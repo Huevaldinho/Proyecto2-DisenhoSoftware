@@ -22,6 +22,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       *assets: archivos como imagenes
       *contexts: Aqui se crean los contextos que se vayan a necesitar.
       *pages: Las paginas enteras, estas paginas van a utilizar los componentes creados anteriormente.
-      *routes: Se definen las rutas de la aplicacion.
+      *routes: Se definen las rutas (URLs) de la aplicacion.
       *services: Logica de la aplicacion, como la conexion con la api y el controlador.
 */
