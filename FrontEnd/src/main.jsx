@@ -3,9 +3,13 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 
+/**
+ * !NO borrar index.html porque ahí renderiza la app.
+ */
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <App />
+    {/*Renderiza al componente App.jsx */}
   </React.StrictMode>
 );
 
