@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NotFound from "../pages/NotFound";
 import PaginaPrincipal from "../pages/PaginaPrincipal";
 import Login from "../pages/auth/Login";
+import ModificarEstudiante from "../pages/estudiantes/modificarEstudiante";
 
 function Router() {
   //*El router funciona para redireccionar a los clientes a las paginas correspondientes.
@@ -19,6 +20,10 @@ function Router() {
       <Routes>
         {/*  Declarar rutas y subrutas en esta parte del codigo.*/}
         <Route path="/paginaPrincipal" element={<PaginaPrincipal />} />
+        {/*Inicio routes de ESTUDIANTES */}
+        <Route path="/modificarEstudiante" element={<ModificarEstudiante />} />
+        {/*Fin routes de ESTUDIANTES */}
+
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -11,9 +11,7 @@ function App() {
       *El router funciona para redireccionar a los url correspondientes (paginas).
       !Todas las paginas deben declararse en el Router.jsx. Si no se hace va a redireccionar a NotFound.jsx
     */
-    <>
-      <Router />
-    </>
+    <Router id="router" />
   );
 }
 
