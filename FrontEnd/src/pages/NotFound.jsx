@@ -17,7 +17,7 @@ function NotFound() {
             </p>
             <Link
               rel="noopener noreferrer"
-              to="/"
+              to="/paginaPrincipal"
               className="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900"
             >
               Menú principal
