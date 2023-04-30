@@ -1,58 +1,31 @@
-const express = require('express');
-const morgan = require("morgan")
-const mongoose = require("mongoose");
-
+//Importaciones necesarias
+import express from "express";
+import morgan from "morgan";
+import inicioRoutes from "./src/routes/inicio.routes.js";
+import systemDB  from "./src/database/connection.js";
 const app = express();
-const url = `mongodb+srv://manaken:12345@cluster0.vcv4xdr.mongodb.net/BaseDeDatos?retryWrites=true&w=majority`;
+systemDB; //conexión con base de datos
 
-const connectionParams={
-    useNewUrlParser: true,
-    useUnifiedTopology: true 
-}
-var systemDb = mongoose.connect(url,connectionParams)
-    .then( () => {
-        console.log('Connected to the database ')
-    })
-    .catch( (err) => {
-        console.error(`Error connecting to the database. n${err}`);
-})
+/*NPM NECESARIOS
+npm i express -D
+npm i morgan -D
+npm i mongoose -D
+npm i babel -D
+*/ 
 
-//import inicioRoutes from "../src/routes/inicio.routes.js";
+//npm start para iniciar el api
+//ctrl+c para terminarlo
+//Datos para conectarse a mongoDB Atlas
 
-//npm run dev para iniciar
-app.use(express.json());
+// Conexión a MongoDB Atlas
+
+app.use(express.json()); //para leer jsons
 app.use(morgan("dev"));
-//app.use(inicioRoutes);
+app.use(inicioRoutes); //rutas de la ventana de Inicio Sesión
 
-const profesorSchema = new mongoose.Schema({
-    name: {type: String, required: true},
-    email: {type: String, required: true},
-    password: {type: String, required: true},
-}, {
-    versionKey: false 
-});
-  
-const Profesor = mongoose.model('Profesor',profesorSchema, 'Profesor');
+const port = 3000
 
-
-app.post('/inicio/:email/:password', (req,res) => {
-    console.log("Post inicio middlewhere");
-    try {
-        let p = new Profesor({
-            name: "Prueba",
-            email: req.params.email,
-            password: req.params.password,
-        })
-        console.log(req.params);
-        res.status(200).json(p.save());
-      } catch (error) {
-        res.status(500).json(error);
-      }
-});
-
-
-
-app.listen(3000,() => {
-    console.log('Server on port 3000');
+app.listen(port,() => {
+    console.log('Server on port '+port);
 });
 
