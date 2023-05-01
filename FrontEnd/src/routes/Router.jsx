@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NotFound from "../pages/NotFound";
 import PaginaPrincipal from "../pages/PaginaPrincipal";
 import Login from "../pages/auth/Login";
-
+import GenerarReporte from "../pages/GenerarReporte";
 function Router() {
   //*El router funciona para redireccionar a los clientes a las paginas correspondientes.
   return (
@@ -19,6 +19,7 @@ function Router() {
       <Routes>
         {/*  Declarar rutas y subrutas en esta parte del codigo.*/}
         <Route path="/paginaPrincipal" element={<PaginaPrincipal />} />
+        <Route path="/generarReporte" element={<GenerarReporte />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
