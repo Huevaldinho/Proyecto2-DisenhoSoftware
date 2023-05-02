@@ -1,6 +1,6 @@
 import React from "react";
 
-import FormularioInformacionEstudiante from "../../components/estudiantes/FormularioInformacionEstudiante";
+import FormularioInformacionEstudiante from '../../components/profesores/FormularioInformacionEstudiante';
 
 /**
  * Este componente es la pagina que se mostrara cuando se necesite

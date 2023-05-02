@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NotFound from "../pages/otrasPages/NotFound";
 import PaginaPrincipal from "../pages/PaginaPrincipal";
 import Login from "../pages/auth/Login";
-import ModificarEstudiante from "../pages/estudiantes/modificarEstudiante";
+import ModificarEstudiante from "../pages/profesores/ModificarEstudiante";
 
 function Router() {
   //*El router funciona para redireccionar a los clientes a las paginas correspondientes.

@@ -1,10 +1,5 @@
 import { useState } from "react";
-/**
- * Componente utilizado para cambiar el estado de un estudiante.
- * @returns  Componente con combobox con dos posibles selecciones:
- * Activo o Inactivo.
- *
- */
+
 function FormularioInformacionEstudiante({
   carnet,
   nombre,
