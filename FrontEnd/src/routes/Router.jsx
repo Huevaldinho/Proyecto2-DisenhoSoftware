@@ -20,6 +20,7 @@ function Router() {
       <Routes>
         {/*  Declarar rutas y subrutas en esta parte del codigo.*/}
         <Route path="/paginaPrincipal" element={<PaginaPrincipal />} />
+
         {/*Inicio routes de ESTUDIANTES */}
         <Route path="/modificarEstudiante" element={<ModificarEstudiante />} />
         {/*Fin routes de ESTUDIANTES */}

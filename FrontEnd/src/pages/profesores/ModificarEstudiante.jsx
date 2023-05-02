@@ -23,6 +23,7 @@ function ModificarEstudiante() {
     telefono: 70130686,
     estado: "Activo",
   };
+  
 
   return (
     <div className="container">

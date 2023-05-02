@@ -14,18 +14,93 @@ function FormularioInformacionEstudiante({
   const [correoEstado, setCorreo] = useState(correo);
   const [telefonoEstado, setTelefono] = useState(telefono);
 
+  /**
+   * Funcion para validar un telefono.
+   * @param {String} telefono: Telefono a validar.
+   * @returns true si el telefono es valido.
+   *        | false si el telefono es invalido.
+   */
+  const validarTelefono = (telefono) => {
+    const regexTelefono = /^(\+506)?[24678]\d{7}$/;
+    if (regexTelefono.test(telefono)) {
+      console.log("Telefono valido");
+      return true;
+    }
+    console.log("Telefono invalido.");
+    return false;
+  };
+  /**
+   * Funcion para validar un correo electronico.
+   * @param {String} correo:Correo a validar.
+   * @returns true si es valido.
+   *        | false si es invalido.
+   */
+  const validarCorreo = (correo) => {
+    //Declaracion de expresion regular para validar correos validos.
+    const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (regexCorreo.test(correo)) {
+      console.log("Correo valido.");
+      return true;
+    }
+    console.log("Correo invalido.");
+    return false;
+  };
+  /**
+   * Funcion para validar los datos que se pueden cambiar del formulario (telefono y correo).
+   * @param {String} correo: Correo a validar.
+   * @param {String} telefono: Telefono a validar.
+   * @returns 0 Si no hay errores.
+   *        | 1 Si el telefono es invalido.
+   *        | 2 Si el correo es invalido.
+   */
+  const validarDatosFormulario = (correo, telefono) => {
+    //Validar correo.
+    if (validarCorreo(correo)) {
+      //Validar telefono.
+      if (validarTelefono(telefono)) {
+        //Validacion exitosa.
+        return 0;
+      } else {
+        //Telefono invalido.
+        return 1;
+      }
+    } else {
+      //Correo invalido.
+      return 2;
+    }
+  };
+
+  /**
+   * Funcion para manejar el envio del formulario.
+   * @param {*} e: Evento que activa el boton. No es inportante.
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(estadoState, correoEstado, telefonoEstado);
-    //!VALIDAR DATOS DEL FORMULARIO
-
-    //*Distinguir si es modificacion o si es eliminacion
-    if (estadoState == "Activo") {
-      console.log("Se ha modificado exitosamente la informacion");
-      //*LLamar al controlador para hacer el cambio
-    } else {
-      console.log("Se ha eliminado al estudiante");
-      //*LLamar al controlador para hacer el cambio
+    //*Validar datos del formulario.
+    switch (validarDatosFormulario(correoEstado, telefonoEstado)) {
+      case 0: {
+        //Validacion exitosa
+        //*Distinguir si es modificacion o si es eliminacion
+        if (estadoState == "Activo") {
+          console.log("Se ha modificado exitosamente la informacion");
+          //*LLamar al controlador para hacer el cambio
+        } else {
+          console.log("Se ha eliminado al estudiante");
+          //*LLamar al controlador para hacer el cambio
+        }
+        break;
+      }
+      case 1: {
+        //Telefono invalido.
+        alert("Telefono invalido, ingrese otro.");
+        break;
+      }
+      case 2: {
+        //Correo invalido.
+        alert("Correo invalido, ingrese otro.");
+        break;
+      }
     }
   };
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
