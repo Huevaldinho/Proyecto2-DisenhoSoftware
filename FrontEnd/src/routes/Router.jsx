@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 //!Para poder declarar las rutas hay que importar el archivo al cual va a redireccionar la ruta.
 
-import NotFound from "../pages/NotFound";
+import NotFound from "../pages/otrasPages/NotFound";
 import PaginaPrincipal from "../pages/PaginaPrincipal";
 import Login from "../pages/auth/Login";
 import ModificarEstudiante from "../pages/estudiantes/modificarEstudiante";
