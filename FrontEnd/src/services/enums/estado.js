@@ -4,3 +4,4 @@ const Estado = {
   REALIZADA: "Realizada",
   CANCELADA: "Cancelada",
 };
+export default Estado;

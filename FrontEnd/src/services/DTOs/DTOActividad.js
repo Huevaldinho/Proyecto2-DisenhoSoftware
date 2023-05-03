@@ -56,3 +56,4 @@ class DTOActividad {
         return this.tipoActividad;
     }
 }
+export default DTOActividad;

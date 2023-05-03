@@ -1,6 +1,6 @@
 import React from "react";
 
-import FormularioInformacionEstudiante from '../../components/profesores/FormularioInformacionEstudiante';
+import FormularioInformacionEstudiante from "../../components/profesores/FormularioInformacionEstudiante";
 
 /**
  * Este componente es la pagina que se mostrara cuando se necesite
@@ -13,6 +13,10 @@ import FormularioInformacionEstudiante from '../../components/profesores/Formula
  */
 function ModificarEstudiante() {
   //!Los datos se deben pasar por parametro cuando se llame a este componente.
+  /*
+  
+    {carnet,nombre,segundoNombre,apellido1,apellido2,correo,telefono,estado}
+  */
   const datosEstudiante = {
     carnet: 2021035489,
     nombre: "Felipe",
@@ -20,10 +24,9 @@ function ModificarEstudiante() {
     apellido1: "Obando",
     apellido2: "Arrieta",
     correo: "felipeobando@estudiantec.cr",
-    telefono: 70130686,
+    telefono: "70130686",
     estado: "Activo",
   };
-  
 
   return (
     <div className="container">

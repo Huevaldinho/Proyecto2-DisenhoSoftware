@@ -34,3 +34,4 @@ class DTOAsistente {
   getCorreo() { return this.correo; }
   getCelular() { return this.celular; }
 }
+export default DTOAsistente;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import EstadoUsuario from "../../services/enums/estadoUsuario";
 function FormularioInformacionEstudiante({
   carnet,
   nombre,
@@ -82,7 +82,7 @@ function FormularioInformacionEstudiante({
       case 0: {
         //Validacion exitosa
         //*Distinguir si es modificacion o si es eliminacion
-        if (estadoState == "Activo") {
+        if (estadoState == EstadoUsuario.ACTIVO) {
           console.log("Se ha modificado exitosamente la informacion");
           //*LLamar al controlador para hacer el cambio
         } else {
