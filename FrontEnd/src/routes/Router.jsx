@@ -6,7 +6,7 @@ import NotFound from "../pages/otrasPages/NotFound";
 import PaginaPrincipal from "../pages/PaginaPrincipal";
 import Login from "../pages/auth/Login";
 import ModificarEstudiante from "../pages/profesores/ModificarEstudiante";
-
+import AgregarEstudiante from "../pages/profesores/AgregarEstudiante";
 function Router() {
   //*El router funciona para redireccionar a los clientes a las paginas correspondientes.
   return (
@@ -23,6 +23,7 @@ function Router() {
 
         {/*Inicio routes de ESTUDIANTES */}
         <Route path="/modificarEstudiante" element={<ModificarEstudiante />} />
+        <Route path="/agregarEstudiante" element={<AgregarEstudiante />} />
         {/*Fin routes de ESTUDIANTES */}
 
         <Route path="/login" element={<Login />} />
