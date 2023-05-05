@@ -9,5 +9,9 @@ class AdminActividades {
         //Tomar los datos del json y se debe instanciar una Activiadad para retornarla.
         return await null;
     }
+    async getPlanDeTrabajo() {//TODO
+        //Hacer peticion a la API.
+        return await null;
+    }
 }
 export default AdminActividades;

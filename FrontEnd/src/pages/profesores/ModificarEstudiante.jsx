@@ -1,6 +1,5 @@
 import React from "react";
-
-
+import { useLocation } from "react-router-dom";
 import FormularioInformacionEstudiante from "../../components/profesores/FormularioInformacionEstudiante";
 /**
  * Este componente es la pagina que se mostrara cuando se necesite
@@ -12,7 +11,14 @@ import FormularioInformacionEstudiante from "../../components/profesores/Formula
  *
  */
 function ModificarEstudiante(props) {
- 
+  /*
+   *Quien llama a esta llamada es el menu de profesores,
+   *ahi es donde se encuentra la informacion del estudiante que se desea
+   *modificar.
+   */
+  const { state } = useLocation();
+  const { id, color } = state;
+
   return (
     <div className="container">
       <h1 className="p-4 m-3 text-center font-bold text-4xl">

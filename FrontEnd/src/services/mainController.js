@@ -41,6 +41,12 @@ class MainController {
     return await this.configuracion.loginRequest(correo, contrasenna);
   }
 
-
+  /**
+   * Metodo para obtener el plan de trabajo.
+   * @returns {JSON} plan de trabajo
+   */
+  async getPlanDeTrabajo() {
+    return await this.adminActividades.getPlanDeTrabajo();
+  }
 }
 export default new MainController();

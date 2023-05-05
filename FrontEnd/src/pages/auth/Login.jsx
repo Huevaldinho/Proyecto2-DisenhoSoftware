@@ -20,15 +20,15 @@ function Login() {
     if (respuestaAPI != null) {
       switch (respuestaAPI) {
         case Role.ASISTENTE: {
-          navigate("/menuAsistente");
+          navigate("/menuAsistentes");
           break;
         }
         case Role.PROFESOR: {
-          navigate("/menuProfesor");
+          navigate("/menuProfesores");
           break;
         }
         case Role.ESTUDIANTE: {
-          navigate("/menuEstudiante");
+          navigate("/menuEstudiantes");
         }
       }
     } else {

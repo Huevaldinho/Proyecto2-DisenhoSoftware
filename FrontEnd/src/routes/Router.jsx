@@ -1,14 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 //!Para poder declarar las rutas hay que importar el archivo al cual va a redireccionar la ruta.
-
+//Otras pages
 import NotFound from "../pages/otrasPages/NotFound";
-import PaginaPrincipal from "../pages/PaginaPrincipal";
 //Auth
 import Login from "../pages/auth/Login";
 import CambiarContraseanna from "../pages/auth/CambiarContraseanna";
+//Profesores
 import ModificarEstudiante from "../pages/profesores/ModificarEstudiante";
-
+//Coordinadores
+import MenuProfesoresGuia from "../pages/profesores/MenuProfesoresGuia";
+import MenuAsistentes from "../pages/asistentes/MenuAsistentes";
+import PlanDeTrabajo from "../pages/compartidas/PlanDeTrabajo";
 function Router() {
   //*El router funciona para redireccionar a los clientes a las paginas correspondientes.
   return (
@@ -20,12 +23,21 @@ function Router() {
      */
     <BrowserRouter>
       <Routes>
-        {/*  Declarar rutas y subrutas en esta parte del codigo.*/}
-        <Route path="/paginaPrincipal" element={<PaginaPrincipal />} />
+        {/*Inicio routues de COMPARTIDAS */}
+        <Route path="/planDeTrabajo" element={<PlanDeTrabajo />} />
+        {/*Fin routues de COMPARTIDAS */}
 
         {/*Inicio routes de ESTUDIANTES */}
         <Route path="/modificarEstudiante" element={<ModificarEstudiante />} />
         {/*Fin routes de ESTUDIANTES */}
+
+        {/*Inicio routes de PROFESORES */}
+        <Route path="/menuProfesores" element={<MenuProfesoresGuia />}></Route>
+        {/*Fin routes de PROFESORES */}
+
+        {/*Inicio routues de ASISTENTES */}
+        <Route path="/menuAsistentes" element={<MenuAsistentes />}></Route>
+        {/*Fin routues de ASISTENTES */}
 
         {/*Auth */}
         <Route path="/login" element={<Login />} />
