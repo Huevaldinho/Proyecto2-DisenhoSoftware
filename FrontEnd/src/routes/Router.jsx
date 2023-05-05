@@ -4,7 +4,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import NotFound from "../pages/otrasPages/NotFound";
 import PaginaPrincipal from "../pages/PaginaPrincipal";
+//Auth
 import Login from "../pages/auth/Login";
+import CambiarContraseanna from "../pages/auth/CambiarContraseanna";
 import ModificarEstudiante from "../pages/profesores/ModificarEstudiante";
 
 function Router() {
@@ -25,7 +27,9 @@ function Router() {
         <Route path="/modificarEstudiante" element={<ModificarEstudiante />} />
         {/*Fin routes de ESTUDIANTES */}
 
+        {/*Auth */}
         <Route path="/login" element={<Login />} />
+        <Route path="/cambiarContrasenna" element={<CambiarContraseanna />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
