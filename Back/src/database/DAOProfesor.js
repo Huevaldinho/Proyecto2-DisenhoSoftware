@@ -10,7 +10,7 @@ const equipoSchema = new mongoose.Schema({
 });
 
 const profesorSchema = new mongoose.Schema({
-    codigo: {type: Number, required: true},
+    cedula: {type: Number, required: true},
     nombre: {type: String, required: true},
     apellido1: {type: String, required: true},
     apellido2: {type: String, required: true},
@@ -43,12 +43,16 @@ export const agregarProfesor = async (DTOProfesor) => {
     console.log("Post inicio middlewhere");
     try {
         let p = new Profesor({
-            codigo: DTOProfesor.codigo,
+            cedula: DTOProfesor.cedula,
             nombre: DTOProfesor.nombre,
             apellido1: DTOProfesor.apellido1,
             apellido2: DTOProfesor.apellido2,
+            telefono: DTOProfesor.telefono,
             email: DTOProfesor.email,
             password: DTOProfesor.password,
+            estado: DTOProfesor.estado,
+            coordinador: DTOProfesor.coordinador,
+            rol: DTOProfesor.rol,
         })
         p.save();
         res.status(200).json(p);
