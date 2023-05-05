@@ -7,5 +7,5 @@ export const estudianteEjemplo = {
     correo: "felipeobando@estudiantec.cr",
     celular: "70130686",
     campus: "Central Cartago",
-    role: "Estudiante"
+    rol: "Estudiante"
 }

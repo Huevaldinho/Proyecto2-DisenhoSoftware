@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+
 
 import FormularioInformacionEstudiante from "../../components/profesores/FormularioInformacionEstudiante";
 /**
@@ -12,8 +12,7 @@ import FormularioInformacionEstudiante from "../../components/profesores/Formula
  *
  */
 function ModificarEstudiante(props) {
-  const location = useLocation(); //Declara un hook paar obtener los datos.
-  const dtoEstudiante = location.state?.datos; //Extrae los datos del hook.
+ 
   return (
     <div className="container">
       <h1 className="p-4 m-3 text-center font-bold text-4xl">

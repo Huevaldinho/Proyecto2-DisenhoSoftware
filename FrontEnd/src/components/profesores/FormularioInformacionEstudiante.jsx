@@ -1,17 +1,34 @@
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 //import PropTypes from "prop-types";
 //import DTOEstudiante from "../../services/DTOs/DTOEstudiante";
 import EstadoUsuario from "../../services/enums/estadoUsuario";
-import { validarCorreo, validarTelefono } from "../../validation/ValidarInputs";
+import { validarCorreoTelefono } from "../../validation/ValidarInputs";
 
-function FormularioInformacionEstudiante({ dtoEstudiante }) {
+function FormularioInformacionEstudiante(props) {
+  const location = useLocation(); //Declara un hook paar obtener los datos.
+  let dtoEstudiante = location.state?.datos; //Extrae los datos del hook.
+  const navigate = useNavigate();
   const [estadoState, setEstado] = useState(dtoEstudiante.getEstado());
   const [correoEstado, setCorreo] = useState(dtoEstudiante.getCorreo());
   const [telefonoEstado, setTelefono] = useState(dtoEstudiante.getTelefono());
 
+  redireccionar = () => {
+    //*Distinguir si es modificacion o si es eliminacion
+    if (estadoState == EstadoUsuario.ACTIVO) {
+      console.log("Se ha modificado exitosamente la información");
+      //*LLamar al controlador para hacer el cambio, utilizar DTOEstudiante.
+
+      alert("Se ha modificado exitosamente la información del estudiante.");
+    } else {
+      console.log("Se ha eliminado al estudiante");
+      //*LLamar al controlador para hacer el cambio, utilizar DTOEstudiante.
+      alert("Se ha eliminado exitosamente al estudiante.");
+    }
+    navigate("/informacionEstudiantes");
+  };
   /**
    * Funcion para manejar el envio del formulario.
-   * @param {*} e: Evento que activa el boton. No es inportante.
    */
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,15 +36,8 @@ function FormularioInformacionEstudiante({ dtoEstudiante }) {
     //*Validar datos del formulario.
     switch (validarCorreoTelefono(correoEstado, telefonoEstado)) {
       case 0: {
-        //Validacion exitosa
-        //*Distinguir si es modificacion o si es eliminacion
-        if (estadoState == EstadoUsuario.ACTIVO) {
-          console.log("Se ha modificado exitosamente la informacion");
-          //*LLamar al controlador para hacer el cambio
-        } else {
-          console.log("Se ha eliminado al estudiante");
-          //*LLamar al controlador para hacer el cambio
-        }
+        //*Validacion exitosa.
+        redireccionar();
         break;
       }
       case 1: {
@@ -42,9 +52,8 @@ function FormularioInformacionEstudiante({ dtoEstudiante }) {
       }
     }
   };
+  //*Styles
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
-
-  //Lo que no se adapta al tamano de la pantall es el contenido del form
   return (
     <div className=" p-3 m-4 text-center items-center">
       <div className="text-center">

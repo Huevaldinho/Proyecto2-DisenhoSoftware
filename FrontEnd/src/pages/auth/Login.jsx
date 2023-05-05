@@ -1,23 +1,19 @@
 import React from "react";
-//Actualizar datos input en tiempo real
-import { useState } from "react";
-//Redireccionar
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-//Validar datos
 import { validarLogin } from "../../validation/ValidarInputs";
-//Peticion a la API.
-import { loginRequest } from "../../services/Administradores/Configuracion";
-//Enum roles
 import Role from "../../services/enums/role";
+import MainContext from "../../contexts/MainControllerContext";
 function Login() {
   //TODO
+  //const { mainController, prueba } = useContext(MainControllerContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const mainController = useContext(MainContext); //Contexto para hacerle la peticion al mainController.
 
   const redireccionar = (respuestaAPI) => {
     //!Extraer el rol de la respuesta porque viene en un json con mas datos.
-
     respuestaAPI = "Asistente"; //!TODO
 
     //*Navegate al menu segun la respuesta de la api.
@@ -44,8 +40,7 @@ function Login() {
     let respuestaAPI = 1;
     //*Validar inputs.
     if (validarLogin(email, password)) {
-      //navigate("/ruta")
-      //!respuestaAPI = loginRequest(email, password);
+      //!mainController.iniciarSesion(email, password);
       redireccionar(respuestaAPI);
     } else {
       alert(

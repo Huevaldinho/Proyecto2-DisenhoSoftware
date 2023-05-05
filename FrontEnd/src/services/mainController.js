@@ -1,3 +1,9 @@
+import AdminActividades from "./Administradores/AdminActividades";
+import AdminArchivos from "./Administradores/AdminArchivos";
+import AdminProfesores from "./Administradores/AdminProfesores";
+import AdminEstudiantes from "./Administradores/AdminEstudiantes";
+import Configuracion from "./Administradores/Configuracion"
+
 class MainController {
   //*Administradores
   adminActividades = null;
@@ -6,25 +12,35 @@ class MainController {
   adminArchivos = null;
   configuracion = null;
   //*Constructores
-  constructor() { }
-  constructor(adminActividades, adminEstudiantes, adminProfesores, adminArchivos, configuracion) {
-    this.adminActividades = adminActividades;
-    this.adminEstudiantes = adminEstudiantes;
-    this.adminProfesores = adminProfesores;
-    this.adminArchivos = adminArchivos;
-    this.configuracion = configuracion;
+  constructor() {
+    this.adminActividades = new AdminActividades();
+    this.adminEstudiantes = new AdminEstudiantes();
+    this.adminProfesores = new AdminProfesores();
+    this.adminArchivos = new AdminArchivos();
+    this.configuracion = new Configuracion();
   }
+
   //*Metodos
   /**
    * Metodo para crear una nueva actividad.
-   * @param {DTOActividad} datos: Datos de la actividad.
-   * @returns {Actividad} 
+   * @param {DTOActividad} dtoActividad: Datos de la actividad.
+   * @returns {Actividad} actividad: Actividad creada.
    */
-  crearActividad(datos) {//TODO
-    //Pasa responsabilidad a AdminActividades.
-    return null;//Retorna una actividad.
+  async crearActividad(dtoActividad) {
+    return await this.adminActividades.crearActividad(dtoActividad);
+  }
+  /**
+   * Metodo para iniciar sesion.
+   * 
+   * @param {String} correo 
+   * @param {String} contrasenna 
+   * 
+   * @returns {JSON} respuesta
+   */
+  async iniciarSesion(correo, contrasenna) {
+    return await this.configuracion.loginRequest(correo, contrasenna);
   }
 
 
 }
-export default MainController;
+export default new MainController();
