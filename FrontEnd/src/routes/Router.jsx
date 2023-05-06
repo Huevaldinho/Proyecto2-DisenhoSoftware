@@ -12,6 +12,7 @@ import ModificarEstudiante from "../pages/profesores/ModificarEstudiante";
 import MenuProfesoresGuia from "../pages/profesores/MenuProfesoresGuia";
 import MenuAsistentes from "../pages/asistentes/MenuAsistentes";
 import PlanDeTrabajo from "../pages/compartidas/PlanDeTrabajo";
+import DetallesActividad from "../pages/compartidas/DetallesActividad";
 function Router() {
   //*El router funciona para redireccionar a los clientes a las paginas correspondientes.
   return (
@@ -25,6 +26,8 @@ function Router() {
       <Routes>
         {/*Inicio routues de COMPARTIDAS */}
         <Route path="/planDeTrabajo" element={<PlanDeTrabajo />} />
+        <Route path="/detallesActividad" element={<DetallesActividad />} />
+
         {/*Fin routues de COMPARTIDAS */}
 
         {/*Inicio routes de ESTUDIANTES */}
