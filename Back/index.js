@@ -2,6 +2,7 @@
 import express from "express";
 import morgan from "morgan";
 import inicioRoutes from "./src/routes/inicio.routes.js";
+import estudiantesRoutes from "./src/routes/estudiantes.routes.js";
 import systemDB  from "./src/database/connection.js";
 const app = express();
 systemDB; //conexión con base de datos
@@ -22,6 +23,7 @@ npm i babel -D
 app.use(express.json()); //para leer jsons
 app.use(morgan("dev"));
 app.use(inicioRoutes); //rutas de la ventana de Inicio Sesión
+app.use(estudiantesRoutes); //rutas de la ventana de los estudiantes, como poder mostrarlos
 
 const port = 3000
 

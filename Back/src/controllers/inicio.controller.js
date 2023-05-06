@@ -8,22 +8,21 @@ import {
 
 //Método asociado a getInicio, este método hace que se valide cuando se inicie sesión y dice si es un profesor, asistente o estudiante
 /*
-1 = Profesor / coordinador
-2 = Asistente
-3 = Estudiante
+Profesor / coordinador / Asistente
+Estudiante
 4 = No existe en el sistema
 */
-export const getInicio = async (req, res) => {
+export const postInicio = async (req, res) => {
     const validar = await validarProfesor(req.params.email, req.params.password) 
     console.log(validar)
-    if (validar) {
-        console.log("bien profe")
-        res.send('1')
+    if (validar != false) {
+        console.log(validar)
+        res.json(validar)
     } else {
         const validar2 = await validarEstudiante(req.params.email, req.params.password) 
-        if (validar2) {
-            console.log("bien estudiante")
-            res.send('3')
+        if (validar2 != false) {
+            console.log(validar2)
+            res.json(validar2)
         }
         else {
             console.log("mal")

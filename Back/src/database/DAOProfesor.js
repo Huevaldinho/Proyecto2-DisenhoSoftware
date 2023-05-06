@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-//PRUEBA
+import mongoose from "mongoose"; //importación de librerias
 
 const campusSchema = new mongoose.Schema({
     nombre: {type: String, required: true},
@@ -19,7 +18,7 @@ const profesorSchema = new mongoose.Schema({
     password: {type: String, required: true},
     estado: {type: Boolean, required: true},
     coordinador: {type: Boolean, required: true},
-    rol: {type: Boolean, required: true},
+    rol: {type: String, required: true},
 });
   
 const Profesor = mongoose.model('Profesor',profesorSchema,'Profesor');
@@ -29,7 +28,7 @@ export async function validarProfesor(emailP,passwordP){
     try {
         const data = await Profesor.findOne({ email: emailP, password: passwordP}); 
         if (data) {
-            return true
+            return data
         } else {
             return false
         }
