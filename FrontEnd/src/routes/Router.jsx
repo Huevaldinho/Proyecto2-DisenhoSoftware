@@ -13,6 +13,7 @@ import MenuProfesoresGuia from "../pages/profesores/MenuProfesoresGuia";
 import MenuAsistentes from "../pages/asistentes/MenuAsistentes";
 import PlanDeTrabajo from "../pages/compartidas/PlanDeTrabajo";
 import DetallesActividad from "../pages/compartidas/DetallesActividad";
+import AgregarActividad from "../pages/profesores/coordinadores/AgregarActividad";
 function Router() {
   //*El router funciona para redireccionar a los clientes a las paginas correspondientes.
   return (
@@ -37,6 +38,10 @@ function Router() {
         {/*Inicio routes de PROFESORES */}
         <Route path="/menuProfesores" element={<MenuProfesoresGuia />}></Route>
         {/*Fin routes de PROFESORES */}
+
+        {/*Inicio routes de COORDINADORES */}
+        <Route path="/agregarActividad" element={<AgregarActividad />}></Route>
+        {/*Fin routes de COORDINADORES */}
 
         {/*Inicio routues de ASISTENTES */}
         <Route path="/menuAsistentes" element={<MenuAsistentes />}></Route>

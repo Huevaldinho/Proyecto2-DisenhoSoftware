@@ -1,13 +1,12 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import FormularioActividad from "../../components/compartidos/actividades/FormularioActividad";
+import FormularioDetallesActividad from "../../components/compartidos/actividades/FormularioDetallesActividad";
 function DetallesActividad(props) {
   const navigate = useNavigate();
   //Mostrar todos los datos de la actividad
   //Los comentarios deben mostrarse si no es la asistente.
-  const { state } = useLocation(); // Acceder al objeto 'state'
-  const info = state?.actividad;
-  console.log(info);
+  const { state } = useLocation(); // Acceder al objeto 'state' que contiene la actividad
+  const actividad = state?.actividad;
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -22,11 +21,11 @@ function DetallesActividad(props) {
           Detalles de actividad
         </h1>
       </div>
-      <FormularioActividad />
+      <FormularioDetallesActividad actividad={actividad} />
       {/*Boton regreso a plan de trabajo */}
       <div className="text-center">
         <button
-          className="text-center bg-blue-500 hover:bg-green-500  rounded-xl p-3 m-2"
+          className="text-center bg-red-500 hover:bg-red-800  rounded-xl p-3 m-2"
           onClick={handleClick}
         >
           Regresar a Plan de Trabajo

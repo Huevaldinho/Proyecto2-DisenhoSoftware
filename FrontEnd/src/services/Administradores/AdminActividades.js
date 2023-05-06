@@ -10,7 +10,7 @@ class AdminActividades {
         return await null;
     }
     async getPlanDeTrabajo() {//TODO
-        //Hacer peticion a la API.
+        //Hacer peticion a la API, retornar el json.
         return await null;
     }
 }
