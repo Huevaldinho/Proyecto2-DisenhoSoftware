@@ -16,9 +16,6 @@ function ModificarEstudiante(props) {
    *ahi es donde se encuentra la informacion del estudiante que se desea
    *modificar.
    */
-  const { state } = useLocation();
-  const { id, color } = state;
-
   return (
     <div className="container">
       <h1 className="p-4 m-3 text-center font-bold text-4xl">

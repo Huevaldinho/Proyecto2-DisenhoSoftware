@@ -4,8 +4,8 @@ import FormularioDetallesActividad from "../../components/compartidos/actividade
 function DetallesActividad(props) {
   const navigate = useNavigate();
   //Mostrar todos los datos de la actividad
-  //Los comentarios deben mostrarse si no es la asistente.
-  const { state } = useLocation(); // Acceder al objeto 'state' que contiene la actividad
+  //Los comentarios no se muestran al asistente.
+  const { state } = useLocation();
   const actividad = state?.actividad;
 
   const handleClick = (e) => {

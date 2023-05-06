@@ -6,8 +6,6 @@ import EstadoUsuario from "../../services/enums/estadoUsuario";
 import { validarCorreoTelefono } from "../../validation/ValidarInputs";
 
 function FormularioInformacionEstudiante(props) {
-  const location = useLocation(); //Declara un hook paar obtener los datos.
-  let dtoEstudiante = location.state?.datos; //Extrae los datos del hook.
   const navigate = useNavigate();
   const [estadoState, setEstado] = useState(dtoEstudiante.getEstado());
   const [correoEstado, setCorreo] = useState(dtoEstudiante.getCorreo());
