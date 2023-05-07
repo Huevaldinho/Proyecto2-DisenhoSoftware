@@ -5,3 +5,4 @@ const TipoActividad = {
   TECNICO: "Técnico",
   RECREACION: "Recreación",
 };
+export default TipoActividad;
