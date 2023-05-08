@@ -1,7 +1,6 @@
 import React from "react";
-
+import { useLocation } from "react-router-dom";
 import FormularioInformacionEstudiante from "../../components/profesores/FormularioInformacionEstudiante";
-
 /**
  * Este componente es la pagina que se mostrara cuando se necesite
  * modificar la informacion de un estudiante.
@@ -11,38 +10,18 @@ import FormularioInformacionEstudiante from "../../components/profesores/Formula
  * @returns Pagina para modificar o eliminar a un estudiante.
  *
  */
-function ModificarEstudiante() {
-  //!Los datos se deben pasar por parametro cuando se llame a este componente.
+function ModificarEstudiante(props) {
   /*
-  
-    {carnet,nombre,segundoNombre,apellido1,apellido2,correo,telefono,estado}
-  */
-  const datosEstudiante = {
-    carnet: 2021035489,
-    nombre: "Felipe",
-    segundoNombre: "De Jesús",
-    apellido1: "Obando",
-    apellido2: "Arrieta",
-    correo: "felipeobando@estudiantec.cr",
-    telefono: "70130686",
-    estado: "Activo",
-  };
-
+   *Quien llama a esta llamada es el menu de profesores,
+   *ahi es donde se encuentra la informacion del estudiante que se desea
+   *modificar.
+   */
   return (
     <div className="container">
       <h1 className="p-4 m-3 text-center font-bold text-4xl">
         Modificar información de estudiante
       </h1>
-      <FormularioInformacionEstudiante
-        carnet={datosEstudiante.carnet}
-        nombre={datosEstudiante.nombre}
-        segundoNombre={datosEstudiante.segundoNombre}
-        apellido1={datosEstudiante.apellido1}
-        apellido2={datosEstudiante.apellido2}
-        correo={datosEstudiante.correo}
-        telefono={datosEstudiante.telefono}
-        estado={datosEstudiante.estado}
-      />
+      <FormularioInformacionEstudiante />
     </div>
   );
 }

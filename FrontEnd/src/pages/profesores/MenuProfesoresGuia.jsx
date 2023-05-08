@@ -1,16 +1,58 @@
-import React from 'react'
+import React from "react";
+
+import { useNavigate } from "react-router-dom";
 
 function MenuProfesoresGuia() {
+  const navigate = useNavigate(); //Para redireccionar.
+
+  const handleInformacionEquipoGuia = (e) => {
+    e.preventDefault();
+    navigate("/informacionEquipoGuia");
+  };
+  const handlePlanDeTrabajo = (e) => {
+    e.preventDefault();
+    navigate("/planDeTrabajo");
+  };
+
+  const handleInformacionEstudiantes = (e) => {
+    //Pedir informacion de estudiantes a la API antes de redireccionar.
+    e.preventDefault();
+    navigate("/informacionEstudiantes");
+  };
+
+  const estiloBotones =
+    "text-center p-3 m-3bg-blue-600 border-collapse shadow-xl hover:bg-green-600 bg-blue-600 rounded-3xl";
   return (
-    <div>
-        <div className='text-center text-4xl'>
-            <h1>Menú de profesores guias</h1>
+    <div className="container p-5 m-3">
+      <h1 className="text-center font-bold text-5xl">Menú Profesores </h1>
+      <div
+        id="containerBotonInformacionEquipoGuia"
+        className="text-center p-2 m-2 "
+      >
+        <div className="p-5 m-3">
+          <button
+            className={estiloBotones}
+            onClick={handleInformacionEquipoGuia}
+          >
+            Información Equipo Guía
+          </button>
         </div>
-      <div>
-        
+        <div id="containerBotonPlanDeTrabajo" className="p-5 m-3">
+          <button className={estiloBotones} onClick={handlePlanDeTrabajo}>
+            Plan de Trabajo
+          </button>
+        </div>
+        <div id="containerBotonInformacionEstudiantes" className="p-5 m-3">
+          <button
+            className={estiloBotones}
+            onClick={handleInformacionEstudiantes}
+          >
+            Información Estudiantes
+          </button>
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default MenuProfesoresGuia
+export default MenuProfesoresGuia;
