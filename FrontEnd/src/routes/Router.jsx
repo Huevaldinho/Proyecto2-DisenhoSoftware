@@ -10,6 +10,7 @@ import AgregarEstudiante from "../pages/profesores/AgregarEstudiante";
 import MensajeGenerarReporte from "../pages/manejoExcel/MensajeGenerarReporte";
 import MenuProfesoresGuia from "../pages/profesores/MenuProfesoresGuia";
 import InformacionEstudiantesProfesores from "../pages/profesores/InformacionEstudiantesProfesores"
+import CargarExcel from "../pages/manejoExcel/CargarExcel"
 function Router() {
   //*El router funciona para redireccionar a los clientes a las paginas correspondientes.
   return (
@@ -35,6 +36,8 @@ function Router() {
         {/*Fin routes de ProfesoresGuia */}
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
+        {/*Routes Excel */}
+        <Route path="/cargarExcel" element={<CargarExcel />} />
       </Routes>
     </BrowserRouter>
   );

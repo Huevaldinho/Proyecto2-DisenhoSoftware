@@ -29,7 +29,7 @@ function ModificarEstudiante() {
   };
 
   return (
-    <div className="container items-center">
+    <div className="container">
       <h1 className="p-4 m-3 text-center font-bold text-4xl">
         Modificar información de estudiante
       </h1>

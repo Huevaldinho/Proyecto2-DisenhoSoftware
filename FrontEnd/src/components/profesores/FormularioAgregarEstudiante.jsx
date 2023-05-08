@@ -20,13 +20,13 @@ function FormularioAgregarEstudiante({
    * @returns true si es valido.
    *        | false si es invalido.
    */
-const validarCarnet = (carnet) => {
+const validarVacio = (carnet) => {
   //Declaracion de expresion regular para validar correos validos.
   if (/^\s*$/.test(carnet)) {
-    console.log("Carnet Valido");
-    /* El campo está vacío o sólo contiene espacios */
+    console.log("Campo Lleno");
+    return true;
 }
-  console.log("Carnet invalido.");
+  console.log("Campo Vacio");
   return false;
 };
 
@@ -74,9 +74,33 @@ const validarCarnet = (carnet) => {
     if (validarCorreo(correo)) {
       //Validar telefono.
       if (validarTelefono(telefono)) {
-        //Validacion exitosa.
-        if (validarCarnet(carnet)){
-          return 0;
+        //Validacion Carnet.
+        if (validarVacio(carnet)){
+          //Validacion nombre.
+          if(validarVacio(nombre)){
+            //Validacion segundoNombre.
+            if(validarVacio(segundoNombre)){
+              //Validacion apellido1.
+              if(validarVacio(apellido1)){
+                //Validacion apellido2.
+                if(validarVacio(apellido2)){
+                  return 0;
+                }else{
+                  return 7;
+                  //Segundo Apellido Vacio
+                }
+              }else{
+                return 6;
+                //Primer Apellido Vacio
+              }
+            }else{
+              return 5;
+              //Segundo Nombre Vacio
+            }
+          }else{
+            return 4;
+            //Nombre Vacio
+          }
         }else{
           return 3;
           //Carnet Invalido
@@ -128,7 +152,24 @@ const validarCarnet = (carnet) => {
         alert("Carnet vacio, agregue alguno.");
         break;
       }
-    }
+      case 4:{
+        alert("Nombre vacio, debe agregar uno.");
+        break;
+      }
+      case 5:{
+        alert("Segundo nombre vacio, debe agregar uno.");
+        break;
+      }
+      case 6:{
+        alert("Primer apellido vacio, debe agregar uno.");
+        break;
+      }
+      case 7:{
+        alert("Segundo apellido vacio, debe agregar uno.");
+        break;
+      }
+      }
+
   };
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
 

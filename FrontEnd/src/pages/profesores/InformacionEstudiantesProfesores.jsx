@@ -9,7 +9,7 @@ function InformacionEstudiantesProfesores() {
       <div>
         <table className=' table-auto relative rounded overflow-auto'>
         <tr className='text-center'>
-          <th className='text-center' >Name</th>
+          <th>Name</th>
           <th>Age</th>
           <th>Gender</th>
         </tr>
