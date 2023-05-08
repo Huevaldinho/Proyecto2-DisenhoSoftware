@@ -1,69 +1,17 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //import PropTypes from "prop-types";
 //import DTOEstudiante from "../../services/DTOs/DTOEstudiante";
 import EstadoUsuario from "../../services/enums/estadoUsuario";
 import { validarCorreoTelefono } from "../../validation/ValidarInputs";
 
-  /**
-   * Funcion para validar un telefono.
-   * @param {String} telefono: Telefono a validar.
-   * @returns true si el telefono es valido.
-   *        | false si el telefono es invalido.
-   */
-  const validarTelefono = (telefono) => {
-    const regexTelefono = /^(\+506)?[24678]\d{7}$/;
-    if (regexTelefono.test(telefono)) {
-      console.log("Telefono valido");
-      return true;
-    }
-    console.log("Telefono invalido.");
-    return false;
-  };
-  /**
-   * Funcion para validar un correo electronico.
-   * @param {String} correo:Correo a validar.
-   * @returns true si es valido.
-   *        | false si es invalido.
-   */
-  const validarCorreo = (correo) => {
-    //Declaracion de expresion regular para validar correos validos.
-    const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (regexCorreo.test(correo)) {
-      console.log("Correo valido.");
-      return true;
-    }
-    console.log("Correo invalido.");
-    return false;
-  };
-
-    
-  /**
-   * Funcion para validar los datos que se pueden cambiar del formulario (telefono y correo).
-   * @param {String} correo: Correo a validar.
-   * @param {String} telefono: Telefono a validar.
-   * @returns 0 Si no hay errores.
-   *        | 1 Si el telefono es invalido.
-   *        | 2 Si el correo es invalido.
-   */
-  const validarDatosFormulario = (correo, telefono) => {
-    //Validar correo.
-    if (validarCorreo(correo)) {
-      //Validar telefono.
-      if (validarTelefono(telefono)) {
-        //Validacion exitosa.
-        return 0;
-      } else {
-        //Telefono invalido.
-        return 1;
-      }
 function FormularioInformacionEstudiante(props) {
   const navigate = useNavigate();
-  const [estadoState, setEstado] = useState(dtoEstudiante.getEstado());
-  const [correoEstado, setCorreo] = useState(dtoEstudiante.getCorreo());
-  const [telefonoEstado, setTelefono] = useState(dtoEstudiante.getTelefono());
+  const [estadoState, setEstado] = useState(null);
+  const [correoEstado, setCorreo] = useState(null);
+  const [telefonoEstado, setTelefono] = useState(null);
 
-  redireccionar = () => {
+  const redireccionar = () => {
     //*Distinguir si es modificacion o si es eliminacion
     if (estadoState == EstadoUsuario.ACTIVO) {
       console.log("Se ha modificado exitosamente la información");
@@ -118,7 +66,7 @@ function FormularioInformacionEstudiante(props) {
             <input
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              defaultValue={dtoEstudiante.getCarnet()}
+              
               disabled={true}
             />
             <p className="font-thin text-red-700">No modificable</p>
@@ -132,7 +80,6 @@ function FormularioInformacionEstudiante(props) {
             <input
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              defaultValue={dtoEstudiante.getNombre()}
               disabled={true}
             />
             <p className="font-thin text-red-700">No modificable</p>
@@ -145,7 +92,6 @@ function FormularioInformacionEstudiante(props) {
             <input
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              defaultValue={dtoEstudiante.getNombre2()}
               disabled={true}
             />
             <p className="font-thin text-red-700">No modificable</p>
@@ -158,7 +104,6 @@ function FormularioInformacionEstudiante(props) {
             <input
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              defaultValue={dtoEstudiante.getApellido1()}
               disabled={true}
             />
             <p className="font-thin text-red-700">No modificable</p>
@@ -171,7 +116,6 @@ function FormularioInformacionEstudiante(props) {
             <input
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              defaultValue={dtoEstudiante.getApellido2()}
               disabled={true}
             />
             <p className="font-thin text-red-700">No modificable</p>
@@ -205,7 +149,6 @@ function FormularioInformacionEstudiante(props) {
             <input
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              defaultValue={dtoEstudiante.getCelular()}
               onChange={(e) => {
                 setTelefono(e.target.value);
               }}
@@ -245,10 +188,6 @@ function FormularioInformacionEstudiante(props) {
       </div>
     </div>
   );
-}
-/* 
-FormularioInformacionEstudiante.propTypes = {
-  dtoEstudiante: PropTypes.instanceOf(DTOEstudiante),
-};
-*/
+  }
+
 export default FormularioInformacionEstudiante;
