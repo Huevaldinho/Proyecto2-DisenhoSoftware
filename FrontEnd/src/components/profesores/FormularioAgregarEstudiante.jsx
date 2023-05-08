@@ -14,6 +14,22 @@ function FormularioAgregarEstudiante({
   const [correoEstado, setCorreo] = useState(correo);
   const [telefonoEstado, setTelefono] = useState(telefono);
 
+/**
+   * Funcion para validar un carnet vacio.
+   * @param {String} carnet:carnet a validar.
+   * @returns true si es valido.
+   *        | false si es invalido.
+   */
+const validarCarnet = (carnet) => {
+  //Declaracion de expresion regular para validar correos validos.
+  if (/^\s*$/.test(carnet)) {
+    console.log("Carnet Valido");
+    /* El campo está vacío o sólo contiene espacios */
+}
+  console.log("Carnet invalido.");
+  return false;
+};
+
   /**
    * Funcion para validar un telefono.
    * @param {String} telefono: Telefono a validar.
@@ -59,7 +75,13 @@ function FormularioAgregarEstudiante({
       //Validar telefono.
       if (validarTelefono(telefono)) {
         //Validacion exitosa.
-        return 0;
+        if (validarCarnet(carnet)){
+          return 0;
+        }else{
+          return 3;
+          //Carnet Invalido
+        }
+        
       } else {
         //Telefono invalido.
         return 1;
@@ -99,6 +121,11 @@ function FormularioAgregarEstudiante({
       case 2: {
         //Correo invalido.
         alert("Correo invalido, ingrese otro.");
+        break;
+      }
+      // Carnet validado
+      case 3:{
+        alert("Carnet vacio, agregue alguno.");
         break;
       }
     }

@@ -6,16 +6,6 @@ function AgregarEstudiante() {
   
     {carnet,nombre,segundoNombre,apellido1,apellido2,correo,telefono,estado}
   */
-    const datosEstudiante = {
-        carnet: 2021035489,
-        nombre: "Felipe",
-        segundoNombre: "De Jesús",
-        apellido1: "Obando",
-        apellido2: "Arrieta",
-        correo: "felipeobando@estudiantec.cr",
-        telefono: "70130686",
-        estado: "Activo",
-      };
     
       return (
         <div className="container">

@@ -7,6 +7,9 @@ import PaginaPrincipal from "../pages/PaginaPrincipal";
 import Login from "../pages/auth/Login";
 import ModificarEstudiante from "../pages/profesores/ModificarEstudiante";
 import AgregarEstudiante from "../pages/profesores/AgregarEstudiante";
+import MensajeGenerarReporte from "../pages/manejoExcel/MensajeGenerarReporte";
+import MenuProfesoresGuia from "../pages/profesores/MenuProfesoresGuia";
+import InformacionEstudiantesProfesores from "../pages/profesores/InformacionEstudiantesProfesores"
 function Router() {
   //*El router funciona para redireccionar a los clientes a las paginas correspondientes.
   return (
@@ -22,10 +25,14 @@ function Router() {
         <Route path="/paginaPrincipal" element={<PaginaPrincipal />} />
 
         {/*Inicio routes de ESTUDIANTES */}
+        <Route path="/mensajeGenerarReporte" element={<MensajeGenerarReporte />} />
         <Route path="/modificarEstudiante" element={<ModificarEstudiante />} />
         <Route path="/agregarEstudiante" element={<AgregarEstudiante />} />
         {/*Fin routes de ESTUDIANTES */}
-
+        {/*Routes Profesores Guia */}
+        <Route path="/informacionEstudiantesProfesores" element={<InformacionEstudiantesProfesores />} />
+        <Route path="/menuProfesoresGuia" element={<MenuProfesoresGuia />} />
+        {/*Fin routes de ProfesoresGuia */}
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

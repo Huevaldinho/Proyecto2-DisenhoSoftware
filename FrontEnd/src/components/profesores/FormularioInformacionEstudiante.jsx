@@ -45,6 +45,8 @@ function FormularioInformacionEstudiante({
     console.log("Correo invalido.");
     return false;
   };
+
+    
   /**
    * Funcion para validar los datos que se pueden cambiar del formulario (telefono y correo).
    * @param {String} correo: Correo a validar.
@@ -101,6 +103,7 @@ function FormularioInformacionEstudiante({
         alert("Correo invalido, ingrese otro.");
         break;
       }
+      
     }
   };
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
