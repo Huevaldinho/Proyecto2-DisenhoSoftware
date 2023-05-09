@@ -48,5 +48,13 @@ class MainController {
   async getPlanDeTrabajo() {
     return await this.adminActividades.getPlanDeTrabajo();
   }
+
+  /**
+   * Metodo para obtener el plan de trabajo.
+   * @returns {JSON} plan de trabajo
+   */
+  async getInformacionEstudiantes() {
+    return await this.adminEstudiantes.getInformacionEstudiantes();
+  }
 }
 export default new MainController();

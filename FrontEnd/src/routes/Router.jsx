@@ -18,6 +18,7 @@ import MenuAsistentes from "../pages/asistentes/MenuAsistentes";
 import PlanDeTrabajo from "../pages/compartidas/PlanDeTrabajo";
 import DetallesActividad from "../pages/compartidas/DetallesActividad";
 import AgregarActividad from "../pages/profesores/coordinadores/AgregarActividad";
+import DetalleEstudiante from "../pages/profesores/DetalleEstudiante";
 function Router() {
   //*El router funciona para redireccionar a los clientes a las paginas correspondientes.
   return (
@@ -39,6 +40,7 @@ function Router() {
         <Route path="/mensajeGenerarReporte" element={<MensajeGenerarReporte />} />
         <Route path="/modificarEstudiante" element={<ModificarEstudiante />} />
         <Route path="/agregarEstudiante" element={<AgregarEstudiante />} />
+        <Route path="/detallesEstudiante" element={<DetalleEstudiante />} />
         {/*Fin routes de ESTUDIANTES */}
         {/*Routes Profesores Guia */}
         <Route path="/informacionEstudiantesProfesores" element={<InformacionEstudiantesProfesores />} />

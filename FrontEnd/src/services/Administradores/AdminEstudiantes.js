@@ -2,6 +2,9 @@
 class AdminEstudiantes {
     //*Constructores
     constructor() { }
-    //*Metodos
+    async getInformacionEstudiantes() {//TODO
+        //Hacer peticion a la API, retornar el json.
+        return await null;
+    }
 }
 export default AdminEstudiantes;
