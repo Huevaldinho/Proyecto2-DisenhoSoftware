@@ -17,4 +17,5 @@ router.post('/profesor', postProfesor);
 router.put('/profesor', putProfesor);
 // Método delete que cambia el estado de un profesor de activo a inactivo
 router.delete('/profesor/:id', deleteProfesor);
+
 export default router;

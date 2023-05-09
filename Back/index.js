@@ -2,6 +2,7 @@
 import express from "express";
 import morgan from "morgan";
 import inicioRoutes from "./src/routes/inicio.routes.js";
+import profesoresRoutes from "./src/routes/profesor.routes.js";
 import estudiantesRoutes from "./src/routes/estudiantes.routes.js";
 import systemDB  from "./src/database/connection.js";
 const app = express();
@@ -23,7 +24,9 @@ npm i babel -D
 app.use(express.json()); //para leer jsons
 app.use(morgan("dev"));
 app.use(inicioRoutes); //rutas de la ventana de Inicio Sesión
-app.use(estudiantesRoutes); //rutas de la ventana de los estudiantes, como poder mostrarlos
+app.use(estudiantesRoutes); //rutas de la ventana de los estudiantes
+app.use(profesoresRoutes); //rutas de la ventana de los profesores
+
 
 const port = 3000
 
