@@ -26,7 +26,7 @@ export const postInicio = async (req, res) => {
         }
         else {
             console.log("mal")
-            res.send('4')
+            res.json({})
         }
     }
 }

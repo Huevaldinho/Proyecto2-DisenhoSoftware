@@ -33,7 +33,7 @@ export async function validarEstudiante(emailP,passwordP){
 //Metodo para hacer la consulta de todos los estudiantes
 export async function getEstudiantesMongo(){
     try {
-        const data = await Estudiante.find({}); 
+        const data = await Estudiante.find({estado: true}); 
         if (data) {
             return data
         } else {
@@ -41,5 +41,16 @@ export async function getEstudiantesMongo(){
         }
     } catch (error) {
         console.log(error)
+    }
+};
+
+//Método encargado de hacer que un estudiante este inactivo, relacionado con la ruta de delete de Estudiante 
+export const eliminarEstudiante = async (id) => {
+    console.log("delete estudiante middlewhere");
+    try {
+        const e = await Estudiante.findByIdAndUpdate(id, {$set: {estado: false}});
+        return e;
+      } catch (error) {
+        res.status(500).json(error);
     }
 };

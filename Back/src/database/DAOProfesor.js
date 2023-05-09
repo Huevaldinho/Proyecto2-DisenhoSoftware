@@ -1,9 +1,5 @@
 import mongoose from "mongoose"; //importación de librerias
 
-const campusSchema = new mongoose.Schema({
-    nombre: {type: String, required: true},
-});
-
 const equipoSchema = new mongoose.Schema({
     miembros: {type: Array, required: true},
 });
@@ -15,6 +11,7 @@ const profesorSchema = new mongoose.Schema({
     apellido2: {type: String, required: true},
     telefono: {type: String, required: true},
     email: {type: String, required: true},
+    campus: {type: String, required: true},
     password: {type: String, required: true},
     estado: {type: Boolean, required: true},
     coordinador: {type: Boolean, required: true},
@@ -22,6 +19,7 @@ const profesorSchema = new mongoose.Schema({
 });
   
 const Profesor = mongoose.model('Profesor',profesorSchema,'Profesor');
+const Equipo = mongoose.model('Equipo',equipoSchema,'Equipo');
 
 //Metodo para poder validar inicio de sesión de profesor
 export async function validarProfesor(emailP,passwordP){
@@ -39,7 +37,7 @@ export async function validarProfesor(emailP,passwordP){
 
 //Método para agregar un profesor
 export const agregarProfesor = async (DTOProfesor) => {
-    console.log("Post inicio middlewhere");
+    console.log("Post profesor middlewhere");
     try {
         let p = new Profesor({
             cedula: DTOProfesor.cedula,
@@ -48,8 +46,9 @@ export const agregarProfesor = async (DTOProfesor) => {
             apellido2: DTOProfesor.apellido2,
             telefono: DTOProfesor.telefono,
             email: DTOProfesor.email,
+            campus: DTOProfesor.campus,
             password: DTOProfesor.password,
-            estado: DTOProfesor.estado,
+            estado: true,
             coordinador: DTOProfesor.coordinador,
             rol: DTOProfesor.rol,
         })
@@ -61,3 +60,49 @@ export const agregarProfesor = async (DTOProfesor) => {
 };
 
 
+//Metodo para hacer la consulta de todos los estudiantes
+export async function getProfesoresMongo(){
+    try {
+        const data = await Profesor.find({}); 
+        if (data) {
+            return data
+        } else {
+            return false
+        }
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+//Método para modificar un profesor, relacionado con la ruta de put de Profesor
+export const modificarProfesor = async (DTOProfesor) => {
+    console.log("delete profesor middlewhere");
+    try {
+        const p = await Profesor.findById(DTOProfesor.id); 
+        p.cedula = DTOProfesor.cedula;
+        p.nombre = DTOProfesor.nombre;
+        p.apellido1 = DTOProfesor.apellido1;
+        p.apellido2 = DTOProfesor.apellido2;
+        p.telefono = DTOProfesor.telefono;
+        p.email = DTOProfesor.email;
+        p.campus = DTOProfesor.campus;
+        p.password = DTOProfesor.password;
+        p.coordinador = DTOProfesor.coordinador;
+        p.rol =  DTOProfesor.rol;
+        p.save();
+        return p;
+      } catch (error) {
+        res.status(500).json(error);
+    }
+};
+
+//Método encargado de hacer que un profesor este inactivo, relacionado con la ruta de delete de Profesor 
+export const eliminarProfesor = async (id) => {
+    console.log("delete profesor middlewhere");
+    try {
+        const p = await Profesor.findByIdAndUpdate(id, {$set: {estado: false}});
+        return p;
+      } catch (error) {
+        res.status(500).json(error);
+    }
+};
