@@ -36,6 +36,7 @@ export async function validarProfesor(emailP,passwordP){
 };
 
 //Método para agregar un profesor
+//DTOProfesor es un json
 export const agregarProfesor = async (DTOProfesor) => {
     console.log("Post profesor middlewhere");
     try {
@@ -75,6 +76,7 @@ export async function getProfesoresMongo(){
 };
 
 //Método para modificar un profesor, relacionado con la ruta de put de Profesor
+//DTOProfesor es un json que viene de Body
 export const modificarProfesor = async (DTOProfesor) => {
     console.log("delete profesor middlewhere");
     try {
@@ -97,10 +99,11 @@ export const modificarProfesor = async (DTOProfesor) => {
 };
 
 //Método encargado de hacer que un profesor este inactivo, relacionado con la ruta de delete de Profesor 
-export const eliminarProfesor = async (id) => {
+//_id es el id de mongo
+export const eliminarProfesor = async (_id) => {
     console.log("delete profesor middlewhere");
     try {
-        const p = await Profesor.findByIdAndUpdate(id, {$set: {estado: false}});
+        const p = await Profesor.findByIdAndUpdate(_id, {$set: {estado: false}});
         return p;
       } catch (error) {
         res.status(500).json(error);

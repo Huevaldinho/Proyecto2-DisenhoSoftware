@@ -13,7 +13,7 @@ import {
 router.get('/profesor', getProfesores);
 // Método post para agregar un profesor al sistema
 router.post('/profesor', postProfesor);
-// Método put para modificar un profesor
+// Método put para modificar un profesor, recibe un body
 router.put('/profesor', putProfesor);
 // Método delete que cambia el estado de un profesor de activo a inactivo
 router.delete('/profesor/:id', deleteProfesor);
