@@ -56,12 +56,12 @@ function Login() {
           onSubmit={handleSubmit}
           method="post"
         >
-          <h1 className="mb-8 text-3xl text-center text-white">Login</h1>
+          <h1 className="mb-8 text-3xl text-center text-white">Iniciar sesión</h1>
           <input
             type="text"
             className="block border border-grey-light w-full p-3 rounded mb-4"
             name="email"
-            placeholder="Email"
+            placeholder="Correo"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -72,7 +72,7 @@ function Login() {
             type="password"
             className="block border border-grey-light w-full p-3 rounded mb-4"
             name="password"
-            placeholder="Password"
+            placeholder="Contraseña"
             required
             onChange={(e) => {
               setPassword(e.target.value);
@@ -84,7 +84,7 @@ function Login() {
             className="w-full text-center py-3 bg-blue-500
         rounded bg-green text-white hover:bg-blue-300 focus:outline-none my-1"
           >
-            Iniciar sesión
+            Ingresar
           </button>
 
           <div className="text-white mt-6 text-center">
