@@ -36,7 +36,44 @@ function FormularioAgregarActividad(props) {
   const [enlace, setEnlace] = useState(null); //Enlace
   const [afiche, setAfiche] = useState(null); //Afiche
   const [responsables, setResponsables] = useState([]); //Responsables
+  const [recordatorios, setRecordatorios] = useState([]); //Recordatorios
 
+  //Para agregar recordatorio
+  const agregarRecordatorio = (recordatorio) => {
+    setRecordatorios([...recordatorios, recordatorio]);
+  };
+  //Para eliminar responsables
+  const eliminarRecordatorio = (i) => {
+    const indiceAEliminar = i;
+    if (indiceAEliminar > -1) {
+      const nuevoArray = [...recordatorios];
+      nuevoArray.splice(indiceAEliminar, 1);
+      setRecordatorios(nuevoArray);
+    }
+  };
+  //Para manejar los recordatorios
+  const handleRecordatoriosChange = (recordatorioIn) => {
+    if (recordatorios.length == 0) {
+      //Si no hay recordatorios en el arreglo
+      agregarRecordatorio(recordatorioIn);
+    } else {
+      //Si ya hay recordatorios, hay que fijarse si el recordatorioIn ya esta registrado
+      //, si esta registrado es porque se está desmarcando.
+      for (let i = 0; i < recordatorios.length; i++) {
+        //!ESTO NO ES ASI PARA EL RECORDATORIO.
+        if (
+          recordatorios[i].toISOString().substr(0, 10) ===
+          recordatorioIn.toISOString().substr(0, 10)
+        ) {
+          console.log("Recordatorio:", recordatorios[i]);
+          console.log("Compara:", recordatorioIn);
+          eliminarRecordatorio(i);
+          return;
+        }
+      }
+      agregarRecordatorio(recordatorioIn);
+    }
+  };
   //Para agregar responsables
   const agregarResponsable = (responsable) => {
     setResponsables([...responsables, responsable]);
@@ -71,6 +108,10 @@ function FormularioAgregarActividad(props) {
   // useEffect(() => {
   //   console.log("Responsables actualizados:", responsables);
   // }, [responsables]);
+  //Para ver como se actualizan en tiempo real los recordatorios.
+  // useEffect(() => {
+  //   console.log("Recordatorios actualizados:", recordatorios);
+  // }, [recordatorios]);
 
   const handleEnviar = (e) => {
     e.preventDefault();
@@ -146,7 +187,10 @@ function FormularioAgregarActividad(props) {
         setDescripcionIngresada={setDescripcionIngresada}
       />
       {/* Recordatorio*/}
-      <RecordatorioAgregarActividad />
+      <RecordatorioAgregarActividad
+        handleRecordatoriosChange={handleRecordatoriosChange}
+        recordatorios={recordatorios}
+      />
       {/* Responsables*/}
       <ResponsablesAgregarActividad
         cssElementosForm={cssElementosForm}
