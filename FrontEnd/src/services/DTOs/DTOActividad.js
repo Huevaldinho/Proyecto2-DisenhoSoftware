@@ -1,16 +1,37 @@
 class DTOActividad {
     //*Atributos
-    fecha = null;//Tipo Date
+    id = null;//Autogenerado por base de datos.
+    semana = null;//[1-16]
+    tipoActividad = null;//TipoActividad
     descripcion = "";
-    tipoActividad = null;//Tipo Enum.
+    responsables = [];//
+    fechaHora = null;//String
+    fechaHoraPublicacion = null;//String
+    recordatorios = [];//Array fechas en string
+    modalidad = null;//True o False
+    enlace = '';
+    afiche = '';
+    estado = null;//Estado
+    evidencias = [];
 
     //*Constructores
     constructor() { }
-    constructor(fecha, descripcion, tipoActividad) {
-        this.fecha = fecha;
-        this.descripcion = descripcion;
+    constructor(id, semana, tipoActividad, descripcion, responsables, fechaHora, fechaHoraPublicacion, recordatorios, modalidad, enlace, afiche, estado, evidencias) {
+        this.id = id;
+        this.semana = semana;
         this.tipoActividad = tipoActividad;
+        this.descripcion = descripcion;
+        this.responsables = responsables;
+        this.fechaHora = fechaHora;
+        this.fechaHoraPublicacion = fechaHoraPublicacion;
+        this.recordatorios = recordatorios;
+        this.modalidad = modalidad;
+        this.enlace = enlace;
+        this.afiche = afiche;
+        this.estado = estado;
+        this.evidencias = evidencias
     }
+
     //*Setters
     /**
      * Metodo para asignar la fecha a la actividad.

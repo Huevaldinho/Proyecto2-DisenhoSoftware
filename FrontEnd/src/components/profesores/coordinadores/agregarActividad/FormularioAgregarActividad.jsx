@@ -18,6 +18,7 @@ import ResponsablesAgregarActividad from "./ResponsablesAgregarActividad";
 import AficheAgregarActividad from "./AficheAgregarActividad";
 //Validar datos
 import { validarDatosActividad } from "../../../../validation/ValidarInputs";
+import mainController from "../../../../services/mainController";
 
 function FormularioAgregarActividad(props) {
   //*Los permisos aun no se crean pero para agregar solo el coordinador puede hacerlo.
@@ -113,6 +114,21 @@ function FormularioAgregarActividad(props) {
   //   console.log("Recordatorios actualizados:", recordatorios);
   // }, [recordatorios]);
 
+  const handleErrores = (respuestaValidacion) => {
+    switch (respuestaValidacion) {
+      case 0: {
+        //Validacion exitosa
+        //Crear dto actividad y llamar a main controller.
+        break;
+      }
+      case 1: {
+        alert(
+          "Ha currido un error al procesar el nombre de la actividad, intente de nuevo."
+        );
+        break;
+      }
+    }
+  };
   const handleEnviar = (e) => {
     e.preventDefault();
     console.log(
@@ -137,9 +153,28 @@ function FormularioAgregarActividad(props) {
       "\nAfiche:\n",
       afiche,
       "\nResponsables:\n",
-      responsables
+      responsables,
+      "\nRecordatorio:\n",
+      recordatorios
     );
-    let datosValidos = validarDatosActividad(null);
+    let datos = {
+      nombreActividad,
+      descripcionIngresada,
+      semanaSeleccionada,
+      estadoSeleccionado,
+      modalidadSeleccionada,
+      tipoActividadSeleccionada,
+      fechaHoraSeleccionada,
+      fechaPublicacion,
+      enlace,
+      afiche,
+      responsables,
+      recordatorios,
+    };
+
+    let validarDatos = validarDatosActividad(datos);
+    console.log("Validacion:", validarDatos);
+    handleErrores(validarDatos);
   };
 
   //*Styles

@@ -7,7 +7,6 @@ function RecordatorioAgregarActividad({
   handleRecordatoriosChange,
   recordatorios,
 }) {
-  console.log("En recordatorio:", recordatorios);
   return (
     <div className="flex flex-col text-center">
       <label htmlFor="fecha-hora">Seleccione las fechas de recordatorio:</label>
