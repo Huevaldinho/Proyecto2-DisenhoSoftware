@@ -83,3 +83,7 @@ export const validarLogin = (correo, constrasenna) => {
         return true;
     return false;
 }
+
+export const validarDatosActividad = (datos) => {
+    return null;
+}

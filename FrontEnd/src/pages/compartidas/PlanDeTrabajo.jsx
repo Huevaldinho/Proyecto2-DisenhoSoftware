@@ -22,7 +22,7 @@ function PlanDeTrabajo(props) {
     navigate("/menuProfesores");
   };
   return (
-    <div className="container">
+    <div className="container text-center">
       <div className="text-center" id="nombrePlanConteiner">
         <h1 className="text-center font-bold text-5xl p-5">
           {planDeTrabajo.nombre}

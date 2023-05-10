@@ -48,5 +48,14 @@ class MainController {
   async getPlanDeTrabajo() {
     return await this.adminActividades.getPlanDeTrabajo();
   }
+
+  /**
+   * Metodo para obtener profesores.
+   * @returns 
+   */
+  async consultarProfesores() {
+    return await this.adminProfesores.consultarProfesores();
+  }
 }
+
 export default new MainController();

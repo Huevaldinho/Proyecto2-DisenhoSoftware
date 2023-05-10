@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import FormularioAgregarActividad from "../../../components/profesores/coordinadores/FormularioAgregarActividad";
+import FormularioAgregarActividad from "../../../components/profesores/coordinadores/agregarActividad/FormularioAgregarActividad";
 
 function AgregarActividad(props) {
   const navigate = useNavigate();

@@ -8,7 +8,7 @@ function BodyTablaActividades({ actividades }) {
       </tbody>
     );
   return (
-    <tbody className="bg-white divide-y divide-gray-200">
+    <tbody className="bg-white divide-y divide-gray-200 text-center">
       {actividades.map((actividad,index) => (
         <FilaTablaActividades key={actividad.id} actividad={actividad} index={index} />
       ))}

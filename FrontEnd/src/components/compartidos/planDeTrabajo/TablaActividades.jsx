@@ -53,10 +53,10 @@ function TablaActividades(props) {
       <h1 className="text-center font-light p-2 text-blue-600">
         Pulsa doble click para ver detalles de actividad
       </h1>
-      <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
+      <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 text-center">
+        <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 text-center">
+          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg text-center">
+            <table className="min-w-full divide-y divide-gray-200  text-center">
               <HeaderTablaActividades />
               <BodyTablaActividades actividades={actividades} />
             </table>

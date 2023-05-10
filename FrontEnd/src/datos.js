@@ -80,3 +80,67 @@ export const planDeTrabajo = {
     nombre: "Plan de Trabajo 2023",
     actividades
 }
+
+export const profesores = [{
+    _id: 1,
+    codigo: 0,
+    nombre: "Mauricio",
+    nombre2: "Rafael",
+    apellido1: "Torres",
+    apellido2: "Solano",
+    correo: "correoRafael@tec.ac.cr",
+    telefono: "25502349 [extensión NNNN]",
+    celular: "80808080",
+    foto: "url foto",
+    campus: "Central Cartago",
+    role: "Profesor",
+    estado: "Activo",
+    coordinador: false
+},
+{
+    _id: 2,
+    codigo: 1,
+    nombre: "Mauricio",
+    nombre2: "Rafael",
+    apellido1: "Torres",
+    apellido2: "Solano",
+    correo: "correoRafael@tec.ac.cr",
+    telefono: "25502349 [extensión NNNN]",
+    celular: "80808080",
+    foto: "url foto",
+    campus: "Central Cartago",
+    role: "Profesor",
+    estado: "Activo",
+    coordinador: false
+}, {
+    _id: 3,
+    codigo: 2,
+    nombre: "Mauricio",
+    nombre2: "Rafael",
+    apellido1: "Torres",
+    apellido2: "Solano",
+    correo: "correoRafael@tec.ac.cr",
+    telefono: "25502349 [extensión NNNN]",
+    celular: "80808080",
+    foto: "url foto",
+    campus: "Central Cartago",
+    role: "Profesor",
+    estado: "Activo",
+    coordinador: false
+}, {
+    _id: 4,
+    codigo: 3,
+    nombre: "Mauricio",
+    nombre2: "Rafael",
+    apellido1: "Torres",
+    apellido2: "Solano",
+    correo: "correoRafael@tec.ac.cr",
+    telefono: "25502349 [extensión NNNN]",
+    celular: "80808080",
+    foto: "url foto",
+    campus: "Central Cartago",
+    role: "Profesor",
+    estado: "Activo",
+    coordinador: false
+}
+];

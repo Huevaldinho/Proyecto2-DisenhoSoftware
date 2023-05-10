@@ -4,5 +4,9 @@ class AdminProfesores {
     //*Constructores
     constructor() { }
     //*Metodos
+    async consultarProfesores() {//TODO
+        //hacer peticion a api
+        return null;
+    }
 }
 export default AdminProfesores;
