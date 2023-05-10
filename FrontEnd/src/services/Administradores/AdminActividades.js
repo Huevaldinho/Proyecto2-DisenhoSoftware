@@ -7,7 +7,7 @@ class AdminActividades {
     async crearActividad(dtoActividad) {//TODO
         //Hacer peticion a API.
         //Tomar los datos del json y se debe instanciar una Activiadad para retornarla.        
-        return await new Actividad(respuesta.nombre,);
+        return await null;
     }
     async getPlanDeTrabajo() {//TODO
         //Hacer peticion a la API, retornar el json.

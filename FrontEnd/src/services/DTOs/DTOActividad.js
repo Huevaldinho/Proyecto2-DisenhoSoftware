@@ -1,6 +1,7 @@
 class DTOActividad {
     //*Atributos
     id = null;//Autogenerado por base de datos.
+    nombre = '';
     semana = null;//[1-16]
     tipoActividad = null;//TipoActividad
     descripcion = "";
@@ -15,9 +16,9 @@ class DTOActividad {
     evidencias = [];
 
     //*Constructores
-    constructor() { }
-    constructor(id, semana, tipoActividad, descripcion, responsables, fechaHora, fechaHoraPublicacion, recordatorios, modalidad, enlace, afiche, estado, evidencias) {
+    constructor(id, nombre, semana, tipoActividad, descripcion, responsables, fechaHora, fechaHoraPublicacion, recordatorios, modalidad, enlace, afiche, estado, evidencias) {
         this.id = id;
+        this.nombre = nombre;
         this.semana = semana;
         this.tipoActividad = tipoActividad;
         this.descripcion = descripcion;

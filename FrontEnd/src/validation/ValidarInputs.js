@@ -161,7 +161,7 @@ const validarFechaHoraSeleccionada = (fechaHora) => {
  *          false si esta mal
  */
 const validarFechaPublicacion = (fechaActividad, fechaPublicacion) => {
-    if (fechaPublicacion.getTime() > new Date().getTime() && fechaPublicacion <= fechaActividad.getTime())
+    if (fechaPublicacion.getTime() <= fechaActividad.getTime())
         return true
     return false
 }
@@ -236,44 +236,33 @@ const validarRecordatorios = (recordatorios, fechaActividad, fechaPublicacion) =
       responsables,
     }
  * @returns 0: Si todo estabien
-          Error 1: nombreActividad
-          Error 2: descripcionIngresada
-          Error 3: semanaSeleccionada
-          Error 4: estadoSeleccionado
-          Error 5: modalidadSeleccionada
-          Error 6: tipoActividadSeleccionada
-          Error 7: fechaHoraSeleccionada
-          Error 8: fechaPublicacion
-          Error 9: modalidadSeleccionada
-          Error 10: afiche
-          Error 11: responsables
-          Error 12: recordatorios
+            String: Si hay algun error.
  */
 export const validarDatosActividad = (datos) => {
     if (!validarVacio(datos.nombreActividad))//Nombre
-        return 1;
+        return 'Ha ocurrido un error con el nombre de la actividad, intente de nuevo.';
     if (!validarVacio(datos.descripcionIngresada))//Descripcion
-        return 2;
+        return 'Ha ocurrido un error con la descripcion de la actividad, intente de nuevo. ';
     if (!validarNumero(datos.semanaSeleccionada, 1, 16))//Semana
-        return 3;
+        return 'Ha ocurrido un error con el numero de la semana, intente de nuevo.';
     if (!validarEstado(datos.estadoSeleccionado))//Estado
-        return 4;
+        return 'Ha ocurrido un error con el estado de la actividad, intente de nuevo.';
     if (!validarModalidad(datos.modalidadSeleccionada))//Modalidad
-        return 5;
+        return 'Ha ocurrido un error con la modalidad de la actividad, intente de nuevo.';
     if (!validarTipoActividad(datos.tipoActividadSeleccionada))
-        return 6;
+        return 'Ha ocurrido un error con el tipo de la actividad, intente de nuevo.';
     if (!validarFechaHoraSeleccionada(datos.fechaHoraSeleccionada))
-        return 7;
+        return 'Ha ocurrido un error con la fecha de la actividad, intente de nuevo.';
     if (!validarFechaPublicacion(datos.fechaHoraSeleccionada, datos.fechaPublicacion))
-        return 8;
+        return 'Ha ocurrido un error la fecha de publicacion de la actividad, intente de nuevo.';
     if (!validarEnlace(datos.enlace, datos.modalidadSeleccionada))
-        return 9;
+        return 'Ha ocurrido un error con el enlace de la actividad, intente de nuevo.';
     if (!validarAfiche(datos.afiche))
-        return 10;
+        return 'Ha ocurrido un error con el afiche de la actividad, intente de nuevo.';
     if (!validarResponsables(datos.responsables))
-        return 10;
+        return 'Ha ocurrido un error con los responsables de la actividad, intente de nuevo.';
     if (!validarRecordatorios(datos.recordatorios, datos.fechaHoraSeleccionada, datos.fechaPublicacion))
-        return 11;
+        return 'Ha ocurrido un error con los recordatorios de la actividad, intente de nuevo.';
     //No hay errores.
     return 0;
 }

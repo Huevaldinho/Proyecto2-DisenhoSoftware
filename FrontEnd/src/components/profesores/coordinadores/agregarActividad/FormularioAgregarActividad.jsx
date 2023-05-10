@@ -1,6 +1,5 @@
-import React from "react";
-import { useState, useEffect } from "react"; //Para obtner en tiempo real la info ingresada
-
+import React, { useContext } from "react";
+import { useState } from "react"; //Para obtner en tiempo real la info ingresada
 //Settear fecha yora Calendarios por defecto (toma la fecha actual)
 import moment from "moment";
 
@@ -18,11 +17,14 @@ import ResponsablesAgregarActividad from "./ResponsablesAgregarActividad";
 import AficheAgregarActividad from "./AficheAgregarActividad";
 //Validar datos
 import { validarDatosActividad } from "../../../../validation/ValidarInputs";
-import mainController from "../../../../services/mainController";
+//Controlador
+import MainContext from "../../../../contexts/MainControllerContext";
+//DTOActividad
+import DTOActividad from "../../../../services/DTOs/DTOActividad";
 
 function FormularioAgregarActividad(props) {
   //*Los permisos aun no se crean pero para agregar solo el coordinador puede hacerlo.
-  //!USAR DTOACTIVIDAD para mandarle los datos al main controller.
+  const mainController = useContext(MainContext);
 
   //Use states
   const [nombreActividad, setNombreActividad] = useState(null); //Nombre
@@ -105,26 +107,56 @@ function FormularioAgregarActividad(props) {
       agregarResponsable(responsableIn);
     }
   };
-  //Para ver como se actualizan en tiempo real los responsables.
-  // useEffect(() => {
-  //   console.log("Responsables actualizados:", responsables);
-  // }, [responsables]);
-  //Para ver como se actualizan en tiempo real los recordatorios.
-  // useEffect(() => {
-  //   console.log("Recordatorios actualizados:", recordatorios);
-  // }, [recordatorios]);
 
-  const handleErrores = (respuestaValidacion) => {
+  const convertirDateAString = (fecha) => {
+    return `${("0" + fecha.getDate()).slice(-2)}-${(
+      "0" +
+      (fecha.getMonth() + 1)
+    ).slice(-2)}-${fecha.getFullYear()} ${("0" + fecha.getHours()).slice(
+      -2
+    )}:${("0" + fecha.getMinutes()).slice(-2)}:${(
+      "0" + fecha.getSeconds()
+    ).slice(-2)}`;
+  };
+  const convertirRecordatorioAString = (dates) => {
+    let datesString = [];
+    dates.map((fecha) => {
+      datesString.push(convertirDateAString(fecha));
+    });
+    return datesString;
+  };
+  const handleErrores = async (respuestaValidacion) => {
+    console.log("HandleErrores:", respuestaValidacion);
     switch (respuestaValidacion) {
       case 0: {
         //Validacion exitosa
-        //Crear dto actividad y llamar a main controller.
+        let dtoActividad = new DTOActividad(
+          null, //id generado en base de datos/
+          nombreActividad,
+          semanaSeleccionada,
+          tipoActividadSeleccionada,
+          descripcionIngresada,
+          responsables,
+          convertirDateAString(fechaHoraSeleccionada),
+          convertirDateAString(fechaPublicacion),
+          convertirRecordatorioAString(recordatorios),
+          modalidadSeleccionada,
+          enlace,
+          afiche,
+          estadoSeleccionado,
+          null //Evidencias.
+        );
+        console.log("DTOActividad creado:", dtoActividad);
+        let respuestaMainController = await mainController.crearActividad(
+          dtoActividad
+        );
+        console.log("Respuesta mainController:", respuestaMainController);
+        alert("Actividad creada exitosamente");
+
         break;
       }
-      case 1: {
-        alert(
-          "Ha currido un error al procesar el nombre de la actividad, intente de nuevo."
-        );
+      default: {
+        alert(respuestaValidacion);
         break;
       }
     }
@@ -173,7 +205,6 @@ function FormularioAgregarActividad(props) {
     };
 
     let validarDatos = validarDatosActividad(datos);
-    console.log("Validacion:", validarDatos);
     handleErrores(validarDatos);
   };
 
