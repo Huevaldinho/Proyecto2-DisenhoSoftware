@@ -17,7 +17,7 @@ function MenuProfesoresGuia() {
   const handleInformacionEstudiantes = (e) => {
     //Pedir informacion de estudiantes a la API antes de redireccionar.
     e.preventDefault();
-    navigate("/informacionEstudiantes");
+    navigate("/informacionEstudiantesProfesores");
   };
 
   const estiloBotones =

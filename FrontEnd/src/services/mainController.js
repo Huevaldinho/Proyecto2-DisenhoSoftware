@@ -56,6 +56,10 @@ class MainController {
   async consultarProfesores() {
     return await this.adminProfesores.consultarProfesores();
   }
+
+  async getInformacionEstudiantes() {
+    return await this.adminEstudiantes.getInformacionEstudiantes();
+  }
 }
 
 export default new MainController();
