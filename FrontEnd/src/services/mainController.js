@@ -60,6 +60,9 @@ class MainController {
   async getInformacionEstudiantes() {
     return await this.adminEstudiantes.getInformacionEstudiantes();
   }
+  async modificarInformacionEstudiante (){
+    return await this.adminEstudiantes.modificarInformacionEstudiante ();
+  }
 }
 
 export default new MainController();

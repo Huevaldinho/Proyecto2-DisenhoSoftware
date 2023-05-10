@@ -21,7 +21,7 @@
     campus: "Central Cartago",
     rol: "Estudiante",
     carrera: "Ingeniería en Computación",
-    estado: "Activo"
+    estado: "Inactivo"
 },
 {
     carnet: 2021047896,

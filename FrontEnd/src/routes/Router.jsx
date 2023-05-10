@@ -7,7 +7,7 @@ import NotFound from "../pages/otrasPages/NotFound";
 import Login from "../pages/auth/Login";
 import CambiarContraseanna from "../pages/auth/CambiarContraseanna";
 //Profesores
-import ModificarEstudiante from "../pages/profesores/ModificarEstudiante";
+import InformacionEstudiante from "../pages/profesores/InformacionEstudiante";
 import AgregarEstudiante from "../pages/profesores/AgregarEstudiante";
 import MensajeGenerarReporte from "../pages/manejoExcel/MensajeGenerarReporte";
 import MenuProfesoresGuia from "../pages/profesores/MenuProfesoresGuia";
@@ -38,7 +38,7 @@ function Router() {
 
         {/*Inicio routes de ESTUDIANTES */}
         <Route path="/mensajeGenerarReporte" element={<MensajeGenerarReporte />} />
-        <Route path="/modificarEstudiante" element={<ModificarEstudiante />} />
+        <Route path="/InformacionEstudiante" element={<InformacionEstudiante />} />
         <Route path="/agregarEstudiante" element={<AgregarEstudiante />} />
         <Route path="/detallesEstudiante" element={<DetalleEstudiante />} />
         {/*Fin routes de ESTUDIANTES */}

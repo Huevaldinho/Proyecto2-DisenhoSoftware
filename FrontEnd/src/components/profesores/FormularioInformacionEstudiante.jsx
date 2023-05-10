@@ -1,21 +1,32 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 //import PropTypes from "prop-types";
 //import DTOEstudiante from "../../services/DTOs/DTOEstudiante";
 import EstadoUsuario from "../../services/enums/estadoUsuario";
 import { validarCorreoTelefono } from "../../validation/ValidarInputs";
-
+//Main controller
+import MainContext from "../../contexts/MainControllerContext";
 function FormularioInformacionEstudiante(props) {
+  const mainController = useContext(MainContext);
+  //Para sacar al informacion del estudiante
+  const { state } = useLocation();
+  let estudiante = state?.estudiante;
+
+  console.log(estudiante);
   const navigate = useNavigate();
-  const [estadoState, setEstado] = useState(null);
-  const [correoEstado, setCorreo] = useState(null);
-  const [telefonoEstado, setTelefono] = useState(null);
+  const [estadoState, setEstado] = useState(estudiante.estado);
+  const [correoEstado, setCorreo] = useState(estudiante.correo);
+  const [telefonoEstado, setTelefono] = useState(estudiante.celular);
 
   const redireccionar = () => {
+    //TODO
     //*Distinguir si es modificacion o si es eliminacion
     if (estadoState == EstadoUsuario.ACTIVO) {
       console.log("Se ha modificado exitosamente la información");
       //*LLamar al controlador para hacer el cambio, utilizar DTOEstudiante.
+
+      //Crear DTOEstudiante con datos que ya tengo y los nuevos.
+      let respuestaController = mainController.modificarInformacionEstudiante();
 
       alert("Se ha modificado exitosamente la información del estudiante.");
     } else {
@@ -23,7 +34,7 @@ function FormularioInformacionEstudiante(props) {
       //*LLamar al controlador para hacer el cambio, utilizar DTOEstudiante.
       alert("Se ha eliminado exitosamente al estudiante.");
     }
-    navigate("/informacionEstudiantes");
+    navigate("/informacionEstudiantesProfesores");
   };
   /**
    * Funcion para manejar el envio del formulario.
@@ -48,7 +59,6 @@ function FormularioInformacionEstudiante(props) {
         alert("Correo invalido, ingrese otro.");
         break;
       }
-      
     }
   };
   //*Styles
@@ -65,10 +75,11 @@ function FormularioInformacionEstudiante(props) {
 
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
               disabled={true}
+              value={estudiante.carnet}
             />
+
             <p className="font-thin text-red-700">No modificable</p>
           </div>
           {/*Primer nombre */}
@@ -79,8 +90,9 @@ function FormularioInformacionEstudiante(props) {
 
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
               disabled={true}
+              value={estudiante.nombre}
             />
             <p className="font-thin text-red-700">No modificable</p>
           </div>
@@ -91,8 +103,9 @@ function FormularioInformacionEstudiante(props) {
             </label>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
               disabled={true}
+              value={estudiante.nombre2}
             />
             <p className="font-thin text-red-700">No modificable</p>
           </div>
@@ -103,8 +116,9 @@ function FormularioInformacionEstudiante(props) {
             </label>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               disabled={true}
+              value={estudiante.apellido1}
             />
             <p className="font-thin text-red-700">No modificable</p>
           </div>
@@ -115,8 +129,9 @@ function FormularioInformacionEstudiante(props) {
             </label>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               disabled={true}
+              value={estudiante.apellido2}
             />
             <p className="font-thin text-red-700">No modificable</p>
           </div>
@@ -148,6 +163,7 @@ function FormularioInformacionEstudiante(props) {
             </label>
             <input
               type="text"
+              defaultValue={telefonoEstado}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(e) => {
                 setTelefono(e.target.value);
@@ -165,6 +181,7 @@ function FormularioInformacionEstudiante(props) {
             </label>
             <select
               id="cEstados"
+              defaultValue={estadoState}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(e) => {
                 setEstado(e.target.value);
@@ -188,6 +205,6 @@ function FormularioInformacionEstudiante(props) {
       </div>
     </div>
   );
-  }
+}
 
 export default FormularioInformacionEstudiante;

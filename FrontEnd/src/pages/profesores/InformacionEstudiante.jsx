@@ -1,6 +1,6 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import FormularioInformacionEstudiante from "../../components/profesores/FormularioInformacionEstudiante";
+import { useNavigate } from "react-router-dom";
 /**
  * Este componente es la pagina que se mostrara cuando se necesite
  * modificar la informacion de un estudiante.
@@ -10,20 +10,33 @@ import FormularioInformacionEstudiante from "../../components/profesores/Formula
  * @returns Pagina para modificar o eliminar a un estudiante.
  *
  */
-function ModificarEstudiante(props) {
+function InformacionEstudiante(props) {
+  const nagivate = useNavigate();
   /*
    *Quien llama a esta llamada es el menu de profesores,
    *ahi es donde se encuentra la informacion del estudiante que se desea
    *modificar.
    */
+  const handleClick = (e) => {
+    e.preventDefault();
+    nagivate("/informacionEstudiantesProfesores");
+  };
   return (
     <div className="container">
       <h1 className="p-4 m-3 text-center font-bold text-4xl">
-        Modificar información de estudiante
+        Información de estudiante
       </h1>
       <FormularioInformacionEstudiante />
+      <div className="text-center">
+        <button
+          className="text-center bg-red-500 hover:bg-red-800  rounded-xl p-3 m-2"
+          onClick={handleClick}
+        >
+          Regresar 
+        </button>
+      </div>
     </div>
   );
 }
 
-export default ModificarEstudiante;
+export default InformacionEstudiante;

@@ -8,11 +8,9 @@ import TablaInformacionEstudiantes from "../../components/compartidos/informacio
 function InformacionEstudiantes(props) {
   const navigate = useNavigate();
   const mainController = useContext(MainContext); //*Contexto para hacerle la peticion al mainController.
-  let planilla = mainController.getInformacionEstudiantes( ); //*Es un json con id,nombre y actividades (dentro trae jsons)
+  let planilla = mainController.getInformacionEstudiantes( );
   planilla = pplanilla; //!OJO, esto se debe quitar cuando la api funcione.
   //TODO
-  //Faltan botones para crear actividad por parte del coordinador.
-
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/agregarEstudiante");

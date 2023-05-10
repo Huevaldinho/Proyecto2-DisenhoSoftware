@@ -6,5 +6,8 @@ class AdminEstudiantes {
         //Hacer peticion a la API, retornar el json.
         return await null;
     }
+    async modificarInformacionEstudiante() {//TODO
+        return await null;
+    }
 }
 export default AdminEstudiantes;
