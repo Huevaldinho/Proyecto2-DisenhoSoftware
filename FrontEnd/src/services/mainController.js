@@ -50,8 +50,8 @@ class MainController {
   }
 
   /**
-   * Metodo para obtener profesores.
-   * @returns 
+   * Metodo para obtener informacion de los estudiantes.
+   * @returns {JSON} plan de trabajo
    */
   async consultarProfesores() {
     return await this.adminProfesores.consultarProfesores();

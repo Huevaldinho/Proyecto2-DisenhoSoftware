@@ -11,8 +11,10 @@ import InformacionEstudiante from "../pages/profesores/InformacionEstudiante";
 import AgregarEstudiante from "../pages/profesores/AgregarEstudiante";
 import MensajeGenerarReporte from "../pages/manejoExcel/MensajeGenerarReporte";
 import MenuProfesoresGuia from "../pages/profesores/MenuProfesoresGuia";
-import InformacionEstudiantesProfesores from "../pages/profesores/InformacionEstudiantesProfesores";
-import CargarExcel from "../pages/manejoExcel/CargarExcel";
+import InformacionEstudiantesProfesores from "../pages/profesores/InformacionEstudiantesProfesores"
+import CargarExcel from "../pages/manejoExcel/CargarExcel"
+import InfoProfesores from "../pages/profesores/InfoProfesores"
+import ModificarProfesor from "../pages/asistentes/ModificarProfesor"
 //Coordinadores
 import MenuAsistentes from "../pages/asistentes/MenuAsistentes";
 import PlanDeTrabajo from "../pages/compartidas/PlanDeTrabajo";
@@ -20,6 +22,7 @@ import DetallesActividad from "../pages/compartidas/DetallesActividad";
 import AgregarActividad from "../pages/profesores/coordinadores/AgregarActividad";
 import DetalleEstudiante from "../pages/profesores/DetalleEstudiante";
 import { Navigate } from "react-router-dom";
+import RegistrarProfesor from "../pages/asistentes/RegistrarProfesor";
 function Router() {
   //*El router funciona para redireccionar a los clientes a las paginas correspondientes.
   return (
@@ -60,6 +63,9 @@ function Router() {
 
         {/*Inicio routes de PROFESORES */}
         <Route path="/menuProfesores" element={<MenuProfesoresGuia />}></Route>
+        <Route path="/infoProfesores" element={<InfoProfesores />}></Route>
+        <Route path="/modificarProfesor" element={<ModificarProfesor />}></Route>
+        <Route path="/registrarProfesor" element={<RegistrarProfesor />}></Route>
         {/*Fin routes de PROFESORES */}
 
         {/*Inicio routes de COORDINADORES */}
