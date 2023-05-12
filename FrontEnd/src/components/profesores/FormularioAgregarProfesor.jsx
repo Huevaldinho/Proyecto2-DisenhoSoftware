@@ -6,7 +6,7 @@ import EstadoUsuario from "../../services/enums/estadoUsuario";
 import COORDINADOR from "../../services/enums/coordinador";
 import { validarCorreoTelefono } from "../../validation/ValidarInputs";
 
-function FormularioModificarProfesor(props) {
+function FormularioAgregarProfesor(props) {
   const navigate = useNavigate();
   const [estadoState, setEstado] = useState(null);
   const [cordState, setCord] = useState(null);
@@ -74,9 +74,9 @@ function FormularioModificarProfesor(props) {
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               
-              disabled={true}
+              disabled={false}
             />
-            <p className="font-thin text-red-700">No modificable</p>
+            
           </div>
           {/*Primer nombre */}
           <div className={cssElementosForm}>
@@ -87,9 +87,9 @@ function FormularioModificarProfesor(props) {
             <input
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              disabled={true}
+              disabled={false}
             />
-            <p className="font-thin text-red-700">No modificable</p>
+           
           </div>
           {/*Segundo nombre */}
           <div className={cssElementosForm}>
@@ -99,9 +99,9 @@ function FormularioModificarProfesor(props) {
             <input
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              disabled={true}
+              disabled={false}
             />
-            <p className="font-thin text-red-700">No modificable</p>
+           
           </div>
           {/*Apellido 1 */}
           <div className={cssElementosForm}>
@@ -111,9 +111,9 @@ function FormularioModificarProfesor(props) {
             <input
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              disabled={true}
+              disabled={false}
             />
-            <p className="font-thin text-red-700">No modificable</p>
+            
           </div>
           {/*Apellido 2 */}
           <div className={cssElementosForm}>
@@ -123,9 +123,9 @@ function FormularioModificarProfesor(props) {
             <input
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              disabled={true}
+              disabled={false}
             />
-            <p className="font-thin text-red-700">No modificable</p>
+            
           </div>
           {/*Correo */}
           <div className={"mb-6 w-auto  "}>
@@ -218,4 +218,4 @@ function FormularioModificarProfesor(props) {
   );
   }
 
-export default FormularioModificarProfesor;
+export default FormularioAgregarProfesor;

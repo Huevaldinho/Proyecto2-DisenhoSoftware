@@ -3,6 +3,9 @@
 class AdminProfesores {
     //*Constructores
     constructor() { }
-    //*Metodos
+    async getProfesores() {//TODO
+        //Hacer peticion a la API, retornar el json.
+        return await null;
+    }
 }
 export default AdminProfesores;

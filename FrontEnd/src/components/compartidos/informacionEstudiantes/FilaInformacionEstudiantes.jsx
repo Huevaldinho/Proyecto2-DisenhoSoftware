@@ -8,7 +8,7 @@ function FilaInformacionEstudiante({ estudiante, index }) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate("/detallesEstudiante", { state: { estudiante: estudiante } });
+    navigate("/modificarEstudiante", { state: { estudiante: estudiante } });
   };
   const styleRow =
     "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900";
@@ -22,6 +22,7 @@ function FilaInformacionEstudiante({ estudiante, index }) {
       <td className={styleRow}>{estudiante.carnet}</td>
       <td className={styleRow}>{estudiante.carrera}</td>
       <td className={styleRow}>{estudiante.estado}</td>
+      
     </tr>
   );
 }

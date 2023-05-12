@@ -101,7 +101,41 @@ const actividades =
         evidencia: null
     }
     ];
+export const profesores = [{
+    id : 1,
+    nombre : "Mauricio",
+    nombre2 : "Ignacio",
+    apellido1 : "Arroyo",
+    apellido2 : "Herrera",
+    correo : "mauarroyo@estudiantec.cr",
+    celular : "85805240",
+    campus : "Central Cartago",
+    rol : "Profesor",
+    estado : "Activo",
+    coordinador : "Coordinador"
 
+},{
+    id : 1,
+    nombre : "Laura",
+    nombre2 : "Maria",
+    apellido1 : "Coto",
+    apellido2 : "Sarmiento",
+    correo : "laucoto@estudiantec.cr",
+    celular : "85805240",
+    campus : "Central Cartago",
+    rol : "Profesor",
+    estado : "Activo",
+    coordinador : "Coordinador"
+}
+
+
+];
+
+export const profPlanilla = {
+    id: 1,
+    nombre: "Profesores 2023",
+    profesores
+}
 export const planilla = {
         id: 1,
         nombre: "Estudiantes 2023",
