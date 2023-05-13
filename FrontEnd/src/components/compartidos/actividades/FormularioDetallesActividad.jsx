@@ -1,7 +1,7 @@
 import React from "react";
 
 import ListaComentarios from "../../profesores/ListaComentarios";
-function FormularioDetallesActividad({ actividad }) {
+function FormularioDetallesActividad(props) {
   return (
     <div>
       FormularioDetallesActividad
