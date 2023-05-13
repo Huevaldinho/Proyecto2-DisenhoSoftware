@@ -3,11 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import FormularioDetallesActividad from "../../components/compartidos/actividades/FormularioDetallesActividad";
 function DetallesActividad(props) {
   const navigate = useNavigate();
-  //Mostrar todos los datos de la actividad
-  //Los comentarios no se muestran al asistente.
-  const { state } = useLocation();
-  const actividad = state?.actividad;
-
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/planDeTrabajo");
@@ -21,7 +16,7 @@ function DetallesActividad(props) {
           Detalles de actividad
         </h1>
       </div>
-      <FormularioDetallesActividad actividad={actividad} />
+      <FormularioDetallesActividad />
       {/*Boton regreso a plan de trabajo */}
       <div className="text-center">
         <button

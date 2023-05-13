@@ -1,4 +1,4 @@
- const estudiantes = [{
+const estudiantes = [{
     carnet: 2021035489,
     nombre: "Felipe",
     nombre2: "De Jesus",
@@ -10,7 +10,7 @@
     rol: "Estudiante",
     carrera: "Ingeniería en Computación",
     estado: "Activo"
-},{
+}, {
     carnet: 2021047883,
     nombre: "Damian",
     nombre2: "José",
@@ -45,7 +45,7 @@ const actividades =
         nombreActividad: "Actividad bienvenida",
         tipoActividad: "Recreación",
         descripcion: "Actividad para dar bienvenida a los nuevos ingresos, se realizaran juegos.",
-        responsable: [{ nombre: "Laura", apellido1: "Coto", codigo: 100 }],//Pueden ser 1 o mas profes.
+        responsable: [{ nombre: "Laura", apellido1: "Coto", codigo: 100 }, { nombre: "Mauricio", apellido1: "Herrera", codigo: 123 }],//Pueden ser 1 o mas profes.
         fechaHora: '05-05-2023 12:00:00',
         fechaPublicacion: "01-05-2023 12:00:00",
         recordatorios: ["02-05-2023 12:00:00", "03-05-2023 12:00:00", "04-05-2023 12:00:00"],
@@ -102,30 +102,30 @@ const actividades =
     }
     ];
 export const profesores = [{
-    id : 1,
-    nombre : "Mauricio",
-    nombre2 : "Ignacio",
-    apellido1 : "Arroyo",
-    apellido2 : "Herrera",
-    correo : "mauarroyo@estudiantec.cr",
-    celular : "85805240",
-    campus : "Central Cartago",
-    rol : "Profesor",
-    estado : "Activo",
-    coordinador : "Coordinador"
+    id: 1,
+    nombre: "Mauricio",
+    nombre2: "Ignacio",
+    apellido1: "Arroyo",
+    apellido2: "Herrera",
+    correo: "mauarroyo@estudiantec.cr",
+    celular: "85805240",
+    campus: "Central Cartago",
+    rol: "Profesor",
+    estado: "Activo",
+    coordinador: "Coordinador"
 
-},{
-    id : 1,
-    nombre : "Laura",
-    nombre2 : "Maria",
-    apellido1 : "Coto",
-    apellido2 : "Sarmiento",
-    correo : "laucoto@estudiantec.cr",
-    celular : "85805240",
-    campus : "Central Cartago",
-    rol : "Profesor",
-    estado : "Activo",
-    coordinador : "Coordinador"
+}, {
+    id: 1,
+    nombre: "Laura",
+    nombre2: "Maria",
+    apellido1: "Coto",
+    apellido2: "Sarmiento",
+    correo: "laucoto@estudiantec.cr",
+    celular: "85805240",
+    campus: "Central Cartago",
+    rol: "Profesor",
+    estado: "Activo",
+    coordinador: "Coordinador"
 }
 
 
@@ -137,10 +137,10 @@ export const profPlanilla = {
     profesores
 }
 export const planilla = {
-        id: 1,
-        nombre: "Estudiantes 2023",
-        estudiantes
-    }
+    id: 1,
+    nombre: "Estudiantes 2023",
+    estudiantes
+}
 export const planDeTrabajo = {
     id: 1,
     nombre: "Plan de Trabajo 2023",
