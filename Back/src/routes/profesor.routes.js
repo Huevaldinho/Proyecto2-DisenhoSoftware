@@ -9,6 +9,8 @@ import {
 } from "../controllers/profesor.controller.js"; //importación de métodos de controller profesor
 
 
+//ME FALTA PARA ASIGNAR ASISTENTE
+
 // Método get para recuperar todos los profesores y mostrarlos
 router.get('/profesor', getProfesores);
 // Método post para agregar un profesor al sistema, recibe un body

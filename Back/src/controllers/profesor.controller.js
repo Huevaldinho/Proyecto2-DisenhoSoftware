@@ -16,14 +16,21 @@ export const getProfesores = async (req, res) => {
 export const postProfesor = async (req, res) => {
     const profesorNuevo = await agregarProfesor(req.body);
     console.log(profesorNuevo);
-    res.json(profesorNuevo);
+    if (typeof profesorNuevo === 'string')
+        res.send(profesorNuevo);
+    else 
+        res.json(profesorNuevo);
+    
 }
 
 //Método post para agregar un profesor, este recibe un Body con los datos que actuara como un DTOProfesor
 export const putProfesor = async (req, res) => {
     const profesorMod = await modificarProfesor(req.body);
     console.log(profesorMod);
-    res.json(profesorMod);
+    if (typeof profesorMod === 'string')
+        res.send(profesorMod);
+    else 
+        res.json(profesorMod);
 }
 
 //Método delete que se encarga de cambiar el estado de un profesor a inactivo

@@ -30,10 +30,30 @@ export async function validarEstudiante(emailP,passwordP){
     }
 };
 
+//Método que retorna los datos del estudiante (si lo encuentra) mediante el email
+export async function validarEstudianteCambiarContra(emailP, passwordP){
+    try {
+        const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        var data = await Estudiante.findOne({ email: emailP}); 
+        if (data) {
+            if (passwordP.match(passwordReg)) {
+                data.password = passwordP;
+                data.save();
+                return data
+            }
+            else return "2" //La contraseña no corresponde al formato de minimo 8 caracteres, al menos 1 letra y 1 número
+        } else {
+            return "1" //No se encontro al usuario en el sistema
+        }
+    } catch (error) {
+        console.log(error)
+    }
+};
+
 //Metodo para hacer la consulta de todos los estudiantes
 export async function getEstudiantesMongo(){
     try {
-        const data = await Estudiante.find({estado: true}); 
+        const data = await Estudiante.find(); 
         if (data) {
             return data
         } else {
@@ -44,12 +64,43 @@ export async function getEstudiantesMongo(){
     }
 };
 
+//Método que ingresa estudiantes a la base de datos mongo, esta es una lista de Json que contiene cada uno 
+//los datos de los estudiantes, devuelve esta misma lista 
+export const ingresarEstudiantes = async (lista) => {
+    try {
+        for (const DTOEstudiante of lista) {
+            let e = new Estudiante({
+                carnet: DTOEstudiante.carnet,
+                nombre: DTOEstudiante.nombre,
+                apellido1: DTOEstudiante.apellido1,
+                apellido2: DTOEstudiante.apellido2,
+                email: DTOEstudiante.email,
+                password: DTOEstudiante.password,
+                estado: true,
+                rol: DTOEstudiante.rol
+            })
+            e.save();
+        }; 
+        return lista;
+    } catch (error) {
+        return error;
+    }
+};
+
 //Método para modificar un profesor, relacionado con la ruta de put de Profesor
 //DTOProfesor es un json que viene de Body
 export const modificarEstudiante = async (DTOEstudiante) => {
     console.log("delete estudiante middlewhere");
     try {
-        const e = await Estudiante.findById(DTOProfesor.id); 
+        const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        const emailReg = /^[a-z0-9]+@estudiantec.cr$/
+        if (!DTOProfesor.password.match(passwordReg)) 
+            return "1"; //error si la contraseña no es aceptada
+        if (!DTOEstudiante.email.match(emailReg)) 
+            return "2"; //error si el email no es aceptado
+        if (nombre == "" || apellido1 == "" || apellido2 == "") 
+            return "5" //error si alguno de estos campos esta vacio
+        var e = await Estudiante.findById(DTOProfesor.id); 
         e.carnet = DTOEstudiante.carnet;
         e.nombre = DTOEstudiante.nombre;
         e.apellido1 = DTOEstudiante.apellido1;
@@ -60,18 +111,19 @@ export const modificarEstudiante = async (DTOEstudiante) => {
         e.save();
         return e;
       } catch (error) {
-        res.status(500).json(error);
+        return error;
     }
 };
 
 //Método encargado de hacer que un estudiante este inactivo, relacionado con la ruta de delete de Estudiante 
 //_id es el id de mongo
-export const eliminarEstudiante = async (id) => {
+export const eliminarEstudiante = async (_id) => {
     console.log("delete estudiante middlewhere");
     try {
-        const e = await Estudiante.findByIdAndUpdate(id, {$set: {estado: false}});
+        var e = await Estudiante.findByIdAndUpdate(_id, {$set: {estado: false}});
+        e = await Estudiante.findById(_id);
         return e;
       } catch (error) {
-        res.status(500).json(error);
+        return error;
     }
 };
