@@ -11,7 +11,7 @@ import {
 router.get('/equipo',getEquipo);
 //Ruta post para insertar miembros del equipo, recibe un body con los datos de los profesores que conformaran el equipo guía
 router.post('/equipo',postEquipo);
-//Ruta delete para borrar miembros del equipo, recibe el id del profesor (mongo) a eliminar del equipo
+//Ruta delete para borrar miembros del equipo, recibe el id del profesor (cedula) a eliminar del equipo
 router.delete('/equipo/:id',deleteEquipo);
 
 export default router;
