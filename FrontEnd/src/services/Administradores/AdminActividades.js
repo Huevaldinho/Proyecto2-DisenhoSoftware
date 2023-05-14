@@ -1,5 +1,8 @@
-//!Clase con los metodos para hacer peticiones a la api respecto a las actividades.
-import axios from 'axios';
+import { API_URL } from '../config';
+
+
+//!BORRAR ESTE IMPORT DE DATOS.
+import { planDeTrabajo as pTEjemplo } from "../../datos";
 
 class AdminActividades {
     //*Constructores
@@ -10,9 +13,9 @@ class AdminActividades {
         //Tomar los datos del json y se debe instanciar una Activiadad para retornarla.        
         return await null;
     }
-    async getPlanDeTrabajo() {//TODO
+    async consultarPlanDeTrabajo() {//TODO
         //Hacer peticion a la API, retornar el json.
-        return await null;
+        return await pTEjemplo;
     }
 }
 export default AdminActividades;

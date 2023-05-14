@@ -2,18 +2,8 @@ import React from "react";
 //Componentes de tabla
 import HeaderTablaActividades from "./HeaderTablaActividades";
 import BodyTablaActividades from "./BodyTablaActividades";
-//Contexto
-import { MainControllerContext } from "../../../contexts/MainControllerContext";
-import { useContext } from "react";
-//Datos quemados
-import { planDeTrabajo as pTEjemplo } from "../../../datos";
 
-function TablaActividades(props) {
-  //Utiliza el main controller para pedir los datos a mostrar.
-  const mainController = useContext(MainControllerContext); //*Contexto para hacerle la peticion al mainController.
-  let planDeTrabajo = mainController.getPlanDeTrabajo(); //*Es un json con id,nombre y actividades (dentro trae jsons)
-  planDeTrabajo = pTEjemplo; //!OJO, esto se debe quitar cuando la api funcione.
-  const { id, nombre, actividades } = planDeTrabajo;
+function TablaActividades({ actividades }) {
   //Valida que existan actividades para mostrar.
   if (actividades.length == 0) {
     //Si no hay actividades todavia
@@ -49,7 +39,7 @@ function TablaActividades(props) {
 
   //Si hay actividades para mostrar.
   return (
-    <div className="flex flex-col mt-8 text-center">
+    <div className="flex flex-col mt-8 text-center ">
       <h1 className="text-center font-light p-2 text-blue-600">
         Pulsa doble click para ver detalles de actividad
       </h1>

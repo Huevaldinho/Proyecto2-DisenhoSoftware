@@ -9,6 +9,7 @@ const MainControllerContextProvider = ({ children }) => {
   let [estudiantes, setEstudiantes] = useState([]);
   //Declara state para el inicio de sesion
   let [usuario, setUsuario] = useState(null);
+  let [planDeTrabajo, setPlanDeTrabajo] = useState({});
 
   /**
    * Metodo para obtener los estudiantes en la base de datos.
@@ -18,7 +19,7 @@ const MainControllerContextProvider = ({ children }) => {
    */
   const verEstudiantes = async () => {
     const data = await mainController.verEstudiantes(); //Pide datos a api
-    setEstudiantes(data); //Guarda en ram los cambios
+    setEstudiantes(data); //Guarda en state de estudiantes
     return estudiantes;
   };
   /**
@@ -30,12 +31,28 @@ const MainControllerContextProvider = ({ children }) => {
   const iniciarSesion = async (correoIn, contrasennaIn) => {
     const data = await mainController.iniciarSesion(correoIn, contrasennaIn);
     setUsuario(data);
-    console.log("Respuesta API:", usuario);
     return usuario;
   };
+  /**
+   * Metodo para obtener plan de trabajo.
+   * @returns
+   */
+  const consultarPlanDeTrabajo = async () => {
+    let data = await mainController.consultarPlanDeTrabajo();
+    setPlanDeTrabajo(data);
+    return planDeTrabajo;
+  };
+
   return (
     <MainControllerContext.Provider
-      value={{ usuario, iniciarSesion, estudiantes, verEstudiantes }}
+      value={{
+        usuario,
+        iniciarSesion,
+        estudiantes,
+        verEstudiantes,
+        consultarPlanDeTrabajo,
+        planDeTrabajo,
+      }}
     >
       {children}
     </MainControllerContext.Provider>

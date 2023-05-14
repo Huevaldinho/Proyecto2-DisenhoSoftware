@@ -1,17 +1,23 @@
 import React from "react";
 import TablaActividades from "../../components/compartidos/planDeTrabajo/TablaActividades";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
-import { useContext } from "react";
-import { planDeTrabajo as pTEjemplo } from "../../datos";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function PlanDeTrabajo(props) {
   const navigate = useNavigate();
-  const mainController = useContext(MainControllerContext); //*Contexto para hacerle la peticion al mainController.
-  let planDeTrabajo = mainController.getPlanDeTrabajo(); //*Es un json con id,nombre y actividades (dentro trae jsons)
-  planDeTrabajo = pTEjemplo; //!OJO, esto se debe quitar cuando la api funcione.
-  //TODO
-  //Faltan botones para crear actividad por parte del coordinador.
+  const { consultarPlanDeTrabajo, planDeTrabajo } = useContext(
+    MainControllerContext
+  );
+
+  const updateState = () => {
+    setTimeout(() => {
+      consultarPlanDeTrabajo();
+    }, 1000);
+  };
+  useEffect(() => {
+    updateState();
+  }, []);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -21,16 +27,25 @@ function PlanDeTrabajo(props) {
     e.preventDefault();
     navigate("/menuProfesores");
   };
+  if (Object.keys(planDeTrabajo).length === 0) {
+    return (
+      <p className="text-center font-semibold text-5xl">
+        Cargando plan de trabajo...
+      </p>
+    );
+  }
   return (
     <div className="container text-center">
       <div className="text-center" id="nombrePlanConteiner">
         <h1 className="text-center font-bold text-5xl p-5">
-          {planDeTrabajo.nombre}
+          {planDeTrabajo != undefined && planDeTrabajo != {}
+            ? planDeTrabajo?.nombre
+            : "Nombre plan de trabajo"}
         </h1>
       </div>
       <div className="text-center" id="tablaActividades">
         {/*Las actividades se las pasa a la tabla por props */}
-        <TablaActividades />
+        <TablaActividades actividades={planDeTrabajo?.actividades} />
       </div>
       <div
         className="text-center rounded-md bg-green-500 p-2 m-3 h-auto w-auto hover:bg-green-800"

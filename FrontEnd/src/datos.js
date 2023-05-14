@@ -136,7 +136,7 @@ export const profPlanilla = {
     nombre: "Profesores 2023",
     profesores
 }
-export const planDeTrabajo = {
+export let planDeTrabajo = {
     id: 1,
     nombre: "Plan de Trabajo 2023",
     actividades

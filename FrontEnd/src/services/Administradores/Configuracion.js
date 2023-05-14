@@ -17,7 +17,6 @@ export default class Configuracion {
         try {
             //!API_URL Esta en el archivo services/config.js
             //en caso que la profe nos pida subirlo a un host solo tenemos que cambiar ahi la ip y puerto
-            console.log("Esta haciendo request: ", `${API_URL}/inicio/${correoIn}/${contrasennaIn}`)
             const response = await fetch(`${API_URL}/inicio/${correoIn}/${contrasennaIn}`, {
                 method: 'POST'
             });
