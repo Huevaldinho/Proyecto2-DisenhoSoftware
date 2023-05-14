@@ -10,9 +10,9 @@ const profesorSchema = new mongoose.Schema({
     apellido2: {type: String, required: true},
     telefono: {type: String, required: true},
     celular: {type: String, required: true},
-    email: {type: String, required: true},
+    correo: {type: String, required: true},
     campus: {type: String, required: true},
-    password: {type: String, required: true},
+    contrasenna: {type: String, required: true},
     estado: {type: Boolean, required: true},
     coordinador: {type: Boolean, required: true},
     rol: {type: String, required: true},
@@ -22,9 +22,9 @@ const profesorSchema = new mongoose.Schema({
 const Profesor = mongoose.model('Profesor',profesorSchema,'Profesor');
 
 //Metodo para poder validar inicio de sesión de profesor
-export async function validarProfesor(emailP,passwordP){
+export async function validarProfesor(correoP,contrasennaP){
     try {
-        const data = await Profesor.findOne({ email: emailP, password: passwordP}); 
+        const data = await Profesor.findOne({ correo: correoP, contrasenna: contrasennaP}); 
         if (data) {
             return data
         } else {
@@ -35,14 +35,14 @@ export async function validarProfesor(emailP,passwordP){
     }
 };
 
-//Método que retorna los datos del profesor (si lo encuentra) mediante el email
-export async function validarProfesorCambiarContra(emailP, passwordP){
+//Método que retorna los datos del profesor (si lo encuentra) mediante el correo
+export async function validarProfesorCambiarContra(correoP, contrasennaP){
     try {
-        const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-        var data = await Profesor.findOne({ email: emailP}); 
+        const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        var data = await Profesor.findOne({ correo: correoP}); 
         if (data) {
-            if (passwordP.match(passwordReg)) {
-                data.password = passwordP;
+            if (contrasennaP.match(contrasennaReg)) {
+                data.contrasenna = contrasennaP;
                 data.save();
                 return data
             }
@@ -60,15 +60,15 @@ export async function validarProfesorCambiarContra(emailP, passwordP){
 export const agregarProfesor = async (DTOProfesor) => {
     console.log("Post profesor middlewhere");
     try {
-        const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-        const emailReg = /^[a-z0-9]+@estudiantec.cr$/
+        const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        const correoReg = /^[a-z0-9]+@estudiantec.cr$/
         const telefonoReg = /^(2|6|8){1}[0-9]{7}$/
         const cedulaReg = /^1{1}[0-9]{8}$/
-        const data = await Profesor.findOne({ email: DTOProfesor.email}); 
-        if (!DTOProfesor.password.match(passwordReg)) 
+        const data = await Profesor.findOne({ correo: DTOProfesor.correo}); 
+        if (!DTOProfesor.contrasenna.match(contrasennaReg)) 
             return "1"; //error si la contraseña no es aceptada
-        if (!DTOProfesor.email.match(emailReg)) 
-            return "2"; //error si el email no es aceptado
+        if (!DTOProfesor.correo.match(correoReg)) 
+            return "2"; //error si el correo no es aceptado
         if (!DTOProfesor.telefono.match(telefonoReg)) 
             return "3";  //error si el telefono no es aceptado
         if (!DTOProfesor.cedula.match(cedulaReg)) 
@@ -85,9 +85,9 @@ export const agregarProfesor = async (DTOProfesor) => {
             apellido2: DTOProfesor.apellido2,
             telefono: DTOProfesor.telefono,
             celular: DTOProfesor.celular,
-            email: DTOProfesor.email,
+            correo: DTOProfesor.correo,
             campus: DTOProfesor.campus,
-            password: DTOProfesor.password,
+            contrasenna: DTOProfesor.contrasenna,
             estado: true,
             coordinador: DTOProfesor.coordinador,
             rol: DTOProfesor.rol,
@@ -103,7 +103,7 @@ export const agregarProfesor = async (DTOProfesor) => {
 //Metodo para hacer la consulta de todos los estudiantes
 export async function getProfesoresMongo(){
     try {
-        const data = await Profesor.find({}); 
+        const data = await Profesor.find({rol:"Profesor"}); 
         if (data) {
             return data
         } else {
@@ -119,15 +119,15 @@ export async function getProfesoresMongo(){
 export const modificarProfesor = async (DTOProfesor) => {
     console.log("put profesor middlewhere");
     try {
-        const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-        const emailReg = /^[a-z0-9]+@estudiantec.cr$/
+        const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        const correoReg = /^[a-z0-9]+@estudiantec.cr$/
         const telefonoReg = /^(2|6|8){1}[0-9]{7}$/
         const cedulaReg = /^1{1}[0-9]{8}$/
-        const data = await Profesor.findOne({ email: DTOProfesor.email}); 
-        if (!DTOProfesor.password.match(passwordReg)) 
+        const data = await Profesor.findOne({ correo: DTOProfesor.correo}); 
+        if (!DTOProfesor.contrasenna.match(contrasennaReg)) 
             return "1"; //error si la contraseña no es aceptada
-        if (!DTOProfesor.email.match(emailReg)) 
-            return "2"; //error si el email no es aceptado
+        if (!DTOProfesor.correo.match(correoReg)) 
+            return "2"; //error si el correo no es aceptado
         if (!DTOProfesor.telefono.match(telefonoReg)) 
             return "3";  //error si el telefono no es aceptado
         if (!DTOProfesor.cedula.match(cedulaReg)) 
@@ -142,10 +142,10 @@ export const modificarProfesor = async (DTOProfesor) => {
         p.apellido1 = DTOProfesor.apellido1;
         p.apellido2 = DTOProfesor.apellido2;
         p.telefono = DTOProfesor.telefono;
-        p.email = DTOProfesor.email;
+        p.correo = DTOProfesor.correo;
         p.celular = DTOProfesor.celular;
         p.campus = DTOProfesor.campus;
-        p.password = DTOProfesor.password;
+        p.contrasenna = DTOProfesor.contrasenna;
         p.coordinador = DTOProfesor.coordinador;
         p.rol =  DTOProfesor.rol;
         p.save();

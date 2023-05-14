@@ -8,10 +8,10 @@ const estudianteSchema = new mongoose.Schema({
     apellido1: {type: String, required: true},
     apellido2: {type: String, required: true},
     celular: {type: String, required: true},
-    email: {type: String, required: true},
+    correo: {type: String, required: true},
     campus: {type: String, required: true},
-    password: {type: String, required: true},
-    estado: {type: Boolean, required: true},
+    contrasenna: {type: String, required: true},
+    estado: {type: String, required: true},
     rol: {type: String, required: true},
 });
 
@@ -19,9 +19,9 @@ const estudianteSchema = new mongoose.Schema({
 const Estudiante = mongoose.model('Estudiante',estudianteSchema,'Estudiante');
 
 //Metodo para poder validar inicio de sesión de estudiante
-export async function validarEstudiante(emailP,passwordP){
+export async function validarEstudiante(correoP,contrasennaP){
     try {
-        const data = await Estudiante.findOne({ email: emailP, password: passwordP}); 
+        const data = await Estudiante.findOne({ correo: correoP, contrasenna: contrasennaP}); 
         if (data) {
             return data
         } else {
@@ -32,14 +32,14 @@ export async function validarEstudiante(emailP,passwordP){
     }
 };
 
-//Método que retorna los datos del estudiante (si lo encuentra) mediante el email
-export async function validarEstudianteCambiarContra(emailP, passwordP){
+//Método que retorna los datos del estudiante (si lo encuentra) mediante el correo
+export async function validarEstudianteCambiarContra(correoP, contrasennaP){
     try {
-        const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-        var data = await Estudiante.findOne({ email: emailP}); 
+        const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        var data = await Estudiante.findOne({ correo: correoP}); 
         if (data) {
-            if (passwordP.match(passwordReg)) {
-                data.password = passwordP;
+            if (contrasennaP.match(contrasennaReg)) {
+                data.contrasenna = contrasennaP;
                 data.save();
                 return data
             }
@@ -76,9 +76,9 @@ export const ingresarEstudiantes = async (lista) => {
                 nombre: DTOEstudiante.nombre,
                 apellido1: DTOEstudiante.apellido1,
                 apellido2: DTOEstudiante.apellido2,
-                email: DTOEstudiante.email,
+                correo: DTOEstudiante.correo,
                 campus: DTOEstudiante.campus,
-                password: DTOEstudiante.password,
+                contrasenna: DTOEstudiante.contrasenna,
                 estado: true,
                 rol: DTOEstudiante.rol
             })
@@ -95,13 +95,13 @@ export const ingresarEstudiantes = async (lista) => {
 export const modificarEstudiante = async (DTOEstudiante) => {
     console.log("delete estudiante middlewhere");
     try {
-        const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-        const emailReg = /^[a-z0-9]+@estudiantec.cr$/
-        const data = await Estudiante.findOne({ email: DTOEstudiante.email}); 
-        if (!DTOProfesor.password.match(passwordReg)) 
+        const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        const correoReg = /^[a-z0-9]+@estudiantec.cr$/
+        const data = await Estudiante.findOne({ correo: DTOEstudiante.correo}); 
+        if (!DTOProfesor.contrasenna.match(contrasennaReg)) 
             return "1"; //error si la contraseña no es aceptada
-        if (!DTOEstudiante.email.match(emailReg)) 
-            return "2"; //error si el email no es aceptado
+        if (!DTOEstudiante.correo.match(correoReg)) 
+            return "2"; //error si el correo no es aceptado
         if (nombre == "" || apellido1 == "" || apellido2 == "") 
             return "5" //error si alguno de estos campos esta vacio
         if (data)
@@ -111,9 +111,9 @@ export const modificarEstudiante = async (DTOEstudiante) => {
         e.nombre = DTOEstudiante.nombre;
         e.apellido1 = DTOEstudiante.apellido1;
         e.apellido2 = DTOEstudiante.apellido2;
-        e.email = DTOEstudiante.email;
+        e.correo = DTOEstudiante.correo;
         e.campus = DTOEstudiante.campus;
-        e.password = DTOEstudiante.password;
+        e.contrasenna = DTOEstudiante.contrasenna;
         e.rol =  DTOEstudiante.rol;
         e.save();
         return e;
