@@ -14,9 +14,9 @@ const profesorSchema = new mongoose.Schema({
     campus: {type: String, required: true},
     contrasenna: {type: String, required: true},
     estado: {type: String, required: true},
-    coordinador: {type: Boolean, required: true},
+    coordinador: {type: String, required: true},
     rol: {type: String, required: true},
-    equipo: {type: Boolean, required: true}
+    equipo: {type: String, required: true}
 });
   
 const Profesor = mongoose.model('Profesor',profesorSchema,'Profesor');
@@ -88,7 +88,7 @@ export const agregarProfesor = async (DTOProfesor) => {
             correo: DTOProfesor.correo,
             campus: DTOProfesor.campus,
             contrasenna: DTOProfesor.contrasenna,
-            estado: true,
+            estado: "Activo",
             coordinador: DTOProfesor.coordinador,
             rol: DTOProfesor.rol,
         })
@@ -148,6 +148,7 @@ export const modificarProfesor = async (DTOProfesor) => {
         p.campus = DTOProfesor.campus;
         p.contrasenna = DTOProfesor.contrasenna;
         p.coordinador = DTOProfesor.coordinador;
+        p.estado = DTOProfesor.estado;
         p.rol =  DTOProfesor.rol;
         p.save();
         return p;
@@ -161,7 +162,7 @@ export const modificarProfesor = async (DTOProfesor) => {
 export const eliminarProfesor = async (_id) => {
     console.log("delete profesor middlewhere");
     try {
-        var p = await Profesor.findByIdAndUpdate(_id, {$set: {estado: false}});
+        var p = await Profesor.findByIdAndUpdate(_id, {$set: {estado: "Inactivo"}});
         p = await Profesor.findById(_id);
         return p;
       } catch (error) {
@@ -175,7 +176,7 @@ export const asignarCoordinador = async (_id,campusP) => {
     try {
         var data = await Profesor.findOne({ campus: campusP,coordinador: true}); 
         if(data) {
-            data.coordinador = false;
+            data.coordinador = "Coordinador";
             data.save();
         }
         var p = await Profesor.findByIdAndUpdate(_id, {$set: {coordinador: true}});
@@ -205,7 +206,7 @@ export const ingresarProfesoresEquipo = async (lista) => {
     try {
         for (const DTOProfesor of lista) {
             var p = await Profesor.findById(DTOProfesor._id);
-            p.equipo = true;
+            p.equipo = "Equipo";
             p.save();
         }; 
         return lista;
@@ -218,7 +219,7 @@ export const ingresarProfesoresEquipo = async (lista) => {
 export const eliminarProfesorEquipo = async (id) => {
     console.log("delete profesorEquipo middlewhere");
     try {
-        var p = await Profesor.findByIdAndUpdate(id, {$set: {equipo: false}});
+        var p = await Profesor.findByIdAndUpdate(id, {$set: {equipo: "NOEquipo"}});
         p = await Profesor.findById(id);
         return p;
       } catch (error) {

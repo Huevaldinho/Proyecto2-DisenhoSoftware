@@ -3,7 +3,7 @@ import mongoose from "mongoose"; //importación de librerias
 
 //Schema del estudiante, estos son sus atributos en la base de datos
 const estudianteSchema = new mongoose.Schema({
-    carnet: {type: Number, required: true},
+    carnet: {type: String, required: true},
     nombre: {type: String, required: true},
     apellido1: {type: String, required: true},
     apellido2: {type: String, required: true},
@@ -79,7 +79,7 @@ export const ingresarEstudiantes = async (lista) => {
                 correo: DTOEstudiante.correo,
                 campus: DTOEstudiante.campus,
                 contrasenna: DTOEstudiante.contrasenna,
-                estado: true,
+                estado: "Activo",
                 rol: DTOEstudiante.rol
             })
             e.save();
