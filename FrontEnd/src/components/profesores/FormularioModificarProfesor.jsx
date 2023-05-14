@@ -1,34 +1,40 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-//import PropTypes from "prop-types";
-//import DTOEstudiante from "../../services/DTOs/DTOEstudiante";
+import { useNavigate, useLocation } from "react-router-dom";
 import EstadoUsuario from "../../services/enums/estadoUsuario";
 import COORDINADOR from "../../services/enums/coordinador";
 import { validarCorreoTelefono } from "../../validation/ValidarInputs";
 
 function FormularioModificarProfesor(props) {
   const navigate = useNavigate();
-  const [estadoState, setEstado] = useState(null);
-  const [cordState, setCord] = useState(null);
-  const [correoEstado, setCorreo] = useState(null);
-  const [telefonoEstado, setTelefono] = useState(null);
+  const location = useLocation();
+  let profesor = location?.state.profesor;
+
+  const [nombre1, setNombre1] = useState(profesor.nombre); //Nombre 1
+  const [nombre2, setNombre2] = useState(profesor.nombre2); //Nombre 2
+  const [apellido1, setApellido1] = useState(profesor.apellido1); //Apellido 1
+  const [apellido2, setApellido2] = useState(profesor.apellido2); //Apellido 2
+  const [correo, setCorreo] = useState(profesor.correo); //Correo
+  const [telefono, setTelefono] = useState(profesor.telefono); //Telefono
+
+  const [estado, setEstado] = useState(profesor.estado); //Estado
+  const [coordinador, setCord] = useState(profesor.coordinador); //Coordinador
+  const [celular, setCelular] = useState(profesor.celular); //Celular
+
+  const [cedula, setCedula] = useState(profesor.cedula); //Cedula
+
+  console.log("Profesor en FormularioModificarProfesor:", profesor);
 
   const redireccionar = () => {
     //*Distinguir si es modificacion o si es eliminacion
     if (estadoState == EstadoUsuario.ACTIVO) {
-      console.log("Se ha modificado exitosamente la información");
-      //*LLamar al controlador para hacer el cambio, utilizar DTOEstudiante.
-
       alert("Se ha modificado exitosamente la información del estudiante.");
     } else {
-      console.log("Se ha eliminado al estudiante");
-      //*LLamar al controlador para hacer el cambio, utilizar DTOEstudiante.
       alert("Se ha eliminado exitosamente al profesor.");
     }
-    if (cordState == COORDINADOR.COORDINADOR ){
-        console.log("El profesor se ha agregado como Coordinador")
-    }else{
-        console.log("El profesor se ha eliminado como Coordinador")
+    if (cordState == COORDINADOR.COORDINADOR) {
+      console.log("El profesor se ha agregado como Coordinador");
+    } else {
+      console.log("El profesor se ha eliminado como Coordinador");
     }
     navigate("/informacionProfesores");
   };
@@ -55,26 +61,26 @@ function FormularioModificarProfesor(props) {
         alert("Correo invalido, ingrese otro.");
         break;
       }
-      
     }
   };
   //*Styles
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
+  const styleInputs =
+    "text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
   return (
     <div className=" p-3 m-4 text-center items-center">
       <div className="text-center">
-        <form className="text-center pt-5 pl-5 pr-5 mt-10 ml-10 mr-10 mb-2 rounded-2xl  grid grid-rows-2 grid-flow-col gap-1 bg-slate-800">
-          {/*Carnet*/}
+        <form className="text-center pt-5 pl-5 pr-5 mt-10 ml-10 mr-10 mb-2 rounded-2xl  grid grid-rows-3 grid-flow-col gap-1 bg-slate-800">
+          {/*Codigo*/}
           <div className={cssElementosForm}>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              ID
+              Código
             </label>
-
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              
+              className={styleInputs}
               disabled={true}
+              value={profesor.codigo}
             />
             <p className="font-thin text-red-700">No modificable</p>
           </div>
@@ -86,10 +92,13 @@ function FormularioModificarProfesor(props) {
 
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              disabled={true}
+              className={styleInputs}
+              disabled={false}
+              defaultValue={nombre1}
+              onChange={(e) => {
+                setNombre1(e.target.value);
+              }}
             />
-            <p className="font-thin text-red-700">No modificable</p>
           </div>
           {/*Segundo nombre */}
           <div className={cssElementosForm}>
@@ -98,10 +107,13 @@ function FormularioModificarProfesor(props) {
             </label>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              disabled={true}
+              className={styleInputs}
+              disabled={false}
+              defaultValue={nombre2}
+              onChange={(e) => {
+                setNombre2(e.target.value);
+              }}
             />
-            <p className="font-thin text-red-700">No modificable</p>
           </div>
           {/*Apellido 1 */}
           <div className={cssElementosForm}>
@@ -110,10 +122,13 @@ function FormularioModificarProfesor(props) {
             </label>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              disabled={true}
+              className={styleInputs}
+              disabled={false}
+              defaultValue={apellido1}
+              onChange={(e) => {
+                setApellido1(e.target.value);
+              }}
             />
-            <p className="font-thin text-red-700">No modificable</p>
           </div>
           {/*Apellido 2 */}
           <div className={cssElementosForm}>
@@ -122,10 +137,13 @@ function FormularioModificarProfesor(props) {
             </label>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              disabled={true}
+              className={styleInputs}
+              disabled={false}
+              defaultValue={apellido2}
+              onChange={(e) => {
+                setApellido2(e.target.value);
+              }}
             />
-            <p className="font-thin text-red-700">No modificable</p>
           </div>
           {/*Correo */}
           <div className={"mb-6 w-auto  "}>
@@ -138,8 +156,8 @@ function FormularioModificarProfesor(props) {
             <input
               type="email"
               id="email"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              defaultValue={correoEstado}
+              className={styleInputs}
+              defaultValue={correo}
               onChange={(e) => {
                 setCorreo(e.target.value);
               }}
@@ -155,14 +173,31 @@ function FormularioModificarProfesor(props) {
             </label>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={styleInputs}
+              defaultValue={telefono}
               onChange={(e) => {
                 setTelefono(e.target.value);
               }}
             />
           </div>
+           {/* Celular */}
+           <div className={cssElementosForm}>
+            <label
+              htmlFor="text"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Celular
+            </label>
+            <input
+              type="text"
+              className={styleInputs}
+              defaultValue={celular}
+              onChange={(e) => {
+                setCelular(e.target.value);
+              }}
+            />
+          </div>
           {/*Estado */}
-          
           <br></br>
           <div className={cssElementosForm}>
             <label
@@ -182,7 +217,7 @@ function FormularioModificarProfesor(props) {
               <option value="Inactivo">Inactivo</option>
             </select>
           </div>
-          
+
           <br></br>
           <div className={cssElementosForm}>
             <label
@@ -194,8 +229,11 @@ function FormularioModificarProfesor(props) {
             <select
               id="cCoordinador"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              defaultValue={
+                profesor.coordinador == true ? "Coordinador" : "No coordinador"
+              }
               onChange={(e) => {
-                setCord(e.target.value);
+                setCord(e.target.value == "Coordinador" ? true : false);
               }}
             >
               <option value="Coordinador">Coordinador</option>
@@ -216,6 +254,6 @@ function FormularioModificarProfesor(props) {
       </div>
     </div>
   );
-  }
+}
 
 export default FormularioModificarProfesor;
