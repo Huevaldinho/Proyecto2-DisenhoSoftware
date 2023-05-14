@@ -73,7 +73,7 @@ export const agregarProfesor = async (DTOProfesor) => {
             return "3";  //error si el telefono no es aceptado
         if (!DTOProfesor.cedula.match(cedulaReg)) 
             return "4"; //error si la cedula no es aceptada
-        if (nombre == "" || apellido1 == "" || apellido2 == "") 
+        if (DTOProfesor.nombre == "" || DTOProfesor.apellido1 == "" || DTOProfesor.apellido2 == "")
             return "5" //error si alguno de estos campos esta vacio
         if (data)
             return "6" //error si ya existia un profesor registrado
@@ -103,7 +103,7 @@ export const agregarProfesor = async (DTOProfesor) => {
 //Metodo para hacer la consulta de todos los estudiantes
 export async function getProfesoresMongo(){
     try {
-        const data = await Profesor.find({rol:"Profesor"}); 
+        const data = await Profesor.find({ $or: [{rol:"Profesor"}, {rol:"Asistente"}]}); 
         if (data) {
             return data
         } else {
@@ -132,14 +132,16 @@ export const modificarProfesor = async (DTOProfesor) => {
             return "3";  //error si el telefono no es aceptado
         if (!DTOProfesor.cedula.match(cedulaReg)) 
             return "4"; //error si la cedula no es aceptada
-        if (nombre == "" || apellido1 == "" || apellido2 == "") 
+        if (DTOProfesor.nombre == "" || DTOProfesor.apellido1 == "" || DTOProfesor.apellido2 == "") 
             return "5" //error si alguno de estos campos esta vacio
         if (data)
             return "6" //error si ya existia un profesor registrado
             
-        var p = await Profesor.findById(DTOProfesor.id); 
+        var p = await Profesor.findOne(DTOProfesor.id); 
+        p.codigo = DTOProfesor.codigo;
         p.cedula = DTOProfesor.cedula;
         p.nombre = DTOProfesor.nombre;
+        p.nombre2 = DTOProfesor.nombre2;
         p.apellido1 = DTOProfesor.apellido1;
         p.apellido2 = DTOProfesor.apellido2;
         p.telefono = DTOProfesor.telefono;
@@ -150,6 +152,7 @@ export const modificarProfesor = async (DTOProfesor) => {
         p.coordinador = DTOProfesor.coordinador;
         p.estado = DTOProfesor.estado;
         p.rol =  DTOProfesor.rol;
+        p.equipo = DTOProfesor.equipo
         p.save();
         return p;
       } catch (error) {
