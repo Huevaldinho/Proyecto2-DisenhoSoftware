@@ -8,8 +8,8 @@ const estudiantes = [{
     celular: "70130686",
     campus: "Central Cartago",
     rol: "Estudiante",
-    carrera: "Ingeniería en Computación",
-    estado: "Activo"
+    estado: "Activo",
+    contrasenna: "1234"
 }, {
     carnet: 2021047883,
     nombre: "Damian",
@@ -20,8 +20,8 @@ const estudiantes = [{
     celular: "85805240",
     campus: "Central Cartago",
     rol: "Estudiante",
-    carrera: "Ingeniería en Computación",
-    estado: "Inactivo"
+    estado: "Inactivo",
+    contrasenna: "1234"
 },
 {
     carnet: 2021047896,
@@ -33,8 +33,8 @@ const estudiantes = [{
     celular: "85805240",
     campus: "Central Cartago",
     rol: "Estudiante",
-    carrera: "Ingeniería en Computación",
-    estado: "Activo"
+    estado: "Activo",
+    contrasenna: "1234"
 }
 ];
 
