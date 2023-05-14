@@ -13,11 +13,11 @@ import {
 
 // Método get para recuperar todos los profesores y mostrarlos
 router.get('/profesor', getProfesores);
-// Método post para agregar un profesor al sistema, recibe un body
+// Método post para agregar un profesor al sistema, recibe un body con los datos del profesor a cambiar
 router.post('/profesor', postProfesor);
-// Método put para modificar un profesor, recibe un body
+// Método put para modificar un profesor, recibe un body con los datos del profesor a cambiar
 router.put('/profesor', putProfesor);
-// Método delete que cambia el estado de un profesor de activo a inactivo, recibe un id como parámetro
+// Método delete que cambia el estado de un profesor de activo a inactivo, recibe un id que es la cédula como parametro
 router.delete('/profesor/:id', deleteProfesor);
 
 export default router;

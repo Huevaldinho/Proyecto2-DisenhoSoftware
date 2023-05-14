@@ -97,16 +97,16 @@ export const modificarEstudiante = async (DTOEstudiante) => {
     try {
         const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
         const correoReg = /^[a-z0-9]+@estudiantec.cr$/
-        const data = await Estudiante.findOne({ correo: DTOEstudiante.correo}); 
+        const data = await Estudiante.findOne({ carnet: DTOEstudiante.carnet}); 
         if (!DTOProfesor.contrasenna.match(contrasennaReg)) 
             return "1"; //error si la contraseña no es aceptada
         if (!DTOEstudiante.correo.match(correoReg)) 
             return "2"; //error si el correo no es aceptado
-        if (nombre == "" || apellido1 == "" || apellido2 == "") 
+        if (DTOEstudiante.nombre == "" || DTOEstudiante.nombre2 == "" || DTOEstudiante.apellido1 == "" || DTOEstudiante.apellido2 == "")
             return "5" //error si alguno de estos campos esta vacio
         if (data)
             return "6" //error si ya existia un profesor registrado
-        var e = await Estudiante.findById(DTOProfesor.id); 
+        var e = await Estudiante.findOne(DTOProfesor.carnet); 
         e.carnet = DTOEstudiante.carnet;
         e.nombre = DTOEstudiante.nombre;
         e.apellido1 = DTOEstudiante.apellido1;
@@ -124,7 +124,7 @@ export const modificarEstudiante = async (DTOEstudiante) => {
 };
 
 //Método encargado de hacer que un estudiante este inactivo, relacionado con la ruta de delete de Estudiante 
-//_id es el id de mongo
+//_id es el carnet del estudiante
 export const eliminarEstudiante = async (_id) => {
     console.log("delete estudiante middlewhere");
     try {

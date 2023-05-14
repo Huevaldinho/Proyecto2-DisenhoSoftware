@@ -73,7 +73,7 @@ export const agregarProfesor = async (DTOProfesor) => {
             return "3";  //error si el telefono no es aceptado
         if (!DTOProfesor.cedula.match(cedulaReg)) 
             return "4"; //error si la cedula no es aceptada
-        if (nombre == "" || apellido1 == "" || apellido2 == "") 
+        if (DTOProfesor.nombre == "" || DTOProfesor.nombre2 == "" || DTOProfesor.apellido1 == "" || DTOProfesor.apellido2 == "")
             return "5" //error si alguno de estos campos esta vacio
         if (data)
             return "6" //error si ya existia un profesor registrado
@@ -103,7 +103,7 @@ export const agregarProfesor = async (DTOProfesor) => {
 //Metodo para hacer la consulta de todos los estudiantes
 export async function getProfesoresMongo(){
     try {
-        const data = await Profesor.find({rol:"Profesor"}); 
+        const data = await Profesor.find({ $or: [{rol:"Profesor"}, {rol:"Asistente"}]}); 
         if (data) {
             return data
         } else {
@@ -132,14 +132,16 @@ export const modificarProfesor = async (DTOProfesor) => {
             return "3";  //error si el telefono no es aceptado
         if (!DTOProfesor.cedula.match(cedulaReg)) 
             return "4"; //error si la cedula no es aceptada
-        if (nombre == "" || apellido1 == "" || apellido2 == "") 
+        if (DTOProfesor.nombre == "" || DTOProfesor.nombre2 == "" || DTOProfesor.apellido1 == "" || DTOProfesor.apellido2 == "") 
             return "5" //error si alguno de estos campos esta vacio
         if (data)
             return "6" //error si ya existia un profesor registrado
             
-        var p = await Profesor.findById(DTOProfesor.id); 
+        var p = await Profesor.findOne(DTOProfesor.id); 
+        p.codigo = DTOProfesor.codigo;
         p.cedula = DTOProfesor.cedula;
         p.nombre = DTOProfesor.nombre;
+        p.nombre2 = DTOProfesor.nombre2;
         p.apellido1 = DTOProfesor.apellido1;
         p.apellido2 = DTOProfesor.apellido2;
         p.telefono = DTOProfesor.telefono;
@@ -150,6 +152,7 @@ export const modificarProfesor = async (DTOProfesor) => {
         p.coordinador = DTOProfesor.coordinador;
         p.estado = DTOProfesor.estado;
         p.rol =  DTOProfesor.rol;
+        p.equipo = DTOProfesor.equipo
         p.save();
         return p;
       } catch (error) {
@@ -158,12 +161,13 @@ export const modificarProfesor = async (DTOProfesor) => {
 };
 
 //Método encargado de hacer que un profesor este inactivo, relacionado con la ruta de delete de Profesor 
-//_id es el id de mongo
+//_id es la cedula del profesor
 export const eliminarProfesor = async (_id) => {
     console.log("delete profesor middlewhere");
     try {
-        var p = await Profesor.findByIdAndUpdate(_id, {$set: {estado: "Inactivo"}});
-        p = await Profesor.findById(_id);
+        var p = await Profesor.findOne({cedula: _id});
+        p.estado = "Inactivo";
+        p.save();
         return p;
       } catch (error) {
         return error;
@@ -171,16 +175,17 @@ export const eliminarProfesor = async (_id) => {
 };
 
 //Método encargado de asignar un profesor a asistente
-//_id es el id de mongo
+//_id es el cedula del profesor
 export const asignarCoordinador = async (_id,campusP) => {
     try {
-        var data = await Profesor.findOne({ campus: campusP,coordinador: true}); 
+        var data = await Profesor.findOne({ campus: campusP,coordinador: "COORDINADOR"}); 
         if(data) {
-            data.coordinador = "Coordinador";
+            data.coordinador = "NOCOORDINADOR";
             data.save();
         }
-        var p = await Profesor.findByIdAndUpdate(_id, {$set: {coordinador: true}});
-        p = await Profesor.findById(_id);
+        var p = await Profesor.findOne({cedula: _id});
+        p.coordinador = "COORDINADOR";
+        p.save();
         return p;
       } catch (error) {
         return error;
@@ -205,7 +210,7 @@ export async function getEquipoGuia(){
 export const ingresarProfesoresEquipo = async (lista) => {
     try {
         for (const DTOProfesor of lista) {
-            var p = await Profesor.findById(DTOProfesor._id);
+            var p = await Profesor.findOne(DTOProfesor.cedula);
             p.equipo = "Equipo";
             p.save();
         }; 
@@ -219,8 +224,9 @@ export const ingresarProfesoresEquipo = async (lista) => {
 export const eliminarProfesorEquipo = async (id) => {
     console.log("delete profesorEquipo middlewhere");
     try {
-        var p = await Profesor.findByIdAndUpdate(id, {$set: {equipo: "NOEquipo"}});
-        p = await Profesor.findById(id);
+        var p = await Profesor.findOne({cedula: _id});
+        p.estado = "NOEquipo";
+        p.save();
         return p;
       } catch (error) {
         return error;
