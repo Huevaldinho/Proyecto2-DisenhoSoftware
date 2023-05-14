@@ -1,3 +1,5 @@
+//*Importa la url y puerto
+import { API_URL } from '../config';
 export default class Configuracion {
 
     //*Constructores
@@ -5,28 +7,25 @@ export default class Configuracion {
     }
     //*Metodos
     /**
-     * 
+     * Metodo para iniciar sesion.
      * @param {String} correoIn 
      * @param {String} contrasennaIn 
-     * @returns {JSON} RespuestaAPI
+     * @returns {JSON con forma {_id,email,password,rol,estado} si encuentra al usuario
+     *           1 si no encuentra al usuario} RespuestaAPI
      */
-    async loginRequest(correoIn, contrasennaIn) {
+    async iniciarSesion(correoIn, contrasennaIn) {
         try {
-            const response = await fetch('https://api.example.com/data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    correo: correoIn,
-                    contrasenna: contrasennaIn
-                })
+            //!API_URL Esta en el archivo services/config.js
+            //en caso que la profe nos pida subirlo a un host solo tenemos que cambiar ahi la ip y puerto
+            console.log("Esta haciendo request: ", `${API_URL}/inicio/${correoIn}/${contrasennaIn}`)
+            const response = await fetch(`${API_URL}/inicio/${correoIn}/${contrasennaIn}`, {
+                method: 'POST'
             });
-            const data = await response.json();
-            console.log('Respuesta api para el login:', data);
+            let data = await response.json(); // Convertir datos a formato JSON
+            console.log("Configuracion: iniciarSesion retorna:", data)
             return data;
         } catch (error) {
-            console.error(error);
+            console.error('Error en Configuracion, en metodo iniciarSesion: ', error);
             return null;
         }
     }

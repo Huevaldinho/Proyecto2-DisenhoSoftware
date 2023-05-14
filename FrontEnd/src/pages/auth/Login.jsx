@@ -5,18 +5,16 @@ import { validarLogin } from "../../validation/ValidarInputs";
 import Role from "../../services/enums/role";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
 function Login() {
-  //TODO
+  const { iniciarSesion } = useContext(MainControllerContext);
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const redireccionar = (respuestaAPI) => {
-    //!Extraer el rol de la respuesta porque viene en un json con mas datos.
-    respuestaAPI = "Asistente"; //!TODO
-
     //*Navegate al menu segun la respuesta de la api.
-    if (respuestaAPI != null) {
-      switch (respuestaAPI) {
+    if (respuestaAPI != 1) {
+      switch (respuestaAPI.rol) {
         case Role.ASISTENTE: {
           navigate("/menuAsistentes");
           break;
@@ -30,15 +28,15 @@ function Login() {
         }
       }
     } else {
-      alert("Ha ocurrido un error, intente de nuevo.");
+      alert("No existe usuario con el correo y contraseña ingresados.");
     }
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let respuestaAPI = 1;
-    //*Validar inputs.
+    let respuestaAPI = 1; //Si la respuesta es 1 es porque no existe el usuario.
     if (validarLogin(email, password)) {
-      //!mainController.iniciarSesion(email, password);
+      //*Validar inputs.
+      respuestaAPI = await iniciarSesion(email, password);
       redireccionar(respuestaAPI);
     } else {
       alert(

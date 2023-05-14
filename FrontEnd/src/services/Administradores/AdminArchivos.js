@@ -1,3 +1,5 @@
+import { API_URL } from '../config';
+
 class AdminArchivos {
     //*Constructores
     constructor() { }

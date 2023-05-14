@@ -31,14 +31,13 @@ class MainController {
   }
   /**
    * Metodo para iniciar sesion.
-   * 
-   * @param {String} correo 
-   * @param {String} contrasenna 
-   * 
-   * @returns {JSON} respuesta
-   */
+   * @param {String} correoIn 
+   * @param {String} contrasennaIn 
+   * @returns {JSON con forma {_id,email,password,rol,estado} si encuentra al usuario
+  *           1 si no encuentra al usuario} RespuestaAPI
+  */
   async iniciarSesion(correo, contrasenna) {
-    return await this.configuracion.loginRequest(correo, contrasenna);
+    return await this.configuracion.iniciarSesion(correo, contrasenna);
   }
 
   /**
@@ -60,8 +59,8 @@ class MainController {
   async verEstudiantes() {
     return await this.adminEstudiantes.verEstudiantes();
   }
-  async modificarInformacionEstudiante (){
-    return await this.adminEstudiantes.modificarInformacionEstudiante ();
+  async modificarInformacionEstudiante() {
+    return await this.adminEstudiantes.modificarInformacionEstudiante();
   }
 }
 
