@@ -7,7 +7,9 @@ const estudianteSchema = new mongoose.Schema({
     nombre: {type: String, required: true},
     apellido1: {type: String, required: true},
     apellido2: {type: String, required: true},
+    celular: {type: String, required: true},
     email: {type: String, required: true},
+    campus: {type: String, required: true},
     password: {type: String, required: true},
     estado: {type: Boolean, required: true},
     rol: {type: String, required: true},
@@ -75,6 +77,7 @@ export const ingresarEstudiantes = async (lista) => {
                 apellido1: DTOEstudiante.apellido1,
                 apellido2: DTOEstudiante.apellido2,
                 email: DTOEstudiante.email,
+                campus: DTOEstudiante.campus,
                 password: DTOEstudiante.password,
                 estado: true,
                 rol: DTOEstudiante.rol
@@ -94,18 +97,22 @@ export const modificarEstudiante = async (DTOEstudiante) => {
     try {
         const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
         const emailReg = /^[a-z0-9]+@estudiantec.cr$/
+        const data = await Estudiante.findOne({ email: DTOEstudiante.email}); 
         if (!DTOProfesor.password.match(passwordReg)) 
             return "1"; //error si la contraseña no es aceptada
         if (!DTOEstudiante.email.match(emailReg)) 
             return "2"; //error si el email no es aceptado
         if (nombre == "" || apellido1 == "" || apellido2 == "") 
             return "5" //error si alguno de estos campos esta vacio
+        if (data)
+            return "6" //error si ya existia un profesor registrado
         var e = await Estudiante.findById(DTOProfesor.id); 
         e.carnet = DTOEstudiante.carnet;
         e.nombre = DTOEstudiante.nombre;
         e.apellido1 = DTOEstudiante.apellido1;
         e.apellido2 = DTOEstudiante.apellido2;
         e.email = DTOEstudiante.email;
+        e.campus = DTOEstudiante.campus;
         e.password = DTOEstudiante.password;
         e.rol =  DTOEstudiante.rol;
         e.save();

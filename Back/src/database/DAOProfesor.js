@@ -2,11 +2,14 @@ import { json } from "express";
 import mongoose from "mongoose"; //importación de librerias
 
 const profesorSchema = new mongoose.Schema({
+    codigo: {type: String, required: true},
     cedula: {type: String, required: true},
     nombre: {type: String, required: true},
+    nombre2: {type: String, required: true},
     apellido1: {type: String, required: true},
     apellido2: {type: String, required: true},
     telefono: {type: String, required: true},
+    celular: {type: String, required: true},
     email: {type: String, required: true},
     campus: {type: String, required: true},
     password: {type: String, required: true},
@@ -61,6 +64,7 @@ export const agregarProfesor = async (DTOProfesor) => {
         const emailReg = /^[a-z0-9]+@estudiantec.cr$/
         const telefonoReg = /^(2|6|8){1}[0-9]{7}$/
         const cedulaReg = /^1{1}[0-9]{8}$/
+        const data = await Profesor.findOne({ email: DTOProfesor.email}); 
         if (!DTOProfesor.password.match(passwordReg)) 
             return "1"; //error si la contraseña no es aceptada
         if (!DTOProfesor.email.match(emailReg)) 
@@ -71,12 +75,16 @@ export const agregarProfesor = async (DTOProfesor) => {
             return "4"; //error si la cedula no es aceptada
         if (nombre == "" || apellido1 == "" || apellido2 == "") 
             return "5" //error si alguno de estos campos esta vacio
+        if (data)
+            return "6" //error si ya existia un profesor registrado
         let p = new Profesor({
+            codigo: DTOProfesor.codigo,
             cedula: DTOProfesor.cedula,
             nombre: DTOProfesor.nombre,
             apellido1: DTOProfesor.apellido1,
             apellido2: DTOProfesor.apellido2,
             telefono: DTOProfesor.telefono,
+            celular: DTOProfesor.celular,
             email: DTOProfesor.email,
             campus: DTOProfesor.campus,
             password: DTOProfesor.password,
@@ -127,7 +135,7 @@ export const modificarProfesor = async (DTOProfesor) => {
         if (nombre == "" || apellido1 == "" || apellido2 == "") 
             return "5" //error si alguno de estos campos esta vacio
         if (data)
-            return "9" //error si ya existia un profesor registrado
+            return "6" //error si ya existia un profesor registrado
         var p = await Profesor.findById(DTOProfesor.id); 
         p.cedula = DTOProfesor.cedula;
         p.nombre = DTOProfesor.nombre;
@@ -135,6 +143,7 @@ export const modificarProfesor = async (DTOProfesor) => {
         p.apellido2 = DTOProfesor.apellido2;
         p.telefono = DTOProfesor.telefono;
         p.email = DTOProfesor.email;
+        p.celular = DTOProfesor.celular;
         p.campus = DTOProfesor.campus;
         p.password = DTOProfesor.password;
         p.coordinador = DTOProfesor.coordinador;
