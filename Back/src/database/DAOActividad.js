@@ -35,7 +35,7 @@ const comentarioSchema = new mongoose.Schema({
 });
 
 // Objeto
-const Actividad = mongoose.model('Actividad',actividadSchema,'Comentario'); //"Objeto comentario" que actuara como conexión entre mongo y el api
+const Actividad = mongoose.model('Actividad',actividadSchema,'Actividad'); //"Objeto comentario" que actuara como conexión entre mongo y el api
 const Comentario = mongoose.model('Comentario',comentarioSchema,'Comentario'); //"Objeto comentario" que actuara como conexión entre mongo y el api
 
 
