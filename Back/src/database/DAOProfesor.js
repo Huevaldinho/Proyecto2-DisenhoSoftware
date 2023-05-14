@@ -136,6 +136,7 @@ export const modificarProfesor = async (DTOProfesor) => {
             return "5" //error si alguno de estos campos esta vacio
         if (data)
             return "6" //error si ya existia un profesor registrado
+            
         var p = await Profesor.findById(DTOProfesor.id); 
         p.cedula = DTOProfesor.cedula;
         p.nombre = DTOProfesor.nombre;
