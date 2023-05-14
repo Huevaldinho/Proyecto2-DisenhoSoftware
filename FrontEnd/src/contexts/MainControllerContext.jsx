@@ -20,6 +20,17 @@ const MainControllerContextProvider = ({ children }) => {
     setProfesores(data); //Guarda en state de profesores
     return profesores;
   };
+  /**
+   * Metodo para cambiar los datos de un profesor
+   * @param {DTOProfesor} DTOProfesor
+   */
+  const actualizarProfesor = async (DTOProfesor) => {
+    //Hacer cambio y actualizar los profes
+    const data = mainController.actualizarProfesor(DTOProfesor);
+    console.log("Respuesta api al actualizar profesor:", data);
+    consultarProfesores();
+    return data;
+  };
   //*ESTUDIANTES
   /**
    * Metodo para obtener los estudiantes en la base de datos.
@@ -41,7 +52,7 @@ const MainControllerContextProvider = ({ children }) => {
    */
   const iniciarSesion = async (correoIn, contrasennaIn) => {
     const data = await mainController.iniciarSesion(correoIn, contrasennaIn);
-    setUsuario(data);//guarda datos de usuario
+    setUsuario(data); //guarda datos de usuario
     return usuario;
   };
   //*PLAN DE TRABAJO
@@ -51,7 +62,7 @@ const MainControllerContextProvider = ({ children }) => {
    */
   const consultarPlanDeTrabajo = async () => {
     let data = await mainController.consultarPlanDeTrabajo();
-    setPlanDeTrabajo(data);//guarda datos de plan de trabajo
+    setPlanDeTrabajo(data); //guarda datos de plan de trabajo
     return planDeTrabajo;
   };
 
@@ -66,6 +77,7 @@ const MainControllerContextProvider = ({ children }) => {
         planDeTrabajo,
         profesores,
         consultarProfesores,
+        actualizarProfesor,
       }}
     >
       {children}

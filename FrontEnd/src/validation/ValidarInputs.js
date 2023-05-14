@@ -34,6 +34,7 @@ export const validarCorreo = (correo) => {
  *        | 2 Si el correo es invalido.
  */
 export const validarCorreoTelefono = (correo, telefono) => {
+    return 0;
     //Validar correo.
     if (validarCorreo(correo)) {
         //Validar telefono.

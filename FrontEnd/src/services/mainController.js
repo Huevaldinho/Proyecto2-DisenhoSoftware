@@ -63,6 +63,14 @@ class MainController {
   async consultarProfesores() {
     return await this.adminProfesores.consultarProfesores();
   }
+  /**
+   * Metodo para cambiar los datos de un profesor.
+   * @param {DTOProfesor} DTOProfesor 
+   * @returns 
+   */
+  async actualizarProfesor( DTOProfesor) {
+    return await this.adminProfesores.actualizarProfesor(DTOProfesor);
+  }
 
   //*ESTUDIANTES
   async verEstudiantes() {

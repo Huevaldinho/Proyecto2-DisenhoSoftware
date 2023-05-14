@@ -3,38 +3,36 @@ import { useNavigate, useLocation } from "react-router-dom";
 import EstadoUsuario from "../../services/enums/estadoUsuario";
 import COORDINADOR from "../../services/enums/coordinador";
 import { validarCorreoTelefono } from "../../validation/ValidarInputs";
-
+import { MainControllerContext } from "../../contexts/MainControllerContext";
 function FormularioModificarProfesor(props) {
+  
   const navigate = useNavigate();
   const location = useLocation();
   let profesor = location?.state.profesor;
-
   const [nombre1, setNombre1] = useState(profesor.nombre); //Nombre 1
   const [nombre2, setNombre2] = useState(profesor.nombre2); //Nombre 2
   const [apellido1, setApellido1] = useState(profesor.apellido1); //Apellido 1
   const [apellido2, setApellido2] = useState(profesor.apellido2); //Apellido 2
   const [correo, setCorreo] = useState(profesor.correo); //Correo
   const [telefono, setTelefono] = useState(profesor.telefono); //Telefono
-
   const [estado, setEstado] = useState(profesor.estado); //Estado
-  const [coordinador, setCord] = useState(profesor.coordinador); //Coordinador
+  const [coordinador, setCord] = useState(
+    profesor.coordinador == COORDINADOR.COORDINADOR
+      ? "Coordinador"
+      : "No coordinador"
+  ); //Coordinador
   const [celular, setCelular] = useState(profesor.celular); //Celular
-
   const [cedula, setCedula] = useState(profesor.cedula); //Cedula
 
-  console.log("Profesor en FormularioModificarProfesor:", profesor);
+
 
   const redireccionar = () => {
-    //*Distinguir si es modificacion o si es eliminacion
-    if (estadoState == EstadoUsuario.ACTIVO) {
+    if (estado == EstadoUsuario.ACTIVO) {
+      //Llamar api
       alert("Se ha modificado exitosamente la información del estudiante.");
     } else {
+      //Llamar api
       alert("Se ha eliminado exitosamente al profesor.");
-    }
-    if (cordState == COORDINADOR.COORDINADOR) {
-      console.log("El profesor se ha agregado como Coordinador");
-    } else {
-      console.log("El profesor se ha eliminado como Coordinador");
     }
     navigate("/informacionProfesores");
   };
@@ -43,9 +41,8 @@ function FormularioModificarProfesor(props) {
    */
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(estadoState, correoEstado, telefonoEstado);
     //*Validar datos del formulario.
-    switch (validarCorreoTelefono(correoEstado, telefonoEstado)) {
+    switch (validarCorreoTelefono(correo, telefono)) {
       case 0: {
         //*Validacion exitosa.
         redireccionar();
@@ -180,8 +177,8 @@ function FormularioModificarProfesor(props) {
               }}
             />
           </div>
-           {/* Celular */}
-           <div className={cssElementosForm}>
+          {/* Celular */}
+          <div className={cssElementosForm}>
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -194,6 +191,23 @@ function FormularioModificarProfesor(props) {
               defaultValue={celular}
               onChange={(e) => {
                 setCelular(e.target.value);
+              }}
+            />
+          </div>
+          {/* Cedula */}
+          <div className={cssElementosForm}>
+            <label
+              htmlFor="text"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Cédula
+            </label>
+            <input
+              type="text"
+              className={styleInputs}
+              defaultValue={cedula}
+              onChange={(e) => {
+                setCedula(e.target.value);
               }}
             />
           </div>
@@ -212,6 +226,7 @@ function FormularioModificarProfesor(props) {
               onChange={(e) => {
                 setEstado(e.target.value);
               }}
+              defaultValue={estado == "Activo" ? "Activo" : "Inactivo"}
             >
               <option value="Activo">Activo</option>
               <option value="Inactivo">Inactivo</option>
@@ -229,15 +244,15 @@ function FormularioModificarProfesor(props) {
             <select
               id="cCoordinador"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              defaultValue={
-                profesor.coordinador == true ? "Coordinador" : "No coordinador"
-              }
               onChange={(e) => {
-                setCord(e.target.value == "Coordinador" ? true : false);
+                setCord(e.target.value);
               }}
+              defaultValue={
+                coordinador == "Coordinador" ? "Coordinador" : "No coordinador"
+              }
             >
               <option value="Coordinador">Coordinador</option>
-              <option value="No Coordinador">No coordinador</option>
+              <option value="No coordinador">No coordinador</option>
             </select>
           </div>
         </form>
