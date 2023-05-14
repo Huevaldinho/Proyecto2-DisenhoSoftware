@@ -19,6 +19,7 @@ npm i morgan -D
 npm i mongoose -D
 npm i babel -D
 npm i read-excel-file
+npm i cors -D
 */ 
 
 //npm start para iniciar el api

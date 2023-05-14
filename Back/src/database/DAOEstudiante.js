@@ -11,7 +11,7 @@ const estudianteSchema = new mongoose.Schema({
     email: {type: String, required: true},
     campus: {type: String, required: true},
     password: {type: String, required: true},
-    estado: {type: Boolean, required: true},
+    estado: {type: String, required: true},
     rol: {type: String, required: true},
 });
 
