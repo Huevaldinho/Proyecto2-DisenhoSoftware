@@ -6,7 +6,8 @@ import inicioRoutes from "./src/routes/inicio.routes.js";
 import profesoresRoutes from "./src/routes/profesor.routes.js";
 import estudiantesRoutes from "./src/routes/estudiantes.routes.js";
 import comentarioRoutes from "./src/routes/comentarios.routes.js";
-import systemDB  from "./src/database/connection.js";
+import actividadesRoutes from "./src/routes/actividades.routes.js"
+import {systemDB}  from "./src/database/connection.js";
 /*import readXlsxFile from "read-excel-file/node";
 import fs from "fs";*/
 
@@ -34,6 +35,7 @@ app.use(cors());
 app.use(inicioRoutes); //rutas de la ventana de Inicio Sesión
 app.use(estudiantesRoutes); //rutas de la ventana de los estudiantes
 app.use(profesoresRoutes); //rutas de la ventana de los profesores
+app.use(actividadesRoutes); //rutas de relacionado a las actividades
 app.use(comentarioRoutes); //rutas relacionadas a los comentarios
 
 /*readXlsxFile(fs.createReadStream('estudiantes.xlsx')).then((rows) => {
