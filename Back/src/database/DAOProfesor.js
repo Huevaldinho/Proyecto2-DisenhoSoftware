@@ -103,7 +103,7 @@ export const agregarProfesor = async (DTOProfesor) => {
 //Metodo para hacer la consulta de todos los estudiantes
 export async function getProfesoresMongo(){
     try {
-        const data = await Profesor.find({}); 
+        const data = await Profesor.find({rol:"Profesor"}); 
         if (data) {
             return data
         } else {
