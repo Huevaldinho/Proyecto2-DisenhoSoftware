@@ -18,11 +18,14 @@ function FilaInfoProfesores({ profesor, index }) {
       : "bg-gray-100 hover:bg-blue-300";
   return (
     <tr onDoubleClick={handleClick} className={styleFilas}>
-      <td className={styleRow}>{profesor.id}</td>
-      <td className={styleRow}>{profesor.nombre} {profesor.nombre2} {profesor.apellido1} {profesor.apellido2}</td>
+      <td className={styleRow}>{profesor.codigo}</td>
+      <td className={styleRow}>
+        {profesor.nombre} {profesor.nombre2} {profesor.apellido1}{" "}
+        {profesor.apellido2}
+      </td>
       <td className={styleRow}>{profesor.campus}</td>
-      <td className={styleRow}>{profesor.estado}</td>
-      <td className={styleRow}>{profesor.coordinador}</td>
+      <td className={styleRow}>{profesor.estado ? "Activido" : "Inactivo"}</td>
+      <td className={styleRow}>{profesor.coordinador ? "Si" : "No"}</td>
     </tr>
   );
 }

@@ -27,7 +27,6 @@ function TablaInformacionEstudiantes(props) {
       </div>
     );
   }
-console.log('Estudiantes:',estudiantes)
   return (
     <div className="flex flex-col mt-8 text-center">
       <h1 className="text-center font-light p-2 text-blue-600">
