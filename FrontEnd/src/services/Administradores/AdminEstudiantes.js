@@ -18,7 +18,6 @@ class AdminEstudiantes {
                 method: 'GET'
             });
             let data = await response.json(); // Convertir datos a formato JSON
-            console.log("AdminEstudiantes: getInformacionEstudiantes retorna:", data)
             return data;
         } catch (error) {
             console.error('Error en AdminEstudiantes, en metodo getInformacionEstudiantes: ', error);

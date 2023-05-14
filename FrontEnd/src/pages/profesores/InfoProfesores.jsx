@@ -1,17 +1,13 @@
 import React from "react";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { profesores as profEjemplo } from "../../datos";
 import { useNavigate } from "react-router-dom";
 import TablaProfesores from "../../components/compartidos/informacionProfesores/TablaProfesores";
 
 function informacionProfesores(props) {
   const navigate = useNavigate();
-  const mainController = useContext(MainControllerContext); //*Contexto para hacerle la peticion al mainController.
-  let profesores = mainController.consultarProfesores(); //*Es un json con id,nombre y actividades (dentro trae jsons)
-  profesores = profEjemplo; //!OJO, esto se debe quitar cuando la api funcione.
-  //TODO
-  //Faltan botones para crear actividad por parte del coordinador.
+  const { profesores, consultarProfesores } = useContext(MainControllerContext);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -21,6 +17,26 @@ function informacionProfesores(props) {
     e.preventDefault();
     navigate("/menuProfesores");
   };
+
+  const updateState = () => {
+    setTimeout(() => {
+      consultarProfesores();
+    }, 1000);
+  };
+
+  // Efecto que actualiza el estado de myState después de que el componente ha sido montado
+  useEffect(() => {
+    updateState();
+  }, []);
+
+  if (profesores.length == 0) {
+    return (
+      <p className="text-center font-semibold text-5xl">
+        Cargando profesores...
+      </p>
+    );
+  }
+
   return (
     <div className="container">
       <div className="text-center" id="nombrePlanConteiner">
@@ -28,7 +44,7 @@ function informacionProfesores(props) {
       </div>
       <div className="text-center" id="tablaProfesores">
         {/*Las actividades se las pasa a la tabla por props */}
-        <TablaProfesores />
+        <TablaProfesores profesores={profesores} />
       </div>
       <div
         className="text-center rounded-md bg-green-500 p-2 m-3 h-auto w-auto hover:bg-green-800"

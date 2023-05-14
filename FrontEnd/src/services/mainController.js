@@ -21,6 +21,8 @@ class MainController {
   }
 
   //*Metodos
+
+  //*PLAN DE TRABAJO
   /**
    * Metodo para crear una nueva actividad.
    * @param {DTOActividad} dtoActividad: Datos de la actividad.
@@ -29,6 +31,16 @@ class MainController {
   async crearActividad(dtoActividad) {
     return await this.adminActividades.crearActividad(dtoActividad);
   }
+  /**
+   * Metodo para obtener el plan de trabajo.
+   * @returns {JSON} plan de trabajo
+   */
+  async consultarPlanDeTrabajo() {
+    return await this.adminActividades.consultarPlanDeTrabajo();
+  }
+
+  //*AUTH
+
   /**
    * Metodo para iniciar sesion.
    * @param {String} correoIn 
@@ -40,22 +52,19 @@ class MainController {
     return await this.configuracion.iniciarSesion(correo, contrasenna);
   }
 
+  //*PROFESORES
   /**
-   * Metodo para obtener el plan de trabajo.
-   * @returns {JSON} plan de trabajo
-   */
-  async consultarPlanDeTrabajo() {
-    return await this.adminActividades.consultarPlanDeTrabajo();
-  }
-
-  /**
-   * Metodo para obtener informacion de los estudiantes.
-   * @returns {JSON} plan de trabajo
-   */
+       * Metodo para obtener los profesores
+       * Trae los datos con la API.
+       * @returns {Array JSON} 
+       * Json con forma:{ "_id":,"rol": ,"estado","apellido1","apellido2","campus","cedula","coordinador",
+          "equipo","nombre","telefono","celular","codigo","contrasenna","correo"}
+       */
   async consultarProfesores() {
     return await this.adminProfesores.consultarProfesores();
   }
 
+  //*ESTUDIANTES
   async verEstudiantes() {
     return await this.adminEstudiantes.verEstudiantes();
   }

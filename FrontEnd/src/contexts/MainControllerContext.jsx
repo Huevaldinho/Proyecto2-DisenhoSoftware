@@ -9,8 +9,18 @@ const MainControllerContextProvider = ({ children }) => {
   let [estudiantes, setEstudiantes] = useState([]);
   //Declara state para el inicio de sesion
   let [usuario, setUsuario] = useState(null);
+  //Plan de trabajo
   let [planDeTrabajo, setPlanDeTrabajo] = useState({});
+  //Profesores
+  let [profesores, setProfesores] = useState([]);
 
+  //*PROFESORES
+  const consultarProfesores = async () => {
+    const data = await mainController.consultarProfesores(); //Pide datos a api
+    setProfesores(data); //Guarda en state de profesores
+    return profesores;
+  };
+  //*ESTUDIANTES
   /**
    * Metodo para obtener los estudiantes en la base de datos.
    * Utiliza la apli.
@@ -22,6 +32,7 @@ const MainControllerContextProvider = ({ children }) => {
     setEstudiantes(data); //Guarda en state de estudiantes
     return estudiantes;
   };
+  //*AUTH
   /**
    * Metodo para iniciar sesion.
    * @param {String} correoIn
@@ -30,16 +41,17 @@ const MainControllerContextProvider = ({ children }) => {
    */
   const iniciarSesion = async (correoIn, contrasennaIn) => {
     const data = await mainController.iniciarSesion(correoIn, contrasennaIn);
-    setUsuario(data);
+    setUsuario(data);//guarda datos de usuario
     return usuario;
   };
+  //*PLAN DE TRABAJO
   /**
    * Metodo para obtener plan de trabajo.
    * @returns
    */
   const consultarPlanDeTrabajo = async () => {
     let data = await mainController.consultarPlanDeTrabajo();
-    setPlanDeTrabajo(data);
+    setPlanDeTrabajo(data);//guarda datos de plan de trabajo
     return planDeTrabajo;
   };
 
@@ -52,6 +64,8 @@ const MainControllerContextProvider = ({ children }) => {
         verEstudiantes,
         consultarPlanDeTrabajo,
         planDeTrabajo,
+        profesores,
+        consultarProfesores,
       }}
     >
       {children}
