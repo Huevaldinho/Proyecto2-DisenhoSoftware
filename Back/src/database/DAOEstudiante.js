@@ -114,6 +114,7 @@ export const modificarEstudiante = async (DTOEstudiante) => {
         e.correo = DTOEstudiante.correo;
         e.campus = DTOEstudiante.campus;
         e.contrasenna = DTOEstudiante.contrasenna;
+        e.estado = DTOEstudiante.estado;
         e.rol =  DTOEstudiante.rol;
         e.save();
         return e;
@@ -127,8 +128,9 @@ export const modificarEstudiante = async (DTOEstudiante) => {
 export const eliminarEstudiante = async (_id) => {
     console.log("delete estudiante middlewhere");
     try {
-        var e = await Estudiante.findByIdAndUpdate(_id, {$set: {estado: false}});
-        e = await Estudiante.findById(_id);
+        var e = await Estudiante.findeOne({carnet: _id});
+        e.estado = "Inactivo";
+        e.save();
         return e;
       } catch (error) {
         return error;

@@ -28,9 +28,8 @@ const actividadSchema = new mongoose.Schema({
 const comentarioSchema = new mongoose.Schema({
     idActividad: {type: ObjectId, required: true},
     descripcion: {type: String, required: true},
-    fecha: {type: Date, required: true},
-    autor: {type: Number, required: true},
-    respuesta: {type: Boolean, required: true},
+    fecha: {type: String, required: true},
+    autor: {type: String, required: true},
     idRespuesta: {type: ObjectId, required: true},
 });
 
@@ -152,7 +151,6 @@ export const agregarComentario = async (comentario) => {
             descripcion: comentario.descripcion,
             fecha: comentario.fecha,
             autor: comentario.autor,
-            respuesta: false,
             idRespuesta: 0
         })
         c.save();
@@ -173,7 +171,6 @@ export const agregarRespuesta = async (comentario) => {
             descripcion: comentario.descripcion,
             fecha: comentario.fecha,
             autor: comentario.autor,
-            respuesta: true,
             idRespuesta: comentario.idRespuesta
         })
         c.save();

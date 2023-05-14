@@ -13,7 +13,7 @@ const profesorSchema = new mongoose.Schema({
     correo: {type: String, required: true},
     campus: {type: String, required: true},
     contrasenna: {type: String, required: true},
-    estado: {type: Boolean, required: true},
+    estado: {type: String, required: true},
     coordinador: {type: Boolean, required: true},
     rol: {type: String, required: true},
     equipo: {type: Boolean, required: true}
