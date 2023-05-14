@@ -18,13 +18,13 @@ import AficheAgregarActividad from "./AficheAgregarActividad";
 //Validar datos
 import { validarDatosActividad } from "../../../../validation/ValidarInputs";
 //Controlador
-import MainContext from "../../../../contexts/MainControllerContext";
+import {MainControllerContext} from "../../../../contexts/MainControllerContext";
 //DTOActividad
 import DTOActividad from "../../../../services/DTOs/DTOActividad";
 
 function FormularioAgregarActividad(props) {
   //*Los permisos aun no se crean pero para agregar solo el coordinador puede hacerlo.
-  const mainController = useContext(MainContext);
+  const mainController = useContext(MainControllerContext);
 
   //Use states
   const [nombreActividad, setNombreActividad] = useState(null); //Nombre

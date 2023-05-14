@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 //Main controller
-import MainContext from "../../../contexts/MainControllerContext";
+import {MainControllerContext} from "../../../contexts/MainControllerContext";
 //Componentes
 import ListaComentarios from "../../profesores/ListaComentarios";
 

@@ -1,4 +1,5 @@
 //!Clase con los metodos para hacer peticiones a la api respecto a las actividades.
+import axios from 'axios';
 
 class AdminActividades {
     //*Constructores

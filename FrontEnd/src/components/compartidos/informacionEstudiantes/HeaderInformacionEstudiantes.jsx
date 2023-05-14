@@ -1,5 +1,4 @@
-
-import React from 'react'
+import React from "react";
 
 function HeaderInformacionEstudiantes() {
   return (
@@ -21,12 +20,6 @@ function HeaderInformacionEstudiantes() {
           scope="col"
           className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
         >
-          Carrera
-        </th>
-        <th
-          scope="col"
-          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-        >
           Estado
         </th>
       </tr>
@@ -34,5 +27,4 @@ function HeaderInformacionEstudiantes() {
   );
 }
 
-export default HeaderInformacionEstudiantes
-
+export default HeaderInformacionEstudiantes;

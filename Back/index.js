@@ -1,6 +1,7 @@
 //Importaciones necesarias
 import express from "express";
 import morgan from "morgan";
+import cors from 'cors';
 import inicioRoutes from "./src/routes/inicio.routes.js";
 import profesoresRoutes from "./src/routes/profesor.routes.js";
 import estudiantesRoutes from "./src/routes/estudiantes.routes.js";
@@ -28,6 +29,7 @@ npm i read-excel-file
 
 app.use(express.json()); //para leer jsons
 app.use(morgan("dev"));
+app.use(cors());
 app.use(inicioRoutes); //rutas de la ventana de Inicio Sesión
 app.use(estudiantesRoutes); //rutas de la ventana de los estudiantes
 app.use(profesoresRoutes); //rutas de la ventana de los profesores

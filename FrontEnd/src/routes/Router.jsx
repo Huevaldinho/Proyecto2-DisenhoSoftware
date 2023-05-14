@@ -11,10 +11,10 @@ import InformacionEstudiante from "../pages/profesores/InformacionEstudiante";
 import AgregarEstudiante from "../pages/profesores/AgregarEstudiante";
 import MensajeGenerarReporte from "../pages/manejoExcel/MensajeGenerarReporte";
 import MenuProfesoresGuia from "../pages/profesores/MenuProfesoresGuia";
-import InformacionEstudiantesProfesores from "../pages/profesores/InformacionEstudiantesProfesores"
-import CargarExcel from "../pages/manejoExcel/CargarExcel"
-import InfoProfesores from "../pages/profesores/InfoProfesores"
-import ModificarProfesor from "../pages/asistentes/ModificarProfesor"
+import InformacionEstudiantesProfesores from "../pages/profesores/InformacionEstudiantesProfesores";
+import CargarExcel from "../pages/manejoExcel/CargarExcel";
+import InfoProfesores from "../pages/profesores/InfoProfesores";
+import ModificarProfesor from "../pages/asistentes/ModificarProfesor";
 //Coordinadores
 import MenuAsistentes from "../pages/asistentes/MenuAsistentes";
 import PlanDeTrabajo from "../pages/compartidas/PlanDeTrabajo";
@@ -62,18 +62,18 @@ function Router() {
         {/*Fin routes de ProfesoresGuia */}
 
         {/*Inicio routes de PROFESORES */}
-        <Route path="/menuProfesores" element={<MenuProfesoresGuia />}></Route>
+        <Route path="/menuProfesores" element={<MenuProfesoresGuia />} />
         <Route path="/infoProfesores" element={<InfoProfesores />}></Route>
-        <Route path="/modificarProfesor" element={<ModificarProfesor />}></Route>
-        <Route path="/registrarProfesor" element={<RegistrarProfesor />}></Route>
+        <Route path="/modificarProfesor" element={<ModificarProfesor />} />
+        <Route path="/registrarProfesor" element={<RegistrarProfesor />} />
         {/*Fin routes de PROFESORES */}
 
         {/*Inicio routes de COORDINADORES */}
-        <Route path="/agregarActividad" element={<AgregarActividad />}></Route>
+        <Route path="/agregarActividad" element={<AgregarActividad />} />
         {/*Fin routes de COORDINADORES */}
 
         {/*Inicio routues de ASISTENTES */}
-        <Route path="/menuAsistentes" element={<MenuAsistentes />}></Route>
+        <Route path="/menuAsistentes" element={<MenuAsistentes />} />
         {/*Fin routues de ASISTENTES */}
 
         {/*Auth */}

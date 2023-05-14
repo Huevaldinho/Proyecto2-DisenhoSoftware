@@ -1,13 +1,13 @@
 import React from "react";
 import TablaActividades from "../../components/compartidos/planDeTrabajo/TablaActividades";
-import MainContext from "../../contexts/MainControllerContext";
+import { MainControllerContext } from "../../contexts/MainControllerContext";
 import { useContext } from "react";
 import { planDeTrabajo as pTEjemplo } from "../../datos";
 import { useNavigate } from "react-router-dom";
 
 function PlanDeTrabajo(props) {
   const navigate = useNavigate();
-  const mainController = useContext(MainContext); //*Contexto para hacerle la peticion al mainController.
+  const mainController = useContext(MainControllerContext); //*Contexto para hacerle la peticion al mainController.
   let planDeTrabajo = mainController.getPlanDeTrabajo(); //*Es un json con id,nombre y actividades (dentro trae jsons)
   planDeTrabajo = pTEjemplo; //!OJO, esto se debe quitar cuando la api funcione.
   //TODO

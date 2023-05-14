@@ -1,7 +1,7 @@
 import React from "react";
 //Main controller
 import { useContext } from "react";
-import MainContext from "../../../../contexts/MainControllerContext";
+import {MainControllerContext} from "../../../../contexts/MainControllerContext";
 //Datos quemados de prueba
 import { profesores as profes } from "../../../../datos";
 
@@ -10,7 +10,7 @@ function ResponsablesAgregarActividad({
   cssElementosForm,
 }) {
   //*DOING
-  const mainController = useContext(MainContext);
+  const mainController = useContext(MainControllerContext);
   //Pedir profesores a la api.
   let profesores = mainController.consultarProfesores();
   profesores = profes; //!QUITAR CUANDO API FUNCIONE

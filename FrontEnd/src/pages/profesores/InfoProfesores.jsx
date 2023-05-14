@@ -1,5 +1,5 @@
 import React from "react";
-import MainContext from "../../contexts/MainControllerContext";
+import { MainControllerContext } from "../../contexts/MainControllerContext";
 import { useContext } from "react";
 import { profesores as profEjemplo } from "../../datos";
 import { useNavigate } from "react-router-dom";
@@ -7,8 +7,8 @@ import TablaProfesores from "../../components/compartidos/informacionProfesores/
 
 function informacionProfesores(props) {
   const navigate = useNavigate();
-  const mainController = useContext(MainContext); //*Contexto para hacerle la peticion al mainController.
-  let profesores = mainController.getProfesores( ); //*Es un json con id,nombre y actividades (dentro trae jsons)
+  const mainController = useContext(MainControllerContext); //*Contexto para hacerle la peticion al mainController.
+  let profesores = mainController.consultarProfesores(); //*Es un json con id,nombre y actividades (dentro trae jsons)
   profesores = profEjemplo; //!OJO, esto se debe quitar cuando la api funcione.
   //TODO
   //Faltan botones para crear actividad por parte del coordinador.
@@ -24,9 +24,7 @@ function informacionProfesores(props) {
   return (
     <div className="container">
       <div className="text-center" id="nombrePlanConteiner">
-        <h1 className="text-center font-bold text-5xl p-5">
-          Profesores
-        </h1>
+        <h1 className="text-center font-bold text-5xl p-5">Profesores</h1>
       </div>
       <div className="text-center" id="tablaProfesores">
         {/*Las actividades se las pasa a la tabla por props */}

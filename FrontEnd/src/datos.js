@@ -1,4 +1,4 @@
-const estudiantes = [{
+export const estudiantes = [{
     carnet: 2021035489,
     nombre: "Felipe",
     nombre2: "De Jesus",
@@ -135,11 +135,6 @@ export const profPlanilla = {
     id: 1,
     nombre: "Profesores 2023",
     profesores
-}
-export const planilla = {
-    id: 1,
-    nombre: "Estudiantes 2023",
-    estudiantes
 }
 export const planDeTrabajo = {
     id: 1,

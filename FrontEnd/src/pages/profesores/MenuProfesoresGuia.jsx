@@ -3,23 +3,24 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 function MenuProfesoresGuia() {
-  const navigate = useNavigate(); //Para redireccionar.
+  const navigate = useNavigate(); //* Para redireccionar.
 
+  //Redirecciona a infoProfes
   const handleInformacionEquipoGuia = (e) => {
     e.preventDefault();
-    navigate("/informacionEquipoGuia");
+    navigate("/infoProfesores");
   };
+  //Redirecciona a planDeTrabajo
   const handlePlanDeTrabajo = (e) => {
     e.preventDefault();
     navigate("/planDeTrabajo");
   };
 
+  //Redirecciona a informacionEstudiantesProfesores
   const handleInformacionEstudiantes = (e) => {
-    //Pedir informacion de estudiantes a la API antes de redireccionar.
     e.preventDefault();
     navigate("/informacionEstudiantesProfesores");
   };
-
   const estiloBotones =
     "text-center p-3 m-3bg-blue-600 border-collapse shadow-xl hover:bg-green-600 bg-blue-600 rounded-3xl";
   return (

@@ -3,14 +3,12 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { validarLogin } from "../../validation/ValidarInputs";
 import Role from "../../services/enums/role";
-import MainContext from "../../contexts/MainControllerContext";
+import { MainControllerContext } from "../../contexts/MainControllerContext";
 function Login() {
   //TODO
-  //const { mainController, prueba } = useContext(MainControllerContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const mainController = useContext(MainContext); //Contexto para hacerle la peticion al mainController.
 
   const redireccionar = (respuestaAPI) => {
     //!Extraer el rol de la respuesta porque viene en un json con mas datos.
@@ -56,7 +54,9 @@ function Login() {
           onSubmit={handleSubmit}
           method="post"
         >
-          <h1 className="mb-8 text-3xl text-center text-white">Iniciar sesión</h1>
+          <h1 className="mb-8 text-3xl text-center text-white">
+            Iniciar sesión
+          </h1>
           <input
             type="text"
             className="block border border-grey-light w-full p-3 rounded mb-4"

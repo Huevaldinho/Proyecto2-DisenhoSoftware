@@ -23,7 +23,6 @@ function FilaInformacionEstudiante({ estudiante, index }) {
         {estudiante.apellido2}
       </td>
       <td className={styleRow}>{estudiante.carnet}</td>
-      <td className={styleRow}>{estudiante.carrera}</td>
       <td className={styleRow}>{estudiante.estado}</td>
       
     </tr>

@@ -5,9 +5,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import EstadoUsuario from "../../services/enums/estadoUsuario";
 import { validarCorreoTelefono } from "../../validation/ValidarInputs";
 //Main controller
-import MainContext from "../../contexts/MainControllerContext";
+import {MainControllerContext} from "../../contexts/MainControllerContext";
 function FormularioInformacionEstudiante(props) {
-  const mainController = useContext(MainContext);
+  const mainController = useContext(MainControllerContext);
   //Para sacar al informacion del estudiante
   const { state } = useLocation();
   let estudiante = state?.estudiante;

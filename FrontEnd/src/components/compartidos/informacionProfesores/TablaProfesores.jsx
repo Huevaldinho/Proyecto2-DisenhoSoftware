@@ -2,7 +2,7 @@ import React from "react";
 //Componentes de tabla
 
 //Contexto
-import MainContext from "../../../contexts/MainControllerContext";
+import { MainControllerContext } from "../../../contexts/MainControllerContext";
 import { useContext } from "react";
 //Datos quemados
 import { profPlanilla as profEjemplo } from "../../../datos";
@@ -11,7 +11,7 @@ import BodyInfoProfesores from "./BodyInfoProfesores";
 
 function TablaProfesores(props) {
   //Utiliza el main controller para pedir los datos a mostrar.
-  //const mainController = useContext(MainContext); //*Contexto para hacerle la peticion al mainController.
+  //const mainController = useContext(MainControllerContext); //*Contexto para hacerle la peticion al mainController.
   //let profesores = mainController.getProfesores(); //*Es un json con id,nombre y actividades (dentro trae jsons)
   //profesores = profEjemplo; //!OJO, esto se debe quitar cuando la api funcione.
   const { id, nombre, profesores } = profEjemplo;

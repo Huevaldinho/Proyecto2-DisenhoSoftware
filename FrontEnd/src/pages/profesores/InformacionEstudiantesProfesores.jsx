@@ -1,17 +1,11 @@
 import React from "react";
-import MainContext from "../../contexts/MainControllerContext";
-import { useContext } from "react";
-import { planilla as pplanilla } from "../../datos";
 import { useNavigate } from "react-router-dom";
 import TablaInformacionEstudiantes from "../../components/compartidos/informacionEstudiantes/TablaInformacionEstudiantes";
 
 function InformacionEstudiantes(props) {
   const navigate = useNavigate();
-  const mainController = useContext(MainContext); //*Contexto para hacerle la peticion al mainController.
-  let planilla = mainController.getInformacionEstudiantes( );
-  planilla = pplanilla; //!OJO, esto se debe quitar cuando la api funcione.
-  //TODO
-  const handleClick = (e) => {
+
+  const handleAgregarEstudiante = (e) => {
     e.preventDefault();
     navigate("/agregarEstudiante");
   };
@@ -22,9 +16,7 @@ function InformacionEstudiantes(props) {
   return (
     <div className="container">
       <div className="text-center" id="nombrePlanConteiner">
-        <h1 className="text-center font-bold text-5xl p-5">
-          {planilla.nombre}
-        </h1>
+        <h1 className="text-center font-bold text-5xl p-5">Estudiantes</h1>
       </div>
       <div className="text-center" id="tablaActividades">
         {/*Las actividades se las pasa a la tabla por props */}
@@ -35,7 +27,10 @@ function InformacionEstudiantes(props) {
         id="containerBotonAgregarActividad"
       >
         {/*Boton para agregar una actividad nueva*/}
-        <button className="text-center w-full h-full" onClick={handleClick}>
+        <button
+          className="text-center w-full h-full"
+          onClick={handleAgregarEstudiante}
+        >
           Agregar Estudiante
         </button>
       </div>
