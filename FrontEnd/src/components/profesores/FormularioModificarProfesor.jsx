@@ -50,6 +50,7 @@ function FormularioModificarProfesor(props) {
         celular,
         ""
       );
+      profeAct.toString();
       const respuesta = await actualizarProfesor(profeAct);
       if (Object.keys(respuesta).length !== 0) {
         alert("Se ha modificado exitosamente al profesor.");
@@ -58,8 +59,8 @@ function FormularioModificarProfesor(props) {
     } else {
       handleBorrar;
       alert("Se ha eliminado exitosamente al profesor.");
+      navigate("/infoProfesores");
     }
-    navigate("/infoProfesores");
   };
   /**
    * Funcion para manejar el envio del formulario.

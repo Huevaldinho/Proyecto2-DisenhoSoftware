@@ -65,11 +65,11 @@ class MainController {
   }
   /**
    * Metodo para cambiar los datos de un profesor.
-   * @param {DTOProfesor} DTOProfesor 
+   * @param {DTOProfesor} dtoProfe 
    * @returns 
    */
-  async actualizarProfesor(DTOProfesor) {
-    return await this.adminProfesores.actualizarProfesor(DTOProfesor);
+  async actualizarProfesor(dtoProfe) {
+    return await this.adminProfesores.actualizarProfesor(dtoProfe);
   }
   /**
      * Metodo para eliminar (inactivar )a un miembro del equipo.

@@ -32,25 +32,6 @@ class AdminProfesores {
      */
     async actualizarProfesor(dtoProfe) {//TODO
         try {
-            /**
-             * 
-        cedula: cedula,
-        nombre: nombre1,
-        nombre2: nombre2,
-        apellido1: apellido1,
-        apellido2: apellido2,
-        correo: correo,
-        contrasenna: profesor.contrasenna,
-        rol: profesor.rol,
-        codigo: profesor.codigo,
-        coordinador:
-          coordinador == "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR",
-        telefono: telefono,
-        campus: profesor.campus,
-        estado: estado,
-        equipo: profesor.equipo,
-        celular: celular,
-             */
             const response = await fetch(`${API_URL}/profesor`, {
                 method: 'PUT',
                 headers: {

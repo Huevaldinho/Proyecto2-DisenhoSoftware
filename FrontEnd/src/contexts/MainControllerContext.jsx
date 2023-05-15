@@ -22,11 +22,11 @@ const MainControllerContextProvider = ({ children }) => {
   };
   /**
    * Metodo para cambiar los datos de un profesor
-   * @param {DTOProfesor} DTOProfesor
+   * @param {DTOProfesor} dtoProfe
    */
-  const actualizarProfesor = async (DTOProfesor) => {
+  const actualizarProfesor = async (dtoProfe) => {
     //Hacer cambio y actualizar los profes
-    const data = mainController.actualizarProfesor(DTOProfesor);
+    const data = mainController.actualizarProfesor(dtoProfe);
     consultarProfesores();
     return data;
   };
