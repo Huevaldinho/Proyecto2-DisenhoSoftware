@@ -2,35 +2,14 @@ import React from "react";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { validarLogin } from "../../validation/ValidarInputs";
-import Role from "../../services/enums/role";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
+
 function CambiarContraseanna() {
   const { cambiarContrasenna } = useContext(MainControllerContext);
-
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const redireccionar = (respuestaAPI) => {
-    //*Navegate al menu segun la respuesta de la api.
-    if (respuestaAPI != 1) {
-      switch (respuestaAPI.rol) {
-        case Role.ASISTENTE: {
-          navigate("/menuAsistentes");
-          break;
-        }
-        case Role.PROFESOR: {
-          navigate("/menuProfesores");
-          break;
-        }
-        case Role.ESTUDIANTE: {
-          navigate("/menuEstudiantes");
-        }
-      }
-    } else {
-      alert("No existe usuario con el correo y contraseña ingresados.");
-    }
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validarLogin(email, password)) {

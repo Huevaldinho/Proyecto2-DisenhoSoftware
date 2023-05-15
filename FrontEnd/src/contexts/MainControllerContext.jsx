@@ -73,7 +73,7 @@ const MainControllerContextProvider = ({ children }) => {
   const iniciarSesion = async (correoIn, contrasennaIn) => {
     const data = await mainController.iniciarSesion(correoIn, contrasennaIn);
     setUsuario(data); //guarda datos de usuario
-    return usuario;
+    return data;
   };
   /**
    * Metodo para cambiar la contra de un correo.

@@ -33,16 +33,19 @@ function Login() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validarLogin(email, password)) {//Valida inputs
-      //*Validar inputs.
-      let respuestaAPI = await iniciarSesion(email, password);//manda request
-      if (respuestaAPI === 1) {//Correo no registrado
+    if (validarLogin(email, password)) {
+      let respuestaAPI = await iniciarSesion(email, password); //manda request
+      if (respuestaAPI === 1) {
+        //Correo no registrado
         alert("El correo ingresado no está registrado.");
-      } else if (respuestaAPI === 2) {//Contraseña no es la registrada
+      } else if (respuestaAPI === 2) {
+        //Contraseña no es la registrada
         alert(
           "La contraseña ingresada no concuerda con la del correo ingresado."
         );
-      } else redireccionar(respuestaAPI); //Correo y contra buenos
+      } else {
+        redireccionar(respuestaAPI); //Correo y contra buen
+      }
     } else {
       alert(
         "No se ha podido iniciar sesion. Correo o contraseña inválidos. Intente de nuevo."
