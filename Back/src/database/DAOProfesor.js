@@ -60,10 +60,10 @@ export async function validarProfesorCambiarContra(correoP, contrasennaP){
 export const agregarProfesor = async (DTOProfesor) => {
     console.log("Post profesor middlewhere");
     try {
-        const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        /*const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
         const correoReg = /^[a-z0-9]+@estudiantec.cr$/
         const telefonoReg = /^(2|6|8){1}[0-9]{7}$/
-        const cedulaReg = /^1{1}[0-9]{8}$/
+        const cedulaReg = /^[1-9]{1}[0-9]{8}$/
         const data = await Profesor.findOne({ correo: DTOProfesor.correo}); 
         if (!DTOProfesor.contrasenna.match(contrasennaReg)) 
             return "1"; //error si la contraseña no es aceptada
@@ -76,11 +76,12 @@ export const agregarProfesor = async (DTOProfesor) => {
         if (DTOProfesor.nombre == "" || DTOProfesor.apellido1 == "" || DTOProfesor.apellido2 == "")
             return "5" //error si alguno de estos campos esta vacio
         if (data)
-            return "6" //error si ya existia un profesor registrado
+            return "6" //error si ya existia un profesor registrado*/
         let p = new Profesor({
-            codigo: DTOProfesor.codigo,
+            codigo: "CA-204",
             cedula: DTOProfesor.cedula,
             nombre: DTOProfesor.nombre,
+            nombre2: DTOProfesor.nombre2,
             apellido1: DTOProfesor.apellido1,
             apellido2: DTOProfesor.apellido2,
             telefono: DTOProfesor.telefono,
@@ -90,6 +91,7 @@ export const agregarProfesor = async (DTOProfesor) => {
             contrasenna: DTOProfesor.contrasenna,
             estado: "Activo",
             coordinador: DTOProfesor.coordinador,
+            equipo: DTOProfesor.equipo,
             rol: DTOProfesor.rol,
         })
         p.save();
