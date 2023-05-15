@@ -54,6 +54,14 @@ class MainController {
 
   //*PROFESORES
   /**
+   * Metodo para registrar un profesor.
+   * @param {DTOProfesor} dtoProfe 
+   * @returns {JSON} dtoProfe registrado
+   */
+  async registrarProfesor(dtoProfe){
+    return this.adminProfesores.registrarProfesor(dtoProfe);
+  }
+  /**
        * Metodo para obtener los profesores
        * Trae los datos con la API.
        * @returns {Array JSON} 

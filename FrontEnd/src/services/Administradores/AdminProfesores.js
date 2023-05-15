@@ -7,6 +7,42 @@ class AdminProfesores {
     constructor() { }
     //*Metodos
     /**
+     * Metodo para registrar a un profesor.
+     * Utiliza la API.
+     * @param {DTOProfesor} dtoProfe 
+     * @returns {JSON} dtoProfe registrado
+     */
+    async registrarProfesor(dtoProfe) {
+        try {
+            const response = await fetch(`${API_URL}/profesor`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "cedula": dtoProfe.getCedula(),
+                    "nombre": dtoProfe.getNombre(),
+                    "nombre2": dtoProfe.getNombre2(),
+                    "apellido1": dtoProfe.getApellido1(),
+                    "apellido2": dtoProfe.getApellido2(),
+                    "correo": dtoProfe.getCorreo(),
+                    "contrasenna": dtoProfe.getContrasenna(),
+                    "rol": dtoProfe.getRol(),
+                    "coordinador": dtoProfe.getCoordinador(),
+                    "telefono": dtoProfe.getTelefono(),
+                    "campus": dtoProfe.getCampus(),
+                    "equipo": dtoProfe.getEquipo(),
+                    "celular": dtoProfe.getCelular(),
+                    "estado": dtoProfe.getEstado()
+                })
+            });
+            let data = await response.json(); // Convertir datos a formato JSON
+            return data;
+        } catch (error) {
+            console.error('Error en AdminProfesores, en metodo actualizarProfesor: ', error);
+        }
+    }
+    /**
      * Metodo para obtener los profesores
      * Trae los datos con la API.
      * @returns {Array JSON} 
@@ -30,7 +66,7 @@ class AdminProfesores {
      * Hace peticion a la API.
      * @param {DTOProfesor} dtoProfe 
      */
-    async actualizarProfesor(dtoProfe) {//TODO
+    async actualizarProfesor(dtoProfe) {
         try {
             const response = await fetch(`${API_URL}/profesor`, {
                 method: 'PUT',
