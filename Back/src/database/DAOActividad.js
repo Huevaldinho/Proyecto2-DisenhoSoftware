@@ -38,8 +38,7 @@ const Plan = mongoose.model('Plan',planSchema,'Plan'); //"Objeto plan" que actua
 const Actividad = mongoose.model('Actividad',actividadSchema,'Actividad'); //"Objeto Actividad" que actuara como conexión entre mongo y el api
 const Comentario = mongoose.model('Comentario',comentarioSchema,'Comentario'); //"Objeto comentario" que actuara como conexión entre mongo y el api
 
-
-async function guardarEnplan(nombreActividad){
+async function guardarEnplanDB(nombreActividad){
     try {
         const plan = await Plan.findOne() //devuelve el primer plan que encuentre (el único)
         const actividad = await Actividad.findOne({nombre: nombreActividad}) //tengo la actividad
@@ -61,13 +60,9 @@ export const getActividadesDB = async () => {
         
         const actividades = await Actividad.find({ _id: { $in: idsActividades } });
 
-        if (actividades){
-            console.log(actividades)
-            return actividades
-        } else {
-            console.log("NO AGARRO NI PICHA")
-            return false
-        }
+        if (actividades) return actividades;
+        return false
+
     } catch (error) {
         return error
     }
@@ -96,7 +91,7 @@ export const ingresarActividadDB = async (DTOActividad) => {
         nuevaActividad.save()
 
         const actividad = await Actividad.findOne({nombre: nuevaActividad.nombre}) //lo guardo para enviarlo con su id
-        guardarEnplan(actividad.nombre) //envía a guardar el id de la nueva actividad en el array de plan
+        guardarEnplanDB(actividad.nombre) //envía a guardar el id de la nueva actividad en el array de plan
 
         return actividad
         
@@ -194,3 +189,4 @@ export const agregarRespuesta = async (comentario) => {
         return error;
     }
 };
+
