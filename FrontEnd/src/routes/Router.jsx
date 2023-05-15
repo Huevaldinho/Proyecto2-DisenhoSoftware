@@ -20,7 +20,6 @@ import MenuAsistentes from "../pages/asistentes/MenuAsistentes";
 import PlanDeTrabajo from "../pages/compartidas/PlanDeTrabajo";
 import DetallesActividad from "../pages/compartidas/DetallesActividad";
 import AgregarActividad from "../pages/profesores/coordinadores/AgregarActividad";
-import DetalleEstudiante from "../pages/profesores/DetalleEstudiante";
 import { Navigate } from "react-router-dom";
 import RegistrarProfesor from "../pages/asistentes/RegistrarProfesor";
 function Router() {
@@ -51,15 +50,12 @@ function Router() {
           element={<InformacionEstudiante />}
         />
         <Route path="/agregarEstudiante" element={<AgregarEstudiante />} />
-        <Route path="/detallesEstudiante" element={<DetalleEstudiante />} />
         {/*Fin routes de ESTUDIANTES */}
         {/*Routes Profesores Guia */}
         <Route
           path="/informacionEstudiantesProfesores"
           element={<InformacionEstudiantesProfesores />}
         />
-        <Route path="/menuProfesoresGuia" element={<MenuProfesoresGuia />} />
-        {/*Fin routes de ProfesoresGuia */}
 
         {/*Inicio routes de PROFESORES */}
         <Route path="/menuProfesores" element={<MenuProfesoresGuia />} />

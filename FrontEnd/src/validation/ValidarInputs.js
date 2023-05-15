@@ -51,25 +51,22 @@ export const validarCorreoTelefono = (correo, telefono) => {
     }
 };
 
-/*
-    *Funcion para validar una contrasenna segun el formato:
-    -Al menos 8 caracteres de longitud
-    -Al menos una letra mayúscula
-    -Al menos una letra minúscula
-    -Al menos un número
-    -Al menos un carácter especial (!@#$%^&*)
-
-    Ejemplo de contrasenna valida: Contraseña1!
-    
-    Parametro:
-        String contrasenna: Contrasenna que se desa validar.
-    Retorna:
-        true si la contrasena cumple con el formato.
-        false si la contrasenna no cumple con el formato.
+/**
+   Funcion para validar una contrasenna segun el formato:
+    8 numeros
+    @returns true o false.
  */
-export const validarContrasenna = (contrasenna) => {
-    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
-    return regex.test(contrasenna);
+export function validarContrasenna(contrasena) {
+    // Comprobar la longitud de la contraseña
+    if (contrasena.length !== 8)
+        return false;
+    // Comprobar si todos los caracteres son números
+    for (var i = 0; i < contrasena.length; i++) {
+        if (isNaN(parseInt(contrasena[i]))) {
+            return false;
+        }
+    }
+    return true;// La contraseña es válida
 }
 
 /*
