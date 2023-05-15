@@ -1,7 +1,6 @@
 import React from "react";
 
 import { useNavigate } from "react-router-dom";
-import NavBarProfesores from "../../components/navbars/navBarProfesores";
 
 function MenuProfesoresGuia() {
   const navigate = useNavigate(); //* Para redireccionar.
