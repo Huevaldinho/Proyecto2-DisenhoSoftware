@@ -98,7 +98,7 @@ export const ingresarEstudiantes = async (lista) => {
 export const modificarEstudiante = async (DTOEstudiante) => {
     console.log("mod estudiante middlewhere");
     try {
-        const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+       /* const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
         const correoReg = /^[a-z0-9]+@estudiantec.cr$/
         //const data = await Estudiante.findOne({ carnet: DTOEstudiante.carnet}); 
         if (!DTOEstudiante.contrasenna.match(contrasennaReg)) 
@@ -107,7 +107,7 @@ export const modificarEstudiante = async (DTOEstudiante) => {
             return "2"; //error si el correo no es aceptado
         if (DTOEstudiante.nombre == "" || DTOEstudiante.apellido1 == "" || DTOEstudiante.apellido2 == "")
             return "5" //error si alguno de estos campos esta vacio
-        /*if (data)
+        if (data)
             return "6" //error si ya existia un profesor registrado*/
         var e = await Estudiante.findOne({carnet: DTOEstudiante.carnet}); 
         e.carnet = DTOEstudiante.carnet;
