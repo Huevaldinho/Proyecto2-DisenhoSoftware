@@ -63,7 +63,7 @@ export const agregarProfesor = async (DTOProfesor) => {
         const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
         const correoReg = /^[a-z0-9]+@estudiantec.cr$/
         const telefonoReg = /^(2|6|8){1}[0-9]{7}$/
-        const cedulaReg = /^1{1}[0-9]{8}$/
+        const cedulaReg = /^[1-9]{1}[0-9]{8}$/
         const data = await Profesor.findOne({ correo: DTOProfesor.correo}); 
         if (!DTOProfesor.contrasenna.match(contrasennaReg)) 
             return "1"; //error si la contraseña no es aceptada
@@ -91,6 +91,7 @@ export const agregarProfesor = async (DTOProfesor) => {
             contrasenna: DTOProfesor.contrasenna,
             estado: "Activo",
             coordinador: DTOProfesor.coordinador,
+            equipo: DTOProfesor.equipo,
             rol: DTOProfesor.rol,
         })
         p.save();
