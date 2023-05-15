@@ -5,6 +5,7 @@ import mongoose from "mongoose"; //importación de librerias
 const estudianteSchema = new mongoose.Schema({
     carnet: {type: String, required: true},
     nombre: {type: String, required: true},
+    nombre2: {type: String, required: true},
     apellido1: {type: String, required: true},
     apellido2: {type: String, required: true},
     celular: {type: String, required: true},
@@ -74,12 +75,14 @@ export const ingresarEstudiantes = async (lista) => {
             let e = new Estudiante({
                 carnet: DTOEstudiante.carnet,
                 nombre: DTOEstudiante.nombre,
+                nombre2: DTOEstudiante.nombre2,
                 apellido1: DTOEstudiante.apellido1,
                 apellido2: DTOEstudiante.apellido2,
                 correo: DTOEstudiante.correo,
                 campus: DTOEstudiante.campus,
                 contrasenna: DTOEstudiante.contrasenna,
-                estado: "Activo",
+                estado: DTOEstudiante.estado,
+                celular: DTOEstudiante.celular,
                 rol: DTOEstudiante.rol
             })
             e.save();
@@ -93,22 +96,23 @@ export const ingresarEstudiantes = async (lista) => {
 //Método para modificar un profesor, relacionado con la ruta de put de Profesor
 //DTOProfesor es un json que viene de Body
 export const modificarEstudiante = async (DTOEstudiante) => {
-    console.log("delete estudiante middlewhere");
+    console.log("mod estudiante middlewhere");
     try {
         const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
         const correoReg = /^[a-z0-9]+@estudiantec.cr$/
-        const data = await Estudiante.findOne({ carnet: DTOEstudiante.carnet}); 
-        if (!DTOProfesor.contrasenna.match(contrasennaReg)) 
+        //const data = await Estudiante.findOne({ carnet: DTOEstudiante.carnet}); 
+        if (!DTOEstudiante.contrasenna.match(contrasennaReg)) 
             return "1"; //error si la contraseña no es aceptada
         if (!DTOEstudiante.correo.match(correoReg)) 
             return "2"; //error si el correo no es aceptado
-        if (DTOEstudiante.nombre == "" || DTOEstudiante.nombre2 == "" || DTOEstudiante.apellido1 == "" || DTOEstudiante.apellido2 == "")
+        if (DTOEstudiante.nombre == "" || DTOEstudiante.apellido1 == "" || DTOEstudiante.apellido2 == "")
             return "5" //error si alguno de estos campos esta vacio
-        if (data)
-            return "6" //error si ya existia un profesor registrado
-        var e = await Estudiante.findOne(DTOProfesor.carnet); 
+        /*if (data)
+            return "6" //error si ya existia un profesor registrado*/
+        var e = await Estudiante.findOne({carnet: DTOEstudiante.carnet}); 
         e.carnet = DTOEstudiante.carnet;
         e.nombre = DTOEstudiante.nombre;
+        e.nombre2 = DTOEstudiante.nombre2;
         e.apellido1 = DTOEstudiante.apellido1;
         e.apellido2 = DTOEstudiante.apellido2;
         e.correo = DTOEstudiante.correo;
@@ -116,6 +120,7 @@ export const modificarEstudiante = async (DTOEstudiante) => {
         e.contrasenna = DTOEstudiante.contrasenna;
         e.estado = DTOEstudiante.estado;
         e.rol =  DTOEstudiante.rol;
+        e.celular = DTOEstudiante.celular;
         e.save();
         return e;
       } catch (error) {
@@ -128,7 +133,7 @@ export const modificarEstudiante = async (DTOEstudiante) => {
 export const eliminarEstudiante = async (_id) => {
     console.log("delete estudiante middlewhere");
     try {
-        var e = await Estudiante.findeOne({carnet: _id});
+        var e = await Estudiante.findOne({carnet: _id});
         e.estado = "Inactivo";
         e.save();
         return e;

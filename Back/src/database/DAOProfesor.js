@@ -73,7 +73,7 @@ export const agregarProfesor = async (DTOProfesor) => {
             return "3";  //error si el telefono no es aceptado
         if (!DTOProfesor.cedula.match(cedulaReg)) 
             return "4"; //error si la cedula no es aceptada
-        if (DTOProfesor.nombre == "" || DTOProfesor.nombre2 == "" || DTOProfesor.apellido1 == "" || DTOProfesor.apellido2 == "")
+        if (DTOProfesor.nombre == "" || DTOProfesor.apellido1 == "" || DTOProfesor.apellido2 == "")
             return "5" //error si alguno de estos campos esta vacio
         if (data)
             return "6" //error si ya existia un profesor registrado
@@ -123,7 +123,7 @@ export const modificarProfesor = async (DTOProfesor) => {
         const correoReg = /^[a-z0-9]+@estudiantec.cr$/
         const telefonoReg = /^(2|6|8){1}[0-9]{7}$/
         const cedulaReg = /^1{1}[0-9]{8}$/
-        const data = await Profesor.findOne({ correo: DTOProfesor.correo}); 
+        //const data = await Profesor.findOne({ correo: DTOProfesor.correo}); 
         if (!DTOProfesor.contrasenna.match(contrasennaReg)) 
             return "1"; //error si la contraseña no es aceptada
         if (!DTOProfesor.correo.match(correoReg)) 
@@ -132,12 +132,12 @@ export const modificarProfesor = async (DTOProfesor) => {
             return "3";  //error si el telefono no es aceptado
         if (!DTOProfesor.cedula.match(cedulaReg)) 
             return "4"; //error si la cedula no es aceptada
-        if (DTOProfesor.nombre == "" || DTOProfesor.nombre2 == "" || DTOProfesor.apellido1 == "" || DTOProfesor.apellido2 == "") 
+        if (DTOProfesor.nombre == "" || DTOProfesor.apellido1 == "" || DTOProfesor.apellido2 == "") 
             return "5" //error si alguno de estos campos esta vacio
-        if (data)
-            return "6" //error si ya existia un profesor registrado
+        /*if (data)
+            return "6" //error si ya existia un profesor registrado*/
             
-        var p = await Profesor.findOne(DTOProfesor.id); 
+        var p = await Profesor.findOne({cedula: DTOProfesor.cedula}); 
         p.codigo = DTOProfesor.codigo;
         p.cedula = DTOProfesor.cedula;
         p.nombre = DTOProfesor.nombre;
@@ -195,7 +195,7 @@ export const asignarCoordinador = async (_id,campusP) => {
 //Metodo para hacer del Equipo Guia
 export async function getEquipoGuia(){
     try {
-        const data = await Profesor.find({equipo: true}); 
+        const data = await Profesor.find({equipo: "Equipo"}); 
         if (data) {
             return data
         } else {
@@ -210,7 +210,7 @@ export async function getEquipoGuia(){
 export const ingresarProfesoresEquipo = async (lista) => {
     try {
         for (const DTOProfesor of lista) {
-            var p = await Profesor.findOne(DTOProfesor.cedula);
+            var p = await Profesor.findOne({cedula: DTOProfesor.cedula});
             p.equipo = "Equipo";
             p.save();
         }; 
@@ -221,7 +221,7 @@ export const ingresarProfesoresEquipo = async (lista) => {
 };
 
 //Método delete para eliminar a un profesor del Equipo Guía
-export const eliminarProfesorEquipo = async (id) => {
+export const eliminarProfesorEquipo = async (_id) => {
     console.log("delete profesorEquipo middlewhere");
     try {
         var p = await Profesor.findOne({cedula: _id});
