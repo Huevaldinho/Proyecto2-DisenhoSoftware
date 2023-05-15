@@ -22,11 +22,14 @@ const Estudiante = mongoose.model('Estudiante',estudianteSchema,'Estudiante');
 //Metodo para poder validar inicio de sesión de estudiante
 export async function validarEstudiante(correoP,contrasennaP){
     try {
-        const data = await Estudiante.findOne({ correo: correoP, contrasenna: contrasennaP}); 
+        const data = await Estudiante.findOne({ correo: correoP}); 
         if (data) {
-            return data
+            if (data.contrasenna == contrasennaP)
+                return data
+            else
+                return "2"
         } else {
-            return false
+            return "1"
         }
     } catch (error) {
         console.log(error)
