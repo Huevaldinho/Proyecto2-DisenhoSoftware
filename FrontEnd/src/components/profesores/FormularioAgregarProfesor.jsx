@@ -1,45 +1,57 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-//import PropTypes from "prop-types";
-//import DTOEstudiante from "../../services/DTOs/DTOEstudiante";
-import EstadoUsuario from "../../services/enums/estadoUsuario";
-import COORDINADOR from "../../services/enums/coordinador";
+import DTOProfesor from "../../services/DTOs/DTOProfesor";
 import { validarCorreoTelefono } from "../../validation/ValidarInputs";
-
+import { MainControllerContext } from "../../contexts/MainControllerContext";
+import { campus } from "../../services/campus";
 function FormularioAgregarProfesor(props) {
+  const { registrarProfesor } = useContext(MainControllerContext);
   const navigate = useNavigate();
-  const [estadoState, setEstado] = useState(null);
-  const [cordState, setCord] = useState(null);
-  const [correoEstado, setCorreo] = useState(null);
-  const [telefonoEstado, setTelefono] = useState(null);
+  const [cedula, setCedula] = useState(null);
+  const [nombre, setNombre] = useState(null);
+  const [nombre2, setNombre2] = useState(null);
+  const [apellido1, setApellido1] = useState(null);
+  const [apellido2, setApellido2] = useState(null);
+  const [correo, setCorreo] = useState(null);
+  const [contrasenna, setContrasenna] = useState(null);
+  const [coordinador, setCoordinador] = useState(null);
+  const [telefono, setTelefono] = useState(null);
+  const [campusSeleccionado, setCampus] = useState(
+    "Campus Tecnológico Central Cartago"
+  );
+  const [celular, setCelular] = useState(null);
 
-  const redireccionar = () => {
-    //*Distinguir si es modificacion o si es eliminacion
-    if (estadoState == EstadoUsuario.ACTIVO) {
-      console.log("Se ha modificado exitosamente la información");
-      //*LLamar al controlador para hacer el cambio, utilizar DTOEstudiante.
+  const redireccionar = async () => {
+    let profeAct = new DTOProfesor(
+      cedula,
+      nombre,
+      nombre2,
+      apellido1,
+      apellido2,
+      correo,
+      contrasenna,
+      "Profesor",
+      "",
+      coordinador == "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR",
+      telefono,
+      campusSeleccionado,
+      "Activo",
+      "Equipo",
+      celular,
+      ""
+    );
+    profeAct.toString();
+    const respuesta = await registrarProfesor(profeAct);
 
-      alert("Se ha modificado exitosamente la información del estudiante.");
-    } else {
-      console.log("Se ha eliminado al estudiante");
-      //*LLamar al controlador para hacer el cambio, utilizar DTOEstudiante.
-      alert("Se ha eliminado exitosamente al profesor.");
-    }
-    if (cordState == COORDINADOR.COORDINADOR ){
-        console.log("El profesor se ha agregado como Coordinador")
-    }else{
-        console.log("El profesor se ha eliminado como Coordinador")
-    }
-    navigate("/informacionProfesores");
+    if (Object.keys(respuesta).length !== 0) {
+      alert("Se ha registrado exitosamente al profesor.");
+      navigate("/infoProfesores");
+    } else alert("No se ha podido modificado al profesor, intente de nuevo.");
   };
-  /**
-   * Funcion para manejar el envio del formulario.
-   */
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(estadoState, correoEstado, telefonoEstado);
-    //*Validar datos del formulario.
-    switch (validarCorreoTelefono(correoEstado, telefonoEstado)) {
+    switch (validarCorreoTelefono(correo, telefono)) {
       case 0: {
         //*Validacion exitosa.
         redireccionar();
@@ -55,28 +67,29 @@ function FormularioAgregarProfesor(props) {
         alert("Correo invalido, ingrese otro.");
         break;
       }
-      
     }
   };
   //*Styles
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
+  const styleInputs =
+    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
   return (
     <div className=" p-3 m-4 text-center items-center">
       <div className="text-center">
-        <form className="text-center pt-5 pl-5 pr-5 mt-10 ml-10 mr-10 mb-2 rounded-2xl  grid grid-rows-2 grid-flow-col gap-1 bg-slate-800">
+        <form className="text-center pt-5 pl-5 pr-5 mt-10 ml-10 mr-10 mb-2 rounded-2xl  grid grid-rows-3 grid-flow-col gap-1 bg-slate-800">
           {/*Carnet*/}
           <div className={cssElementosForm}>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              ID
+              Cédula
             </label>
-
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              
+              className={styleInputs}
               disabled={false}
+              onChange={(e) => {
+                setCedula(e.target.value);
+              }}
             />
-            
           </div>
           {/*Primer nombre */}
           <div className={cssElementosForm}>
@@ -86,10 +99,12 @@ function FormularioAgregarProfesor(props) {
 
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={styleInputs}
               disabled={false}
+              onChange={(e) => {
+                setNombre(e.target.value);
+              }}
             />
-           
           </div>
           {/*Segundo nombre */}
           <div className={cssElementosForm}>
@@ -98,10 +113,12 @@ function FormularioAgregarProfesor(props) {
             </label>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={styleInputs}
               disabled={false}
+              onChange={(e) => {
+                setNombre2(e.target.value);
+              }}
             />
-           
           </div>
           {/*Apellido 1 */}
           <div className={cssElementosForm}>
@@ -110,10 +127,12 @@ function FormularioAgregarProfesor(props) {
             </label>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={styleInputs}
               disabled={false}
+              onChange={(e) => {
+                setApellido1(e.target.value);
+              }}
             />
-            
           </div>
           {/*Apellido 2 */}
           <div className={cssElementosForm}>
@@ -122,10 +141,12 @@ function FormularioAgregarProfesor(props) {
             </label>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={styleInputs}
               disabled={false}
+              onChange={(e) => {
+                setApellido2(e.target.value);
+              }}
             />
-            
           </div>
           {/*Correo */}
           <div className={"mb-6 w-auto  "}>
@@ -138,8 +159,7 @@ function FormularioAgregarProfesor(props) {
             <input
               type="email"
               id="email"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              defaultValue={correoEstado}
+              className={styleInputs}
               onChange={(e) => {
                 setCorreo(e.target.value);
               }}
@@ -155,35 +175,46 @@ function FormularioAgregarProfesor(props) {
             </label>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={styleInputs}
               onChange={(e) => {
                 setTelefono(e.target.value);
               }}
             />
           </div>
-          {/*Estado */}
-          
-          <br></br>
+          {/* Celular */}
           <div className={cssElementosForm}>
             <label
-              htmlFor="estados"
+              htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Seleccione el estado
+              Celular
             </label>
-            <select
-              id="cEstados"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            <input
+              type="text"
+              className={styleInputs}
               onChange={(e) => {
-                setEstado(e.target.value);
+                setCelular(e.target.value);
               }}
-            >
-              <option value="Activo">Activo</option>
-              <option value="Inactivo">Inactivo</option>
-            </select>
+            />
           </div>
-          
+          {/* Contrasenna */}
+          <div className={cssElementosForm}>
+            <label
+              htmlFor="text"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Contraseña
+            </label>
+            <input
+              type="password"
+              className={styleInputs}
+              onChange={(e) => {
+                setContrasenna(e.target.value);
+              }}
+            />
+          </div>
           <br></br>
+          {/*Coordinador */}
           <div className={cssElementosForm}>
             <label
               htmlFor="coordinador"
@@ -193,13 +224,37 @@ function FormularioAgregarProfesor(props) {
             </label>
             <select
               id="cCoordinador"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={styleInputs}
               onChange={(e) => {
-                setCord(e.target.value);
+                setCoordinador(e.target.value);
               }}
             >
               <option value="Coordinador">Coordinador</option>
               <option value="No Coordinador">No coordinador</option>
+            </select>
+          </div>
+          {/*Campus */}
+          <div className={cssElementosForm}>
+            <label
+              htmlFor="campus"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Elija el campus
+            </label>
+            <select
+              id="ccampus"
+              className={styleInputs}
+              onChange={(e) => {
+                setCampus(e.target.value);
+              }}
+            >
+              {campus.map((campusIn, index) => {
+                return (
+                  <option value={campusIn} key={index}>
+                    {campusIn}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </form>
@@ -216,6 +271,6 @@ function FormularioAgregarProfesor(props) {
       </div>
     </div>
   );
-  }
+}
 
 export default FormularioAgregarProfesor;

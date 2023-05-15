@@ -13,7 +13,7 @@ const MainControllerContextProvider = ({ children }) => {
   let [planDeTrabajo, setPlanDeTrabajo] = useState({});
   //Profesores
   let [profesores, setProfesores] = useState([]);
-
+ 
   //*PROFESORES
   /**
    * Metodo para registrar a un profesor.
@@ -23,7 +23,7 @@ const MainControllerContextProvider = ({ children }) => {
   const registrarProfesor = async (dtoProfe) => {
     const data = await mainController.registrarProfesor(dtoProfe);
     consultarProfesores();
-    return data;//profe 
+    return data; //profe
   };
   const consultarProfesores = async () => {
     const data = await mainController.consultarProfesores(); //Pide datos a api
@@ -99,7 +99,8 @@ const MainControllerContextProvider = ({ children }) => {
         consultarProfesores,
         actualizarProfesor,
         eliminarMiembro,
-        registrarProfesor
+        registrarProfesor,
+        
       }}
     >
       {children}
