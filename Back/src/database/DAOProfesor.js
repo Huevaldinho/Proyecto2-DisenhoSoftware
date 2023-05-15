@@ -78,7 +78,7 @@ export const agregarProfesor = async (DTOProfesor) => {
         if (data)
             return "6" //error si ya existia un profesor registrado
         let p = new Profesor({
-            codigo: DTOProfesor.codigo,
+            codigo: "CA-204",
             cedula: DTOProfesor.cedula,
             nombre: DTOProfesor.nombre,
             apellido1: DTOProfesor.apellido1,
