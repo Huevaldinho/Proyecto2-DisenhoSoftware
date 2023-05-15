@@ -1,7 +1,6 @@
 import React from "react";
 
 import { useNavigate } from "react-router-dom";
-import NavBarProfesores from "../../components/navbars/navBarProfesores";
 
 function MenuProfesoresGuia() {
   const navigate = useNavigate(); //* Para redireccionar.
@@ -21,6 +20,11 @@ function MenuProfesoresGuia() {
   const handleInformacionEstudiantes = (e) => {
     e.preventDefault();
     navigate("/informacionEstudiantesProfesores");
+  };
+
+  const handleSalir = (e) => {
+    e.preventDefault();
+    navigate("/login");
   };
   const estiloBotones =
     "text-center p-3 m-3bg-blue-600 border-collapse shadow-xl hover:bg-green-600 bg-blue-600 rounded-3xl";
@@ -53,6 +57,14 @@ function MenuProfesoresGuia() {
             onClick={handleInformacionEstudiantes}
           >
             Información Estudiantes
+          </button>
+        </div>
+        <div className="text-center">
+          <button
+            className="text-center bg-red-500 hover:bg-red-800  rounded-xl p-3 m-2"
+            onClick={handleSalir}
+          >
+            Salir
           </button>
         </div>
       </div>
