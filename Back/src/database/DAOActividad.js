@@ -30,7 +30,7 @@ const comentarioSchema = new mongoose.Schema({
     descripcion: {type: String, required: true},
     fecha: {type: String, required: true},
     autor: {type: String, required: true},
-    idRespuesta: {type: ObjectId, required: true},
+    idRespuesta: {type: ObjectId},
 });
 
 // Objeto
@@ -151,7 +151,7 @@ export const agregarComentario = async (comentario) => {
             descripcion: comentario.descripcion,
             fecha: comentario.fecha,
             autor: comentario.autor,
-            idRespuesta: 0
+            idRespuesta: null
         })
         c.save();
         return c;
