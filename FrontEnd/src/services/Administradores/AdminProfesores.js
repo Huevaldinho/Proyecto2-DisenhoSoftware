@@ -51,11 +51,11 @@ class AdminProfesores {
                     "telefono": dtoProfe.getTelefono(),
                     "campus": dtoProfe.getCampus(),
                     "equipo": dtoProfe.getEquipo(),
-                    "celular": dtoProfe.getCelular()
+                    "celular": dtoProfe.getCelular(),
+                    "estado": dtoProfe.getEstado()
                 })
             });
             let data = await response.json(); // Convertir datos a formato JSON
-            console.log("Respueata api put profe:", data)
             return data;
         } catch (error) {
             console.error('Error en AdminProfesores, en metodo actualizarProfesor: ', error);

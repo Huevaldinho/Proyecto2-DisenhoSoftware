@@ -29,38 +29,30 @@ function FormularioModificarProfesor(props) {
   const [cedula, setCedula] = useState(profesor.cedula); //Cedula
 
   const redireccionar = async () => {
-    if (estado == EstadoUsuario.ACTIVO) {
-      const Escoordinador =
-        coordinador == "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR";
-      let profeAct = new DTOProfesor(
-        cedula,
-        nombre1,
-        nombre2,
-        apellido1,
-        apellido2,
-        correo,
-        profesor.contrasenna,
-        profesor.rol,
-        profesor.codigo,
-        Escoordinador,
-        telefono,
-        profesor.campus,
-        estado,
-        profesor.equipo,
-        celular,
-        ""
-      );
-      profeAct.toString();
-      const respuesta = await actualizarProfesor(profeAct);
-      if (Object.keys(respuesta).length !== 0) {
-        alert("Se ha modificado exitosamente al profesor.");
-        navigate("/infoProfesores");
-      } else alert("No se ha podido modificado al profesor, intente de nuevo.");
-    } else {
-      handleBorrar;
-      alert("Se ha eliminado exitosamente al profesor.");
+    let profeAct = new DTOProfesor(
+      cedula,
+      nombre1,
+      nombre2,
+      apellido1,
+      apellido2,
+      correo,
+      profesor.contrasenna,
+      profesor.rol,
+      profesor.codigo,
+      coordinador == "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR",
+      telefono,
+      profesor.campus,
+      estado,
+      profesor.equipo,
+      celular,
+      ""
+    );
+    const respuesta = await actualizarProfesor(profeAct);
+
+    if (Object.keys(respuesta).length !== 0) {
+      alert("Se ha modificado exitosamente al profesor.");
       navigate("/infoProfesores");
-    }
+    } else alert("No se ha podido modificado al profesor, intente de nuevo.");
   };
   /**
    * Funcion para manejar el envio del formulario.
