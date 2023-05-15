@@ -1,16 +1,8 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FormularioModificarProfesor from "../../components/profesores/FormularioModificarProfesor";
-/**
- * Este componente es la pagina que se mostrara cuando se necesite
- * modificar la informacion de un estudiante.
- * Esta modificacion incluye poner en estado inactivo al estudiante,
- * es decir, tambien funciona para eliminar a un estudiante.
- *
- * @returns Pagina para modificar o eliminar a un estudiante.
- *
- */
-function ModificarEstudiante(props) {
+
+function InformacionProfesor(props) {
   const navigate=useNavigate();
   /*
    *Quien llama a esta llamada es el menu de profesores,
@@ -39,4 +31,4 @@ function ModificarEstudiante(props) {
   );
 }
 
-export default ModificarEstudiante;
+export default InformacionProfesor;

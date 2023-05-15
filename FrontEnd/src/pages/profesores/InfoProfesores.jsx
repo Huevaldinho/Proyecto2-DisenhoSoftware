@@ -1,7 +1,6 @@
 import React from "react";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
 import { useContext, useEffect } from "react";
-import { profesores as profEjemplo } from "../../datos";
 import { useNavigate } from "react-router-dom";
 import TablaProfesores from "../../components/compartidos/informacionProfesores/TablaProfesores";
 

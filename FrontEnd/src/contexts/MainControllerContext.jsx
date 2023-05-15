@@ -23,7 +23,7 @@ const MainControllerContextProvider = ({ children }) => {
   const registrarProfesor = async (dtoProfe) => {
     const data = await mainController.registrarProfesor(dtoProfe);
     consultarProfesores();
-    return data; //profe
+    return data; //profe o error.
   };
   const consultarProfesores = async () => {
     const data = await mainController.consultarProfesores(); //Pide datos a api

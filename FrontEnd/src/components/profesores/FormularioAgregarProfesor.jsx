@@ -4,6 +4,7 @@ import DTOProfesor from "../../services/DTOs/DTOProfesor";
 import { validarCorreoTelefono } from "../../validation/ValidarInputs";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
 import { campus } from "../../services/campus";
+
 function FormularioAgregarProfesor(props) {
   const { registrarProfesor } = useContext(MainControllerContext);
   const navigate = useNavigate();
@@ -21,6 +22,45 @@ function FormularioAgregarProfesor(props) {
   );
   const [celular, setCelular] = useState(null);
 
+  const manejoErrores = async (respuesta) => {
+    switch (respuesta) {
+      case 1: {
+        alert("Ha ocurrido un error, formato de contraseña incorrecto.");
+        return false;
+      }
+      case 2: {
+        alert("Ha ocurrido un error, correo incorrecto.");
+        return false;
+      }
+      case 3: {
+        alert(
+          "Ha ocurrido un error, telefono incorrecto (8 números y debe empezar con 2|6|8)."
+        );
+        return false;
+      }
+      case 4: {
+        alert(
+          "Ha ocurrido un error, cedula incorrecta (empieza con 1|2|3|4|5|6|7|8|9 seguido de 8 números)."
+        );
+        return false;
+      }
+      case 5: {
+        alert(
+          "Ha ocurrido un error, nombre, primer apellido o segundo apellido vacio."
+        );
+        return false;
+      }
+      case 6: {
+        alert(
+          "Ha ocurrido un error, el correo con el que quiere ingresar ya estaba registrado antes."
+        );
+        return false;
+      }
+      default: {
+        return true;
+      }
+    }
+  };
   const redireccionar = async () => {
     let profeAct = new DTOProfesor(
       cedula,
@@ -40,34 +80,21 @@ function FormularioAgregarProfesor(props) {
       celular,
       ""
     );
-    profeAct.toString();
+    //profeAct.toString();
     const respuesta = await registrarProfesor(profeAct);
 
-    if (Object.keys(respuesta).length !== 0) {
-      alert("Se ha registrado exitosamente al profesor.");
-      navigate("/infoProfesores");
-    } else alert("No se ha podido modificado al profesor, intente de nuevo.");
+    if (manejoErrores(respuesta)) {
+      //No hubo errores.
+      if (Object.keys(respuesta).length !== 0) {
+        alert("Se ha registrado exitosamente al profesor.");
+        navigate("/infoProfesores");
+      } else alert("No se ha podido modificado al profesor, intente de nuevo.");
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    switch (validarCorreoTelefono(correo, telefono)) {
-      case 0: {
-        //*Validacion exitosa.
-        redireccionar();
-        break;
-      }
-      case 1: {
-        //Telefono invalido.
-        alert("Telefono invalido, ingrese otro.");
-        break;
-      }
-      case 2: {
-        //Correo invalido.
-        alert("Correo invalido, ingrese otro.");
-        break;
-      }
-    }
+    redireccionar();
   };
   //*Styles
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";

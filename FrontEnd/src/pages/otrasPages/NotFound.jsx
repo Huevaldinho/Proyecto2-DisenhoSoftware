@@ -17,10 +17,10 @@ function NotFound() {
             </p>
             <Link
               rel="noopener noreferrer"
-              to="/paginaPrincipal"
+              to="/login"
               className="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900"
             >
-              Menú principal
+              Iniciar Sesión
             </Link>
           </div>
         </div>

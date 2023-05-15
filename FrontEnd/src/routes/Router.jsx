@@ -14,7 +14,7 @@ import MenuProfesoresGuia from "../pages/profesores/MenuProfesoresGuia";
 import InformacionEstudiantesProfesores from "../pages/profesores/InformacionEstudiantesProfesores";
 import CargarExcel from "../pages/manejoExcel/CargarExcel";
 import InfoProfesores from "../pages/profesores/InfoProfesores";
-import ModificarProfesor from "../pages/asistentes/ModificarProfesor";
+import InformacionProfesor from "../pages/asistentes/InformacionProfesor";
 //Coordinadores
 import MenuAsistentes from "../pages/asistentes/MenuAsistentes";
 import PlanDeTrabajo from "../pages/compartidas/PlanDeTrabajo";
@@ -60,7 +60,7 @@ function Router() {
         {/*Inicio routes de PROFESORES */}
         <Route path="/menuProfesores" element={<MenuProfesoresGuia />} />
         <Route path="/infoProfesores" element={<InfoProfesores />}></Route>
-        <Route path="/modificarProfesor" element={<ModificarProfesor />} />
+        <Route path="/informacionProfesor" element={<InformacionProfesor />} />
         <Route path="/registrarProfesor" element={<RegistrarProfesor />} />
         {/*Fin routes de PROFESORES */}
 
