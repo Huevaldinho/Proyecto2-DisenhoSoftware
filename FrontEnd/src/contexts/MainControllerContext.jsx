@@ -13,7 +13,7 @@ const MainControllerContextProvider = ({ children }) => {
   let [planDeTrabajo, setPlanDeTrabajo] = useState({});
   //Profesores
   let [profesores, setProfesores] = useState([]);
- 
+
   //*PROFESORES
   /**
    * Metodo para registrar a un profesor.
@@ -75,6 +75,20 @@ const MainControllerContextProvider = ({ children }) => {
     setUsuario(data); //guarda datos de usuario
     return usuario;
   };
+  /**
+   * Metodo para cambiar la contra de un correo.
+   * @param {String} correoIn 
+   * @param {String} contrasennaIn: nueva contrasenna
+   * @returns 
+   */
+  const cambiarContrasenna = async (correoIn, contrasennaIn) => {
+    const data = await mainController.cambiarContrasenna(
+      correoIn,
+      contrasennaIn
+    );
+    return data;
+  };
+
   //*PLAN DE TRABAJO
   /**
    * Metodo para obtener plan de trabajo.
@@ -91,6 +105,7 @@ const MainControllerContextProvider = ({ children }) => {
       value={{
         usuario,
         iniciarSesion,
+        cambiarContrasenna,
         estudiantes,
         verEstudiantes,
         consultarPlanDeTrabajo,
@@ -100,7 +115,6 @@ const MainControllerContextProvider = ({ children }) => {
         actualizarProfesor,
         eliminarMiembro,
         registrarProfesor,
-        
       }}
     >
       {children}

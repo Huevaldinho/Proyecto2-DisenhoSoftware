@@ -52,13 +52,23 @@ class MainController {
     return await this.configuracion.iniciarSesion(correo, contrasenna);
   }
 
+  /**
+   * Metodo para cambiar la contrasenna.
+   * @param {String} correo 
+   * @param {String} contrasenna 
+   * @returns 
+   */
+  async cambiarContrasenna(correo, contrasenna) {
+    return await this.configuracion.cambiarContrasenna(correo, contrasenna);
+  }
+
   //*PROFESORES
   /**
    * Metodo para registrar un profesor.
    * @param {DTOProfesor} dtoProfe 
    * @returns {JSON} dtoProfe registrado
    */
-  async registrarProfesor(dtoProfe){
+  async registrarProfesor(dtoProfe) {
     return this.adminProfesores.registrarProfesor(dtoProfe);
   }
   /**

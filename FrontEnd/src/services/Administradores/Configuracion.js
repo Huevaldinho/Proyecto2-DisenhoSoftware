@@ -15,8 +15,6 @@ export default class Configuracion {
      */
     async iniciarSesion(correoIn, contrasennaIn) {
         try {
-            //!API_URL Esta en el archivo services/config.js
-            //en caso que la profe nos pida subirlo a un host solo tenemos que cambiar ahi la ip y puerto
             const response = await fetch(`${API_URL}/inicio/${correoIn}/${contrasennaIn}`, {
                 method: 'POST'
             });
@@ -25,6 +23,26 @@ export default class Configuracion {
             return data;
         } catch (error) {
             console.error('Error en Configuracion, en metodo iniciarSesion: ', error);
+            return null;
+        }
+    }
+    /**
+     * Metodo para cambiar la contrasenna de un usuario.
+     * Llama a la API para cambiar la contrasenna en la base de datos.
+     * @param {String} correoIn 
+     * @param {String} contrasennaIn 
+     * @returns 
+     */
+    async cambiarContrasenna(correoIn, contrasennaIn) {
+        try {
+            const response = await fetch(`${API_URL}/inicio/${correoIn}/${contrasennaIn}`, {
+                method: 'PUT'
+            });
+            let data = await response.json(); // Convertir datos a formato JSON
+            console.log("Configuracion: cambiarContrasenna retorna:", data)
+            return data;
+        } catch (error) {
+            console.error('Error en Configuracion, en metodo cambiarContrasenna: ', error);
             return null;
         }
     }
