@@ -28,7 +28,7 @@ const MainControllerContextProvider = ({ children }) => {
   const consultarProfesores = async () => {
     const data = await mainController.consultarProfesores(); //Pide datos a api
     setProfesores(data); //Guarda en state de profesores
-    return profesores;
+    return data;
   };
   /**
    * Metodo para cambiar los datos de un profesor
@@ -61,7 +61,7 @@ const MainControllerContextProvider = ({ children }) => {
   const verEstudiantes = async () => {
     const data = await mainController.verEstudiantes(); //Pide datos a api
     setEstudiantes(data); //Guarda en state de estudiantes
-    return estudiantes;
+    return data;
   };
   //*AUTH
   /**
@@ -97,7 +97,7 @@ const MainControllerContextProvider = ({ children }) => {
   const consultarPlanDeTrabajo = async () => {
     let data = await mainController.consultarPlanDeTrabajo();
     setPlanDeTrabajo(data); //guarda datos de plan de trabajo
-    return planDeTrabajo;
+    return data;
   };
 
   return (

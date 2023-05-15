@@ -1,14 +1,26 @@
 import Estado from "../services/enums/estado";
 import TipoActividad from "../services/enums/tipoActividad";
+function validarTelefono(telefono) {
+    // Expresión regular para validar el formato del teléfono
+    const regex = /^2\d{3}-\d{4}( \[\d{4}\])?$/;
+
+    // Verificar si el teléfono coincide con el formato
+    if (regex.test(telefono)) {
+        return true; // El teléfono es válido
+    } else {
+        return false; // El teléfono no cumple con el formato
+    }
+}
+
 /**
    * Funcion para validar un telefono.
    * @param {String} telefono: Telefono a validar.
    * @returns true si el telefono es valido.
    *        | false si el telefono es invalido.
    */
-export const validarTelefono = (telefono) => {
+export const validarCelular = (celular) => {
     const regexTelefono = /^(\+506)?[24678]\d{7}$/;
-    if (regexTelefono.test(telefono))
+    if (regexTelefono.test(celular))
         return true;
     return false;
 };
