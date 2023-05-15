@@ -39,7 +39,6 @@ const Comentario = mongoose.model('Comentario',comentarioSchema,'Comentario'); /
 
 
 export const getActividadesDB = async () => {
-    console.log('OBTENER ACTIVIDAD')
     try {
         const data = await Actividad.find(); 
         if (data) {
@@ -82,46 +81,36 @@ export const ingresarActividadDB = async (DTOActividad) => {
 };
 
 export const modificarActividadDB = async (DTOActividad) => {
+    console.log(DTOActividad)
     try {
-        const actividadActualizada = await Actividad.findByIdAndUpdate(
-            DTOActividad.id,
-            {
-            nombre: DTOActividad.nombre,
-            fecha: DTOActividad.fecha,
-            semana: DTOActividad.semana,
-            descripcion: DTOActividad.descripcion,
-            tipo: DTOActividad.tipo,
-            responsable: DTOActividad.responsable,
-            fechaPublicacion: DTOActividad.fechaPublicacion,
-            recordatorios: DTOActividad.recordatorios,
-            modalidad: DTOActividad.modalidad,
-            enlace: DTOActividad.enlace,
-            afiche: DTOActividad.afiche,
-            estado: DTOActividad.estado,
-            evidencia: DTOActividad.evidencia,
-            },
-            { new: true } // Devuelve el documento actualizado
-        );
+        const actividadExistente = await Actividad.findById(DTOActividad._id);
+        if (!actividadExistente) {
+          throw new Error(`No se encontró la actividad con id ${DTOActividad._id}`);
+        }
+    
+        Object.assign(actividadExistente, DTOActividad);
+        const actividadActualizada = await actividadExistente.save();
+    
         return actividadActualizada;
-        } catch (error) {
-        console.error(error);
-        return error;
-        }
-};
-
-export const eliminarActividadDB = async (DTOActividad) => {
-    try {
-        const resultado = await Actividad.deleteOne({ _id: DTOActividad.id });
-        if (resultado.deletedCount === 0) {
-          throw new Error(`No se encontró la actividad con id ${DTOActividad.id}`);
-        }
-        return resultado;
       } catch (error) {
         console.error(error);
         return error;
       }
 };
 
+export const eliminarActividadDB = async (DTOActividad) => {
+    try {
+        const actividadEliminada = DTOActividad
+        const resultado = await Actividad.deleteOne({ _id: DTOActividad._id });
+        if (resultado.deletedCount === 0) {
+          throw new Error(`No se encontró la actividad con id ${DTOActividad._id}`);
+        }
+        return actividadEliminada;
+      } catch (error) {
+        console.error(error);
+        return error;
+      }
+};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
