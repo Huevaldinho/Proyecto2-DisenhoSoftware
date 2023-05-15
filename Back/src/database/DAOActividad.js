@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
 
 //Schema asociado a plan de actividades, es el cual se guardará en mongo
-const planActividadSchema = new mongoose.Schema({
+const planSchema = new mongoose.Schema({
     nombre: {type: String, required: true},
     actividades: {type: Array, required: true}
 });
@@ -34,20 +34,42 @@ const comentarioSchema = new mongoose.Schema({
 });
 
 // Objeto
-const Actividad = mongoose.model('Actividad',actividadSchema,'Actividad'); //"Objeto comentario" que actuara como conexión entre mongo y el api
+const Plan = mongoose.model('Plan',planSchema,'Plan'); //"Objeto plan" que actuara como conexión entre mongo y el api
+const Actividad = mongoose.model('Actividad',actividadSchema,'Actividad'); //"Objeto Actividad" que actuara como conexión entre mongo y el api
 const Comentario = mongoose.model('Comentario',comentarioSchema,'Comentario'); //"Objeto comentario" que actuara como conexión entre mongo y el api
 
 
+async function guardarEnplan(nombreActividad){
+    try {
+        const plan = await Plan.findOne() //devuelve el primer plan que encuentre (el único)
+        const actividad = await Actividad.findOne({nombre: nombreActividad}) //tengo la actividad
+
+        plan.actividades.push(actividad._id) //agrega el id de la actividad al plan de trabajo
+        await plan.save();
+
+    } catch (error) {
+        return error
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 export const getActividadesDB = async () => {
     try {
-        const data = await Actividad.find(); 
-        if (data) {
-            return data
+        const plan = await Plan.findOne() //devuelve el primer plan que encuentre (el único)
+        const idsActividades = plan.actividades
+        console.log(idsActividades)
+        
+        const actividades = await Actividad.find({ _id: { $in: idsActividades } });
+
+        if (actividades){
+            console.log(actividades)
+            return actividades
         } else {
+            console.log("NO AGARRO NI PICHA")
             return false
         }
     } catch (error) {
-        console.log(error)
+        return error
     }
 };
 
@@ -72,12 +94,15 @@ export const ingresarActividadDB = async (DTOActividad) => {
             evidencia: DTOActividad.evidencia,
         })
         nuevaActividad.save()
-        return nuevaActividad
+
+        const actividad = await Actividad.findOne({nombre: nuevaActividad.nombre}) //lo guardo para enviarlo con su id
+        guardarEnplan(actividad.nombre) //envía a guardar el id de la nueva actividad en el array de plan
+
+        return actividad
         
     } catch (error) {
         return error
     }
-
 };
 
 export const modificarActividadDB = async (DTOActividad) => {
@@ -101,11 +126,12 @@ export const modificarActividadDB = async (DTOActividad) => {
 export const eliminarActividadDB = async (DTOActividad) => {
     try {
         const actividadEliminada = DTOActividad
-        const resultado = await Actividad.deleteOne({ _id: DTOActividad._id });
-        if (resultado.deletedCount === 0) {
-          throw new Error(`No se encontró la actividad con id ${DTOActividad._id}`);
-        }
-        return actividadEliminada;
+
+        const plan = await Plan.findOne() //devuelve el primer plan que encuentre (el único)
+        plan.actividades.pull(DTOActividad._id)
+        await plan.save()
+        
+        return actividadEliminada
       } catch (error) {
         console.error(error);
         return error;
