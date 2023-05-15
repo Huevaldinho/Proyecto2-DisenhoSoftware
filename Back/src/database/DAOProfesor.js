@@ -24,11 +24,14 @@ const Profesor = mongoose.model('Profesor',profesorSchema,'Profesor');
 //Metodo para poder validar inicio de sesión de profesor
 export async function validarProfesor(correoP,contrasennaP){
     try {
-        const data = await Profesor.findOne({ correo: correoP, contrasenna: contrasennaP}); 
+        const data = await Profesor.findOne({ correo: correoP}); 
         if (data) {
-            return data
+            if (data.contrasenna == contrasennaP)
+                return data
+            else
+                return "2"
         } else {
-            return false
+            return "1"
         }
     } catch (error) {
         return error
