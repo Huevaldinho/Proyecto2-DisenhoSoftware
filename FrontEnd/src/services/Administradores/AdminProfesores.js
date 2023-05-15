@@ -1,6 +1,6 @@
 import { API_URL } from '../config';
 import { profesores as profEjemplo } from "../../datos";
-
+import DTOProfesor from '../DTOs/DTOProfesor';
 
 class AdminProfesores {
     //*Constructores
@@ -28,12 +28,54 @@ class AdminProfesores {
     /**
      * Metodo para cambiar los datos de un profesor.
      * Hace peticion a la API.
-     * @param {DTOProfesor} DTOProfesor 
+     * @param {DTOProfesor} dtoProfe 
      */
-    async actualizarProfesor(DTOProfesor) {//TODO
+    async actualizarProfesor(dtoProfe) {//TODO
         try {
-            //!HACER REQUEST A LA API
-            return true;
+            /**
+             * 
+        cedula: cedula,
+        nombre: nombre1,
+        nombre2: nombre2,
+        apellido1: apellido1,
+        apellido2: apellido2,
+        correo: correo,
+        contrasenna: profesor.contrasenna,
+        rol: profesor.rol,
+        codigo: profesor.codigo,
+        coordinador:
+          coordinador == "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR",
+        telefono: telefono,
+        campus: profesor.campus,
+        estado: estado,
+        equipo: profesor.equipo,
+        celular: celular,
+             */
+            const response = await fetch(`${API_URL}/profesor`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "cedula": dtoProfe.getCedula(),
+                    "nombre": dtoProfe.getNombre(),
+                    "nombre2": dtoProfe.getNombre2(),
+                    "apellido1": dtoProfe.getApellido1(),
+                    "apellido2": dtoProfe.getApellido2(),
+                    "correo": dtoProfe.getCorreo(),
+                    "contrasenna": dtoProfe.getContrasenna(),
+                    "rol": dtoProfe.getRol(),
+                    "codigo": dtoProfe.getCodigo(),
+                    "coordinador": dtoProfe.getCoordinador(),
+                    "telefono": dtoProfe.getTelefono(),
+                    "campus": dtoProfe.getCampus(),
+                    "equipo": dtoProfe.getEquipo(),
+                    "celular": dtoProfe.getCelular()
+                })
+            });
+            let data = await response.json(); // Convertir datos a formato JSON
+            console.log("Respueata api put profe:", data)
+            return data;
         } catch (error) {
             console.error('Error en AdminProfesores, en metodo actualizarProfesor: ', error);
         }
@@ -46,11 +88,10 @@ class AdminProfesores {
      */
     async eliminarMiembro(cedula) {
         try {
-            const response = await fetch(`${API_URL}/profesor${cedula}`, {
+            const response = await fetch(`${API_URL}/profesor/${cedula}`, {
                 method: 'DELETE'
             });
-            let data = await response.json(); // Convertir datos a formato JSON
-            return data;
+            return await response.json()
         } catch (error) {
             console.error('Error en AdminProfesores, en metodo eliminarMiembro: ', error);
         }

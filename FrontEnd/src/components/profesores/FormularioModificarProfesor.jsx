@@ -4,6 +4,8 @@ import EstadoUsuario from "../../services/enums/estadoUsuario";
 import COORDINADOR from "../../services/enums/coordinador";
 import { validarCorreoTelefono } from "../../validation/ValidarInputs";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
+import DTOProfesor from "../../services/DTOs/DTOProfesor";
+
 function FormularioModificarProfesor(props) {
   const { actualizarProfesor, eliminarMiembro } = useContext(
     MainControllerContext
@@ -26,12 +28,35 @@ function FormularioModificarProfesor(props) {
   const [celular, setCelular] = useState(profesor.celular); //Celular
   const [cedula, setCedula] = useState(profesor.cedula); //Cedula
 
-  const redireccionar = () => {
+  const redireccionar = async () => {
     if (estado == EstadoUsuario.ACTIVO) {
-      //Llamar api
-      alert("Se ha modificado exitosamente la información del estudiante.");
+      const Escoordinador =
+        coordinador == "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR";
+      let profeAct = new DTOProfesor(
+        cedula,
+        nombre1,
+        nombre2,
+        apellido1,
+        apellido2,
+        correo,
+        profesor.contrasenna,
+        profesor.rol,
+        profesor.codigo,
+        Escoordinador,
+        telefono,
+        profesor.campus,
+        estado,
+        profesor.equipo,
+        celular,
+        ""
+      );
+      const respuesta = await actualizarProfesor(profeAct);
+      if (Object.keys(respuesta).length !== 0) {
+        alert("Se ha modificado exitosamente al profesor.");
+        navigate("/infoProfesores");
+      } else alert("No se ha podido modificado al profesor, intente de nuevo.");
     } else {
-      //Llamar api
+      handleBorrar;
       alert("Se ha eliminado exitosamente al profesor.");
     }
     navigate("/infoProfesores");
@@ -63,10 +88,7 @@ function FormularioModificarProfesor(props) {
 
   const handleBorrar = async (e) => {
     e.preventDefault();
-    console.log("Borrar profesor con cedula:", cedula);
-    const respuesta = await eliminarMiembro(profesor.cedula);
-    console.log("Respueta al elimiunar miembro:", respuesta);
-
+    const respuesta = await eliminarMiembro(parseInt(profesor.cedula));
     if (Object.keys(respuesta).length !== 0) {
       alert("Se ha eliminado exitosamente al profesor.");
       navigate("/infoProfesores");

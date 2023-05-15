@@ -78,7 +78,7 @@ class MainController {
      * @returns {JSON de profesor}
   */
   async eliminarMiembro(cedula) {
-    return await this.adminProfesores.actualizarProfesor(cedula);
+    return await this.adminProfesores.eliminarMiembro(cedula);
   }
 
   //*ESTUDIANTES

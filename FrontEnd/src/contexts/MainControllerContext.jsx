@@ -27,7 +27,6 @@ const MainControllerContextProvider = ({ children }) => {
   const actualizarProfesor = async (DTOProfesor) => {
     //Hacer cambio y actualizar los profes
     const data = mainController.actualizarProfesor(DTOProfesor);
-    console.log("Respuesta api al actualizar profesor:", data);
     consultarProfesores();
     return data;
   };
@@ -38,7 +37,7 @@ const MainControllerContextProvider = ({ children }) => {
    * @returns {JSON de profesor}
    */
   const eliminarMiembro = async (cedula) => {
-    const data = mainController.eliminarMiembro(cedula);
+    const data = await mainController.eliminarMiembro(cedula);
     consultarProfesores();
     return data;
   };

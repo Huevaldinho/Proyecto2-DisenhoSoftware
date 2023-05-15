@@ -16,7 +16,6 @@ function FilaInfoProfesores({ profesor, index }) {
     index % 2 === 0
       ? "bg-gray-200 hover:bg-blue-300"
       : "bg-gray-100 hover:bg-blue-300";
-      console.log(profesor)
   return (
     <tr onDoubleClick={handleClick} className={styleFilas}>
       <td className={styleRow}>{profesor.codigo}</td>
@@ -25,7 +24,9 @@ function FilaInfoProfesores({ profesor, index }) {
         {profesor.apellido2}
       </td>
       <td className={styleRow}>{profesor.campus}</td>
-      <td className={styleRow}>{profesor.estado=='Activo' ? "Activo" : "Inactivo"}</td>
+      <td className={styleRow}>
+        {profesor.estado == "Activo" ? "Activo" : "Inactivo"}
+      </td>
       <td className={styleRow}>
         {profesor.coordinador == "NOCOORDINADOR" ? "No" : "Si"}
       </td>
