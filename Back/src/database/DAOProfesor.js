@@ -119,7 +119,7 @@ export async function getProfesoresMongo(){
 export const modificarProfesor = async (DTOProfesor) => {
     console.log("put profesor middlewhere");
     try {
-        const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        /*const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
         const correoReg = /^[a-z0-9]+@estudiantec.cr$/
         const telefonoReg = /^(2|6|8){1}[0-9]{7}$/
         const cedulaReg = /^1{1}[0-9]{8}$/
@@ -134,7 +134,7 @@ export const modificarProfesor = async (DTOProfesor) => {
             return "4"; //error si la cedula no es aceptada
         if (DTOProfesor.nombre == "" || DTOProfesor.apellido1 == "" || DTOProfesor.apellido2 == "") 
             return "5" //error si alguno de estos campos esta vacio
-        /*if (data)
+        if (data)
             return "6" //error si ya existia un profesor registrado*/
             
         var p = await Profesor.findOne({cedula: DTOProfesor.cedula}); 
