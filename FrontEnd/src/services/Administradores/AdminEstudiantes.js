@@ -12,8 +12,6 @@ class AdminEstudiantes {
      */
     async verEstudiantes() {
         try {
-            //!API_URL Esta en el archivo services/config.js
-            //en caso que la profe nos pida subirlo a un host solo tenemos que cambiar ahi la ip y puerto
             const response = await fetch(`${API_URL}/estudiantes`, {
                 method: 'GET'
             });

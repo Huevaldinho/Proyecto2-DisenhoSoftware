@@ -15,8 +15,6 @@ class AdminProfesores {
      */
     async consultarProfesores() {
         try {
-            //!API_URL Esta en el archivo services/config.js
-            //en caso que la profe nos pida subirlo a un host solo tenemos que cambiar ahi la ip y puerto
             const response = await fetch(`${API_URL}/profesor`, {
                 method: 'GET'
             });
@@ -32,12 +30,29 @@ class AdminProfesores {
      * Hace peticion a la API.
      * @param {DTOProfesor} DTOProfesor 
      */
-    async actualizarProfesor(DTOProfesor) {
+    async actualizarProfesor(DTOProfesor) {//TODO
         try {
             //!HACER REQUEST A LA API
             return true;
         } catch (error) {
             console.error('Error en AdminProfesores, en metodo actualizarProfesor: ', error);
+        }
+    }
+    /**
+     * Metodo para eliminar (inactivar )a un miembro del equipo.
+     * Llama a la API para inactivarlo en la base de datos.
+     * @param {int} cedula 
+     * @returns {JSON de profesor}
+     */
+    async eliminarMiembro(cedula) {
+        try {
+            const response = await fetch(`${API_URL}/profesor${cedula}`, {
+                method: 'DELETE'
+            });
+            let data = await response.json(); // Convertir datos a formato JSON
+            return data;
+        } catch (error) {
+            console.error('Error en AdminProfesores, en metodo eliminarMiembro: ', error);
         }
     }
 }

@@ -31,6 +31,17 @@ const MainControllerContextProvider = ({ children }) => {
     consultarProfesores();
     return data;
   };
+  /**
+   * Metodo para eliminar (inactivar )a un miembro del equipo.
+   * Llama a la API para inactivarlo en la base de datos.
+   * @param {int} cedula
+   * @returns {JSON de profesor}
+   */
+  const eliminarMiembro = async (cedula) => {
+    const data = mainController.eliminarMiembro(cedula);
+    consultarProfesores();
+    return data;
+  };
   //*ESTUDIANTES
   /**
    * Metodo para obtener los estudiantes en la base de datos.
@@ -78,6 +89,7 @@ const MainControllerContextProvider = ({ children }) => {
         profesores,
         consultarProfesores,
         actualizarProfesor,
+        eliminarMiembro,
       }}
     >
       {children}

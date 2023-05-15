@@ -8,7 +8,7 @@ class AdminActividades {
     //*Constructores
     constructor() { }
     //*Metodos
-    async crearActividad(dtoActividad) {//TODO
+    async crearActividad(DTOActividad) {//TODO
         //Hacer peticion a API.
         //Tomar los datos del json y se debe instanciar una Activiadad para retornarla.        
         return await null;

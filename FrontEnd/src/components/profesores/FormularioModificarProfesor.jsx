@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import EstadoUsuario from "../../services/enums/estadoUsuario";
 import COORDINADOR from "../../services/enums/coordinador";
 import { validarCorreoTelefono } from "../../validation/ValidarInputs";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
 function FormularioModificarProfesor(props) {
-  
+  const { actualizarProfesor, eliminarMiembro } = useContext(
+    MainControllerContext
+  );
   const navigate = useNavigate();
   const location = useLocation();
   let profesor = location?.state.profesor;
@@ -24,8 +26,6 @@ function FormularioModificarProfesor(props) {
   const [celular, setCelular] = useState(profesor.celular); //Celular
   const [cedula, setCedula] = useState(profesor.cedula); //Cedula
 
-
-
   const redireccionar = () => {
     if (estado == EstadoUsuario.ACTIVO) {
       //Llamar api
@@ -34,12 +34,12 @@ function FormularioModificarProfesor(props) {
       //Llamar api
       alert("Se ha eliminado exitosamente al profesor.");
     }
-    navigate("/informacionProfesores");
+    navigate("/infoProfesores");
   };
   /**
    * Funcion para manejar el envio del formulario.
    */
-  const handleSubmit = (e) => {
+  const handleModificar = (e) => {
     e.preventDefault();
     //*Validar datos del formulario.
     switch (validarCorreoTelefono(correo, telefono)) {
@@ -60,6 +60,19 @@ function FormularioModificarProfesor(props) {
       }
     }
   };
+
+  const handleBorrar = async (e) => {
+    e.preventDefault();
+    console.log("Borrar profesor con cedula:", cedula);
+    const respuesta = await eliminarMiembro(profesor.cedula);
+    console.log("Respueta al elimiunar miembro:", respuesta);
+
+    if (Object.keys(respuesta).length !== 0) {
+      alert("Se ha eliminado exitosamente al profesor.");
+      navigate("/infoProfesores");
+    } else alert("No se ha podido eliminar al profesor, intente de nuevo.");
+  };
+
   //*Styles
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
   const styleInputs =
@@ -255,6 +268,18 @@ function FormularioModificarProfesor(props) {
               <option value="No coordinador">No coordinador</option>
             </select>
           </div>
+          <div
+            className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
+            id="containerBotonAgregarActividad"
+          >
+            {/*Boton agilizar la eliminacion de un profesor*/}
+            <button
+              className="text-center w-full h-full"
+              onClick={handleBorrar}
+            >
+              Inactivar Profesor
+            </button>
+          </div>
         </form>
       </div>
       <div className={"text-center w-full "}>
@@ -262,7 +287,7 @@ function FormularioModificarProfesor(props) {
         <button
           type="submit"
           className=" text-white bg-blue-700 hover:bg-blue-900  font-medium rounded-lg w-auto p-4  text-center "
-          onClick={handleSubmit}
+          onClick={handleModificar}
         >
           Aceptar
         </button>

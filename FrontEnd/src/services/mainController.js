@@ -68,8 +68,17 @@ class MainController {
    * @param {DTOProfesor} DTOProfesor 
    * @returns 
    */
-  async actualizarProfesor( DTOProfesor) {
+  async actualizarProfesor(DTOProfesor) {
     return await this.adminProfesores.actualizarProfesor(DTOProfesor);
+  }
+  /**
+     * Metodo para eliminar (inactivar )a un miembro del equipo.
+     * Llama a la API para inactivarlo en la base de datos.
+     * @param {int} cedula 
+     * @returns {JSON de profesor}
+  */
+  async eliminarMiembro(cedula) {
+    return await this.adminProfesores.actualizarProfesor(cedula);
   }
 
   //*ESTUDIANTES
