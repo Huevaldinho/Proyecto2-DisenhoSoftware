@@ -81,6 +81,7 @@ export const agregarProfesor = async (DTOProfesor) => {
             codigo: "CA-204",
             cedula: DTOProfesor.cedula,
             nombre: DTOProfesor.nombre,
+            nombre2: DTOProfesor.nombre2,
             apellido1: DTOProfesor.apellido1,
             apellido2: DTOProfesor.apellido2,
             telefono: DTOProfesor.telefono,
