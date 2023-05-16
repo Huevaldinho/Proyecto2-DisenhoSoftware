@@ -80,8 +80,21 @@ export const agregarProfesor = async (DTOProfesor) => {
             return "5" //error si alguno de estos campos esta vacio
         if (data)
             return "6" //error si ya existia un profesor registrado*/
+        const lista = await Profesor.find({campus: DTOProfesor.campus}); 
+        var num = lista.length +1;
+        var codigoP;
+        if (DTOProfesor.campus == "Campus Tecnológico Central Cartago")
+            codigoP = "CA-" + num
+        if (DTOProfesor.campus == "Campus Tecnológico Local San Carlos")
+            codigoP = "SC-" + num
+        if (DTOProfesor.campus == "Campus Tecnológico Local San José")
+            codigoP = "SJ-" + num
+        if (DTOProfesor.campus == "Centro Académico de Alajuela")
+            codigoP = "AL-" + num
+        if (DTOProfesor.campus == "Centro Académico de Limón")
+            codigoP = "LI-" + num
         let p = new Profesor({
-            codigo: "CA-204",
+            codigo: codigoP,
             cedula: DTOProfesor.cedula,
             nombre: DTOProfesor.nombre,
             nombre2: DTOProfesor.nombre2,
