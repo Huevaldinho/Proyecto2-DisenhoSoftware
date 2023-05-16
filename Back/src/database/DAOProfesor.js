@@ -41,7 +41,7 @@ export async function validarProfesor(correoP,contrasennaP){
 //Método que retorna los datos del profesor (si lo encuentra) mediante el correo
 export async function validarProfesorCambiarContra(correoP, contrasennaP){
     try {
-        const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        const contrasennaReg = /^[0-9]{8}$/
         var data = await Profesor.findOne({ correo: correoP}); 
         if (data) {
             if (contrasennaP.match(contrasennaReg)) {
@@ -63,11 +63,15 @@ export async function validarProfesorCambiarContra(correoP, contrasennaP){
 export const agregarProfesor = async (DTOProfesor) => {
     console.log("Post profesor middlewhere");
     try {
-        /*const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-        const correoReg = /^[a-z0-9]+@estudiantec.cr$/
+        const contrasennaReg = /^[0-9]{8}$/
+        const correoReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const telefonoReg = /^(2|6|8){1}[0-9]{7}$/
         const cedulaReg = /^[1-9]{1}[0-9]{8}$/
+        const celularReg = /^(\+506)?[24678]\d{7}$/;
         const data = await Profesor.findOne({ correo: DTOProfesor.correo}); 
+        const dataT = await Profesor.findOne({ telefono: DTOProfesor.telefono}); 
+        const dataC = await Profesor.findOne({ cedula: DTOProfesor.cedula}); 
+        const dataCel = await Profesor.findOne({ celular: DTOProfesor.celular}); 
         if (!DTOProfesor.contrasenna.match(contrasennaReg)) 
             return "1"; //error si la contraseña no es aceptada
         if (!DTOProfesor.correo.match(correoReg)) 
@@ -79,7 +83,15 @@ export const agregarProfesor = async (DTOProfesor) => {
         if (DTOProfesor.nombre == "" || DTOProfesor.apellido1 == "" || DTOProfesor.apellido2 == "")
             return "5" //error si alguno de estos campos esta vacio
         if (data)
-            return "6" //error si ya existia un profesor registrado*/
+            return "6" //error si ya existia un profesor registrado
+        if (dataT)
+            return "7" //error si ya existia el telefono registrado
+        if (dataC)
+            return "8" //error si ya existia la cedula registrada
+        if (dataCel)
+            return "9" //error si ya existia el celular registrada
+        if (!DTOProfesor.celular.match(celularReg)) 
+            return "10"; //error si el celular no es aceptada
         const lista = await Profesor.find({campus: DTOProfesor.campus}); 
         var num = lista.length +1;
         var codigoP;
@@ -152,26 +164,38 @@ export async function getProfesoresMongo(){
 export const modificarProfesor = async (DTOProfesor) => {
     console.log("put profesor middlewhere");
     try {
-        /*const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-        const correoReg = /^[a-z0-9]+@estudiantec.cr$/
+        //const contrasennaReg = /^[0-9]{8}$/
+        const correoReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const telefonoReg = /^(2|6|8){1}[0-9]{7}$/
-        const cedulaReg = /^1{1}[0-9]{8}$/
-        //const data = await Profesor.findOne({ correo: DTOProfesor.correo}); 
-        if (!DTOProfesor.contrasenna.match(contrasennaReg)) 
-            return "1"; //error si la contraseña no es aceptada
+        const cedulaReg = /^[1-9]{1}[0-9]{8}$/
+        const celularReg = /^(\+506)?[24678]\d{7}$/;
+        var p = await Profesor.findOne({codigo: DTOProfesor.codigo}); 
+
+
+        const data = await Profesor.findOne({ correo: DTOProfesor.correo}); 
+        const dataT = await Profesor.findOne({ telefono: DTOProfesor.telefono}); 
+        const dataC = await Profesor.findOne({ cedula: DTOProfesor.cedula}); 
+        const dataCel = await Profesor.findOne({ celular: DTOProfesor.celular}); 
+        /*if (!DTOProfesor.contrasenna.match(contrasennaReg)) 
+            return "1"; //error si la contraseña no es aceptada*/
         if (!DTOProfesor.correo.match(correoReg)) 
             return "2"; //error si el correo no es aceptado
         if (!DTOProfesor.telefono.match(telefonoReg)) 
             return "3";  //error si el telefono no es aceptado
         if (!DTOProfesor.cedula.match(cedulaReg)) 
             return "4"; //error si la cedula no es aceptada
-        if (DTOProfesor.nombre == "" || DTOProfesor.apellido1 == "" || DTOProfesor.apellido2 == "") 
+        if (DTOProfesor.nombre == "" || DTOProfesor.apellido1 == "" || DTOProfesor.apellido2 == "")
             return "5" //error si alguno de estos campos esta vacio
-        if (data)
-            return "6" //error si ya existia un profesor registrado*/
-            
-        var p = await Profesor.findOne({cedula: DTOProfesor.cedula}); 
-        p.codigo = DTOProfesor.codigo;
+        if (p.correo != DTOProfesor.correo && data)
+            return "6" //error si ya existia un profesor registrado
+        if (p.telefono != DTOProfesor.telefono && dataT)
+            return "7" //error si ya existia el telefono registrado
+        if (p.cedula != DTOProfesor.cedula && dataC)
+            return "8" //error si ya existia la cedula registrada
+        if (p.celular != DTOProfesor.celular && dataCel)
+            return "9" //error si ya existia el celular registrada
+        if (!DTOProfesor.celular.match(celularReg)) 
+            return "10"; //error si el celular no es aceptada 
         p.cedula = DTOProfesor.cedula;
         p.nombre = DTOProfesor.nombre;
         p.nombre2 = DTOProfesor.nombre2;
