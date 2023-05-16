@@ -6,9 +6,9 @@ import {
 
 //Método para obtener y mostrar todos los comentarios de una actividad en especifico
 export const getComentarios = async (req, res) => {
-    const profesores = await getComentariosActividad(req.params.idA);
-    console.log(profesores);
-    res.json(profesores);
+    const comentarios = await getComentariosActividad(req.params.idA);
+    console.log(comentarios);
+    res.json(comentarios);
 }
 
 //Método post para agregar un comentario
