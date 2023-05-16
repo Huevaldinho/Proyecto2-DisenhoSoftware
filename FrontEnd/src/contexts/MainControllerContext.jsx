@@ -24,12 +24,12 @@ const MainControllerContextProvider = ({ children }) => {
   const registrarProfesor = async (dtoProfe) => {
     const data = await mainController.registrarProfesor(dtoProfe);
     consultarProfesores();
-    return data;//profe 
+    return data; //profe o error.
   };
   const consultarProfesores = async () => {
     const data = await mainController.consultarProfesores(); //Pide datos a api
     setProfesores(data); //Guarda en state de profesores
-    return profesores;
+    return data;
   };
   /**
    * Metodo para cambiar los datos de un profesor
@@ -62,7 +62,7 @@ const MainControllerContextProvider = ({ children }) => {
   const verEstudiantes = async () => {
     const data = await mainController.verEstudiantes(); //Pide datos a api
     setEstudiantes(data); //Guarda en state de estudiantes
-    return estudiantes;
+    return data;
   };
   //*AUTH
   /**
@@ -74,8 +74,22 @@ const MainControllerContextProvider = ({ children }) => {
   const iniciarSesion = async (correoIn, contrasennaIn) => {
     const data = await mainController.iniciarSesion(correoIn, contrasennaIn);
     setUsuario(data); //guarda datos de usuario
-    return usuario;
+    return data;
   };
+  /**
+   * Metodo para cambiar la contra de un correo.
+   * @param {String} correoIn 
+   * @param {String} contrasennaIn: nueva contrasenna
+   * @returns 
+   */
+  const cambiarContrasenna = async (correoIn, contrasennaIn) => {
+    const data = await mainController.cambiarContrasenna(
+      correoIn,
+      contrasennaIn
+    );
+    return data;
+  };
+
   //*PLAN DE TRABAJO
   /**
    * Metodo para obtener plan de trabajo.
@@ -84,7 +98,7 @@ const MainControllerContextProvider = ({ children }) => {
   const consultarPlanDeTrabajo = async () => {
     let data = await mainController.consultarPlanDeTrabajo();
     setPlanDeTrabajo(data); //guarda datos de plan de trabajo
-    return planDeTrabajo;
+    return data;
   };
   const consultarComentarios = async (id) => {
     let data = await mainController.consultarComentarios(id);
@@ -98,6 +112,7 @@ const MainControllerContextProvider = ({ children }) => {
       value={{
         usuario,
         iniciarSesion,
+        cambiarContrasenna,
         estudiantes,
         verEstudiantes,
         consultarPlanDeTrabajo,

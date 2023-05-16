@@ -1,8 +1,6 @@
 import { useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import EstadoUsuario from "../../services/enums/estadoUsuario";
 import COORDINADOR from "../../services/enums/coordinador";
-import { validarCorreoTelefono } from "../../validation/ValidarInputs";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
 import DTOProfesor from "../../services/DTOs/DTOProfesor";
 
@@ -28,6 +26,46 @@ function FormularioModificarProfesor(props) {
   const [celular, setCelular] = useState(profesor.celular); //Celular
   const [cedula, setCedula] = useState(profesor.cedula); //Cedula
 
+  const manejoErrores = async (respuesta) => {
+    switch (respuesta) {
+      case 1: {
+        alert("Ha ocurrido un error, formato de contraseña incorrecto.");
+        return false;
+      }
+      case 2: {
+        alert("Ha ocurrido un error, correo incorrecto.");
+        return false;
+      }
+      case 3: {
+        alert(
+          "Ha ocurrido un error, telefono incorrecto (8 números y debe empezar con 2|6|8)."
+        );
+        return false;
+      }
+      case 4: {
+        alert(
+          "Ha ocurrido un error, cedula incorrecta (empieza con 1|2|3|4|5|6|7|8|9 seguido de 8 números)."
+        );
+        return false;
+      }
+      case 5: {
+        alert(
+          "Ha ocurrido un error, nombre, primer apellido o segundo apellido vacio."
+        );
+        return false;
+      }
+      case 6: {
+        alert(
+          "Ha ocurrido un error, el correo con el que quiere ingresar ya estaba registrado antes."
+        );
+        return false;
+      }
+      default: {
+        return true;
+      }
+    }
+  };
+
   const redireccionar = async () => {
     let profeAct = new DTOProfesor(
       cedula,
@@ -49,34 +87,18 @@ function FormularioModificarProfesor(props) {
     );
     const respuesta = await actualizarProfesor(profeAct);
 
-    if (Object.keys(respuesta).length !== 0) {
-      alert("Se ha modificado exitosamente al profesor.");
-      navigate("/infoProfesores");
-    } else alert("No se ha podido modificado al profesor, intente de nuevo.");
+    if (manejoErrores(respuesta)) {
+      //No hubo errores.
+      if (Object.keys(respuesta).length !== 0) {
+        alert("Se ha modificado exitosamente al profesor.");
+        navigate("/infoProfesores");
+      } else alert("No se ha podido modificado al profesor, intente de nuevo.");
+    }
   };
-  /**
-   * Funcion para manejar el envio del formulario.
-   */
+
   const handleModificar = (e) => {
     e.preventDefault();
-    //*Validar datos del formulario.
-    switch (validarCorreoTelefono(correo, telefono)) {
-      case 0: {
-        //*Validacion exitosa.
-        redireccionar();
-        break;
-      }
-      case 1: {
-        //Telefono invalido.
-        alert("Telefono invalido, ingrese otro.");
-        break;
-      }
-      case 2: {
-        //Correo invalido.
-        alert("Correo invalido, ingrese otro.");
-        break;
-      }
-    }
+    redireccionar();
   };
 
   const handleBorrar = async (e) => {

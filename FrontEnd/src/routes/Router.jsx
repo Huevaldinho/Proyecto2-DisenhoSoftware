@@ -14,27 +14,20 @@ import MenuProfesoresGuia from "../pages/profesores/MenuProfesoresGuia";
 import InformacionEstudiantesProfesores from "../pages/profesores/InformacionEstudiantesProfesores";
 import CargarExcel from "../pages/manejoExcel/CargarExcel";
 import InfoProfesores from "../pages/profesores/InfoProfesores";
-import ModificarProfesor from "../pages/asistentes/ModificarProfesor";
+import InformacionProfesor from "../pages/asistentes/InformacionProfesor";
 //Coordinadores
 import MenuAsistentes from "../pages/asistentes/MenuAsistentes";
 import PlanDeTrabajo from "../pages/compartidas/PlanDeTrabajo";
 import DetallesActividad from "../pages/compartidas/DetallesActividad";
 import AgregarActividad from "../pages/profesores/coordinadores/AgregarActividad";
-import DetalleEstudiante from "../pages/profesores/DetalleEstudiante";
 import { Navigate } from "react-router-dom";
 import RegistrarProfesor from "../pages/asistentes/RegistrarProfesor";
 import ListaComentarios from "../components/profesores/ListaComentarios";
 function Router() {
-  //*El router funciona para redireccionar a los clientes a las paginas correspondientes.
   return (
-    /*
-     ! Plantilla para declarar una ruta:
-     
-      *  <Route path="/URL" element={<NOMBRE DEL COMPONENTE />}>
-      *  El URL es la ruta asociada al componente que se desea mostrar.
-     */
     <BrowserRouter>
       <Routes>
+        {/*Ruta al iniciar aplicacion es login. */}
         <Route index element={<Navigate to="/login" />} />
         {/*Inicio routues de COMPARTIDAS */}
         <Route path="/planDeTrabajo" element={<PlanDeTrabajo />} />
@@ -52,39 +45,31 @@ function Router() {
           element={<InformacionEstudiante />}
         />
         <Route path="/agregarEstudiante" element={<AgregarEstudiante />} />
-        <Route path="/detallesEstudiante" element={<DetalleEstudiante />} />
-        {/*Fin routes de ESTUDIANTES */}
-        {/*Routes Profesores Guia */}
+
+        {/*Inicio routes de PROFESORES */}
         <Route
           path="/informacionEstudiantesProfesores"
           element={<InformacionEstudiantesProfesores />}
         />
-        <Route path="/menuProfesoresGuia" element={<MenuProfesoresGuia />} />
-        {/*Fin routes de ProfesoresGuia */}
-
-        {/*Inicio routes de PROFESORES */}
         <Route path="/menuProfesores" element={<MenuProfesoresGuia />} />
         <Route path="/infoProfesores" element={<InfoProfesores />}></Route>
-        <Route path="/modificarProfesor" element={<ModificarProfesor />} />
+        <Route path="/informacionProfesor" element={<InformacionProfesor />} />
         <Route path="/registrarProfesor" element={<RegistrarProfesor />} />
-        {/*Fin routes de PROFESORES */}
 
         {/*Inicio routes de COORDINADORES */}
         <Route path="/agregarActividad" element={<AgregarActividad />} />
-        {/*Fin routes de COORDINADORES */}
 
         {/*Inicio routues de ASISTENTES */}
         <Route path="/menuAsistentes" element={<MenuAsistentes />} />
-        {/*Fin routues de ASISTENTES */}
 
-        {/*Auth */}
+        {/*Inicio routues de AUTH */}
         <Route path="/login" element={<Login />} />
         <Route path="/cambiarContrasenna" element={<CambiarContraseanna />} />
 
-        {/*Routes Excel */}
+        {/*Routes EXCEL */}
         <Route path="/cargarExcel" element={<CargarExcel />} />
 
-        {/*Rutas no encontradas */}
+        {/*Rutas NO ENCONTRADAS */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

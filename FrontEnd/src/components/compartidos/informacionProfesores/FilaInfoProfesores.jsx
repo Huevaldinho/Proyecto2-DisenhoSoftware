@@ -8,7 +8,7 @@ function FilaInfoProfesores({ profesor, index }) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate("/modificarProfesor", { state: { profesor: profesor } });
+    navigate("/informacionProfesor", { state: { profesor: profesor } });
   };
   const styleRow =
     "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900";

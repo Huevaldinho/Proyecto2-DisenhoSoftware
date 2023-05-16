@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
 
 //Schema asociado a plan de actividades, es el cual se guardará en mongo
-const planActividadSchema = new mongoose.Schema({
+const planSchema = new mongoose.Schema({
     nombre: {type: String, required: true},
     actividades: {type: Array, required: true}
 });
@@ -34,21 +34,37 @@ const comentarioSchema = new mongoose.Schema({
 });
 
 // Objeto
-const Actividad = mongoose.model('Actividad',actividadSchema,'Actividad'); //"Objeto comentario" que actuara como conexión entre mongo y el api
+const Plan = mongoose.model('Plan',planSchema,'Plan'); //"Objeto plan" que actuara como conexión entre mongo y el api
+const Actividad = mongoose.model('Actividad',actividadSchema,'Actividad'); //"Objeto Actividad" que actuara como conexión entre mongo y el api
 const Comentario = mongoose.model('Comentario',comentarioSchema,'Comentario'); //"Objeto comentario" que actuara como conexión entre mongo y el api
 
-
-export const getActividadesDB = async () => {
-    console.log('OBTENER ACTIVIDAD')
+async function guardarEnplanDB(nombreActividad){
     try {
-        const data = await Actividad.find(); 
-        if (data) {
-            return data
-        } else {
-            return false
-        }
+        const plan = await Plan.findOne() //devuelve el primer plan que encuentre (el único)
+        const actividad = await Actividad.findOne({nombre: nombreActividad}) //tengo la actividad
+
+        plan.actividades.push(actividad._id) //agrega el id de la actividad al plan de trabajo
+        await plan.save();
+
     } catch (error) {
-        console.log(error)
+        return error
+    }
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+export const getActividadesDB = async () => {
+    try {
+        const plan = await Plan.findOne() //devuelve el primer plan que encuentre (el único)
+        const idsActividades = plan.actividades
+        console.log(idsActividades)
+        
+        const actividades = await Actividad.find({ _id: { $in: idsActividades } });
+
+        if (actividades) return actividades;
+        return false
+
+    } catch (error) {
+        return error
     }
 };
 
@@ -73,55 +89,49 @@ export const ingresarActividadDB = async (DTOActividad) => {
             evidencia: DTOActividad.evidencia,
         })
         nuevaActividad.save()
-        return nuevaActividad
+
+        const actividad = await Actividad.findOne({nombre: nuevaActividad.nombre}) //lo guardo para enviarlo con su id
+        guardarEnplanDB(actividad.nombre) //envía a guardar el id de la nueva actividad en el array de plan
+
+        return actividad
         
     } catch (error) {
         return error
     }
-
 };
 
 export const modificarActividadDB = async (DTOActividad) => {
+    console.log(DTOActividad)
     try {
-        const actividadActualizada = await Actividad.findByIdAndUpdate(
-            DTOActividad.id,
-            {
-            nombre: DTOActividad.nombre,
-            fecha: DTOActividad.fecha,
-            semana: DTOActividad.semana,
-            descripcion: DTOActividad.descripcion,
-            tipo: DTOActividad.tipo,
-            responsable: DTOActividad.responsable,
-            fechaPublicacion: DTOActividad.fechaPublicacion,
-            recordatorios: DTOActividad.recordatorios,
-            modalidad: DTOActividad.modalidad,
-            enlace: DTOActividad.enlace,
-            afiche: DTOActividad.afiche,
-            estado: DTOActividad.estado,
-            evidencia: DTOActividad.evidencia,
-            },
-            { new: true } // Devuelve el documento actualizado
-        );
+        const actividadExistente = await Actividad.findById(DTOActividad._id);
+        if (!actividadExistente) {
+          throw new Error(`No se encontró la actividad con id ${DTOActividad._id}`);
+        }
+    
+        Object.assign(actividadExistente, DTOActividad);
+        const actividadActualizada = await actividadExistente.save();
+    
         return actividadActualizada;
-        } catch (error) {
-        console.error(error);
-        return error;
-        }
-};
-
-export const eliminarActividadDB = async (DTOActividad) => {
-    try {
-        const resultado = await Actividad.deleteOne({ _id: DTOActividad.id });
-        if (resultado.deletedCount === 0) {
-          throw new Error(`No se encontró la actividad con id ${DTOActividad.id}`);
-        }
-        return resultado;
       } catch (error) {
         console.error(error);
         return error;
       }
 };
 
+export const eliminarActividadDB = async (DTOActividad) => {
+    try {
+        const actividadEliminada = DTOActividad
+
+        const plan = await Plan.findOne() //devuelve el primer plan que encuentre (el único)
+        plan.actividades.pull(DTOActividad._id)
+        await plan.save()
+        
+        return actividadEliminada
+      } catch (error) {
+        console.error(error);
+        return error;
+      }
+};
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
@@ -179,3 +189,4 @@ export const agregarRespuesta = async (comentario) => {
         return error;
     }
 };
+
