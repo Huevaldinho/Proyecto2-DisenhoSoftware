@@ -115,7 +115,7 @@ export const profesores = [{
     coordinador: "Coordinador"
 
 }, {
-    id: 1,
+    id: 2,
     nombre: "Laura",
     nombre2: "Maria",
     apellido1: "Coto",
@@ -129,6 +129,15 @@ export const profesores = [{
 }
 
 
+];
+export const comentarios = [
+    {"idActividad" :  1,
+    "descripcion" : "Gran Actividad",
+    "fecha" : "12/07/2014",
+    "Autor" : "Anthony Jimenez",
+    "idRespuesta" :  null
+
+}
 ];
 
 export const profPlanilla = {

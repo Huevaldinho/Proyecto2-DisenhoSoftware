@@ -11,16 +11,16 @@ export const getActividades = async (req, res) => {
 }
 
 export const postActividad = async (req, res) => {
-    const actividad = ingresarActividadDB(req.body)
+    const actividad = await ingresarActividadDB(req.body)
     res.json(actividad)
 }
 
 export const putActividad = async (req, res) => {
-    const actividad = modificarActividadDB(req.body)
+    const actividad = await modificarActividadDB(req.body)
     res.json(actividad)
 }
 
 export const deleteActividad = async (req, res) => {
-    const actividad = eliminarActividadDB(req.body)
+    const actividad = await eliminarActividadDB(req.body)
     res.json(actividad)
 }

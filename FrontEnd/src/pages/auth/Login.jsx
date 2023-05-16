@@ -33,11 +33,19 @@ function Login() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let respuestaAPI = 1; //Si la respuesta es 1 es porque no existe el usuario.
     if (validarLogin(email, password)) {
-      //*Validar inputs.
-      respuestaAPI = await iniciarSesion(email, password);
-      redireccionar(respuestaAPI);
+      let respuestaAPI = await iniciarSesion(email, password); //manda request
+      if (respuestaAPI === 1) {
+        //Correo no registrado
+        alert("El correo ingresado no está registrado.");
+      } else if (respuestaAPI === 2) {
+        //Contraseña no es la registrada
+        alert(
+          "La contraseña ingresada no concuerda con la del correo ingresado."
+        );
+      } else {
+        redireccionar(respuestaAPI); //Correo y contra buen
+      }
     } else {
       alert(
         "No se ha podido iniciar sesion. Correo o contraseña inválidos. Intente de nuevo."

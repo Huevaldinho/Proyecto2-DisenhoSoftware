@@ -8,7 +8,7 @@ function FilaInfoProfesores({ profesor, index }) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate("/modificarProfesor", { state: { profesor: profesor } });
+    navigate("/informacionProfesor", { state: { profesor: profesor } });
   };
   const styleRow =
     "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900";
@@ -24,8 +24,12 @@ function FilaInfoProfesores({ profesor, index }) {
         {profesor.apellido2}
       </td>
       <td className={styleRow}>{profesor.campus}</td>
-      <td className={styleRow}>{profesor.estado ? "Activido" : "Inactivo"}</td>
-      <td className={styleRow}>{profesor.coordinador ? "Si" : "No"}</td>
+      <td className={styleRow}>
+        {profesor.estado == "Activo" ? "Activo" : "Inactivo"}
+      </td>
+      <td className={styleRow}>
+        {profesor.coordinador == "NOCOORDINADOR" ? "No" : "Si"}
+      </td>
     </tr>
   );
 }

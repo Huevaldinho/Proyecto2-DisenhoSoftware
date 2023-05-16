@@ -1,24 +1,51 @@
 class DTOProfesor {
   //*Atributos
-  nombre = "";
-  apellido1 = "";
-  apellido2 = "";
-  correo = "";
-  telefono = "";
-  celular = "";
-  foto = "";
+  cedula = ''
+  nombre = ''
+  nombre2 = ''
+  apellido1 = ''
+  apellido2 = ''
+  correo = ''
+  contrasenna = ''
+  rol = ''
+  codigo = ''
+  coordinador = ''
+  telefono = ''
+  campus = ''
+  estado = ''
+  equipo = ''
+  celular = ''
+  foto = '';
   //*Constructores
-  constructor() { }
-  constructor(nombre, apellido1, apellido2, correo, telefono, celular, foto) {
+  constructor(cedula, nombre, nombre2, apellido1, apellido2, correo, contrasenna, rol,
+    codigo, coordinador, telefono, campus, estado, equipo, celular, foto) {
+    this.cedula = cedula;
     this.nombre = nombre;
+    this.nombre2 = nombre2;
     this.apellido1 = apellido1;
     this.apellido2 = apellido2;
     this.correo = correo;
+    this.contrasenna = contrasenna;
+    this.rol = rol;
+    this.codigo = codigo;
+    this.coordinador = coordinador;
     this.telefono = telefono;
+    this.campus = campus;
+    this.estado = estado;
+    this.equipo = equipo;
     this.celular = celular;
-    this.foto = foto;
+    this.foto = foto;//TODO
+  }
+  //*To String
+  toString() {
+    console.log(this.cedula, this.nombre, this.nombre2, this.apellido1,
+      this.apellido2, this.correo, this.contrasenna, this.rol, this.codigo, this.coordinador, this.telefono,
+      this.campus, this.estado, this.equipo, this.celular, this.foto)
   }
   //*Getters
+  getCedula() {
+    return this.cedula;
+  }
   /**
    * Metodo para obtener nombre del profesor.
    * @returns String nombre: Nombre 
@@ -26,95 +53,49 @@ class DTOProfesor {
   getNombre() {
     return this.nombre;
   }
-  /**
-   * Metodo para obtener el apellido 1 del profesor.
-   * @returns String apellido1: Apellido 1 del profesor.
-   */
+  getNombre2() {
+    return this.nombre2;
+  }
   getApellido1() {
     return this.apellido1;
   }
-  /**
-   * Metodo para obtener el apellido 2 del profesor.
-   * @returns String apellido2: Apellido 2 del profesor.
-   */
   getApellido2() {
     return this.apellido2;
   }
-  /**
-   * Metodo para obtener el correo del profesor.
-   * @returns String correo: Correo del profesor.
-   */
   getCorreo() {
     return this.correo;
   }
-  /**
-   * Metodo para obtener el telefono de oficiona del profesor.
-   * @returns String telefono: Telefono de oficina del profesor.
-   */
+  getContrasenna() {
+    return this.contrasenna;
+  }
+  getRol() {
+    return this.rol;
+  }
+  getCodigo() {
+    return this.codigo;
+  }
+  getCoordinador() {
+    return this.coordinador;
+  }
   getTelefono() {
     return this.telefono;
   }
-  /**
-   * Metodo para obtener el celular del profesor.
-   * @returns String celular: Celular del profesor.
-   */
+  getCampus() {
+    return this.campus;
+  }
+  getEstado() {
+    return this.estado;
+  }
+  getEquipo() {
+    return this.equipo;
+  }
   getCelular() {
     return this.celular;
   }
-  /**
-   * Metodo para obtener el link de la foto del profesor.
-   * @returns String foto: String con el link de la foto del profesor.
-   */
   getFoto() {
     return this.foto;
   }
   //*Setters
-  /**
-   * Metodo para asignar nombre al profesor.
-   * @param {String} nombre: Nombre del profesor.
-   */
-  setNombre(nombre) {
-    this.nombre = nombre;
-  }
-  /**
-   * Metodo para asignar el apellido 1 del profesor.
-   * @param {String} apellido1: Apellido 1 del profesor.
-   */
-  setApellido1(apellido1) {
-    this.apellido1 = apellido1;
-  }
-  /**
-   * Metodo para asignar el apellido 2 del profesor.
-   * @param {String} apellido2: Apellido 2 del profesor.
-   */
-  setApellido2(apellido2) {
-    this.apellido2 = apellido2;
-  }
-  /**
-   * Metodo para asignar el correo del profesor.
-   * @param {String} correo: Correo del profesor.
-   */
-  setCorreo(correo) {
-    this.correo = correo;
-  }
-  /**
-   * Metodo para asignar el telefono de oficina del profesor.
-   * @param {String} telefono: Telefono de oficina del profesor.
-   */
-  setTelefono(telefono) {
-    this.telefono = telefono;
-  }
-  /**
-   * Metodo para asignar el celular del profesor.
-   * @param {String} celular: Celular del profesor.
-   */
-  setCelular(celular) {
-    this.celular = celular;
-  }
-  /**
-   * Metodo para asignar el link  de la foto del profesor.
-   * @param {String} foto: String con link de la foto del profesor.
-   */
   setFoto(foto) {
     this.foto = foto;
   }

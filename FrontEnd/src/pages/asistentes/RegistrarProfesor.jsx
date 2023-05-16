@@ -1,15 +1,6 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import FormularioAgregarProfesor from "../../components/profesores/FormularioAgregarProfesor";
-/**
- * Este componente es la pagina que se mostrara cuando se necesite
- * modificar la informacion de un estudiante.
- * Esta modificacion incluye poner en estado inactivo al estudiante,
- * es decir, tambien funciona para eliminar a un estudiante.
- *
- * @returns Pagina para modificar o eliminar a un estudiante.
- *
- */
+
 function RegistrarProfesor(props) {
   /*
    *Quien llama a esta llamada es el menu de profesores,

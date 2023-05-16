@@ -13,12 +13,44 @@ const MainControllerContextProvider = ({ children }) => {
   let [planDeTrabajo, setPlanDeTrabajo] = useState({});
   //Profesores
   let [profesores, setProfesores] = useState([]);
-
+  //Comentarios
+  let [comentarios, setComentarios] = useState([]);
   //*PROFESORES
+  /**
+   * Metodo para registrar a un profesor.
+   * @param {DTOProfesor} dtoProfe
+   * @returns {JSON} profe registrado
+   */
+  const registrarProfesor = async (dtoProfe) => {
+    const data = await mainController.registrarProfesor(dtoProfe);
+    consultarProfesores();
+    return data; //profe o error.
+  };
   const consultarProfesores = async () => {
     const data = await mainController.consultarProfesores(); //Pide datos a api
     setProfesores(data); //Guarda en state de profesores
-    return profesores;
+    return data;
+  };
+  /**
+   * Metodo para cambiar los datos de un profesor
+   * @param {DTOProfesor} dtoProfe
+   */
+  const actualizarProfesor = async (dtoProfe) => {
+    //Hacer cambio y actualizar los profes
+    const data = mainController.actualizarProfesor(dtoProfe);
+    consultarProfesores();
+    return data;
+  };
+  /**
+   * Metodo para eliminar (inactivar )a un miembro del equipo.
+   * Llama a la API para inactivarlo en la base de datos.
+   * @param {int} cedula
+   * @returns {JSON de profesor}
+   */
+  const eliminarMiembro = async (cedula) => {
+    const data = await mainController.eliminarMiembro(cedula);
+    consultarProfesores();
+    return data;
   };
   //*ESTUDIANTES
   /**
@@ -30,7 +62,7 @@ const MainControllerContextProvider = ({ children }) => {
   const verEstudiantes = async () => {
     const data = await mainController.verEstudiantes(); //Pide datos a api
     setEstudiantes(data); //Guarda en state de estudiantes
-    return estudiantes;
+    return data;
   };
   //*AUTH
   /**
@@ -41,9 +73,23 @@ const MainControllerContextProvider = ({ children }) => {
    */
   const iniciarSesion = async (correoIn, contrasennaIn) => {
     const data = await mainController.iniciarSesion(correoIn, contrasennaIn);
-    setUsuario(data);//guarda datos de usuario
-    return usuario;
+    setUsuario(data); //guarda datos de usuario
+    return data;
   };
+  /**
+   * Metodo para cambiar la contra de un correo.
+   * @param {String} correoIn 
+   * @param {String} contrasennaIn: nueva contrasenna
+   * @returns 
+   */
+  const cambiarContrasenna = async (correoIn, contrasennaIn) => {
+    const data = await mainController.cambiarContrasenna(
+      correoIn,
+      contrasennaIn
+    );
+    return data;
+  };
+
   //*PLAN DE TRABAJO
   /**
    * Metodo para obtener plan de trabajo.
@@ -51,21 +97,33 @@ const MainControllerContextProvider = ({ children }) => {
    */
   const consultarPlanDeTrabajo = async () => {
     let data = await mainController.consultarPlanDeTrabajo();
-    setPlanDeTrabajo(data);//guarda datos de plan de trabajo
-    return planDeTrabajo;
+    setPlanDeTrabajo(data); //guarda datos de plan de trabajo
+    return data;
   };
+  const consultarComentarios = async (id) => {
+    let data = await mainController.consultarComentarios(id);
+    setComentarios(data);
+    return data;
+
+  }
 
   return (
     <MainControllerContext.Provider
       value={{
         usuario,
         iniciarSesion,
+        cambiarContrasenna,
         estudiantes,
         verEstudiantes,
         consultarPlanDeTrabajo,
         planDeTrabajo,
         profesores,
         consultarProfesores,
+        actualizarProfesor,
+        eliminarMiembro,
+        registrarProfesor,
+        comentarios,
+        consultarComentarios
       }}
     >
       {children}

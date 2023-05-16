@@ -31,6 +31,16 @@ class MainController {
   async crearActividad(dtoActividad) {
     return await this.adminActividades.crearActividad(dtoActividad);
   }
+/**
+   * Metodo para obtener los comentarios
+   * Trae los datos con la API.
+   * @returns {Array JSON} 
+   * 
+   */
+      async consultarComentarios(id) {
+        return await this.adminActividades.consultarComentarios(id);
+      }
+
   /**
    * Metodo para obtener el plan de trabajo.
    * @returns {JSON} plan de trabajo
@@ -52,7 +62,25 @@ class MainController {
     return await this.configuracion.iniciarSesion(correo, contrasenna);
   }
 
+  /**
+   * Metodo para cambiar la contrasenna.
+   * @param {String} correo 
+   * @param {String} contrasenna 
+   * @returns 
+   */
+  async cambiarContrasenna(correo, contrasenna) {
+    return await this.configuracion.cambiarContrasenna(correo, contrasenna);
+  }
+
   //*PROFESORES
+  /**
+   * Metodo para registrar un profesor.
+   * @param {DTOProfesor} dtoProfe 
+   * @returns {JSON} dtoProfe registrado
+   */
+  async registrarProfesor(dtoProfe) {
+    return this.adminProfesores.registrarProfesor(dtoProfe);
+  }
   /**
        * Metodo para obtener los profesores
        * Trae los datos con la API.
@@ -62,6 +90,23 @@ class MainController {
        */
   async consultarProfesores() {
     return await this.adminProfesores.consultarProfesores();
+  }
+  /**
+   * Metodo para cambiar los datos de un profesor.
+   * @param {DTOProfesor} dtoProfe 
+   * @returns 
+   */
+  async actualizarProfesor(dtoProfe) {
+    return await this.adminProfesores.actualizarProfesor(dtoProfe);
+  }
+  /**
+     * Metodo para eliminar (inactivar )a un miembro del equipo.
+     * Llama a la API para inactivarlo en la base de datos.
+     * @param {int} cedula 
+     * @returns {JSON de profesor}
+  */
+  async eliminarMiembro(cedula) {
+    return await this.adminProfesores.eliminarMiembro(cedula);
   }
 
   //*ESTUDIANTES
