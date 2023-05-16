@@ -84,15 +84,30 @@ export const agregarProfesor = async (DTOProfesor) => {
         var num = lista.length +1;
         var codigoP;
         if (DTOProfesor.campus == "Campus Tecnológico Central Cartago")
-            codigoP = "CA-" + num
+            if (num < 100)
+                codigoP = "CA-0" + num
+            else
+                codigoP = "CA-" + num
         if (DTOProfesor.campus == "Campus Tecnológico Local San Carlos")
-            codigoP = "SC-" + num
+            if (num < 100)
+                codigoP = "SC-0" + num
+            else
+                codigoP = "SC-" + num
         if (DTOProfesor.campus == "Campus Tecnológico Local San José")
-            codigoP = "SJ-" + num
+            if (num < 100)
+                codigoP = "SJ-0" + num
+            else
+                codigoP = "SJ-" + num
         if (DTOProfesor.campus == "Centro Académico de Alajuela")
-            codigoP = "AL-" + num
+            if (num < 100)
+                codigoP = "AL-0" + num
+            else
+                codigoP = "AL-" + num
         if (DTOProfesor.campus == "Centro Académico de Limón")
-            codigoP = "LI-" + num
+            if (num < 100)
+                codigoP = "LI-0" + num
+            else
+                codigoP = "LI-" + num
         let p = new Profesor({
             codigo: codigoP,
             cedula: DTOProfesor.cedula,
