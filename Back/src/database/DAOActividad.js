@@ -51,6 +51,27 @@ async function guardarEnplanDB(nombreActividad){
     }
 }
 
+export const getPlanDB = async () => {
+    try {
+        const plan = await Plan.findOne()
+        if (plan) return plan
+        return false
+    } catch (error) {
+        return error
+    }
+}
+
+export const modificarPlanDB = async (nuevoPlan) => {
+    try {
+        var plan = await Plan.findOne() //encuentra el unico plan
+        plan.nombre = nuevoPlan.nombre
+        plan.save()
+        return plan
+    } catch (error) {
+        return error
+    }
+};
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 export const getActividadesDB = async () => {
     try {
