@@ -23,6 +23,7 @@ import AgregarActividad from "../pages/profesores/coordinadores/AgregarActividad
 import DetalleEstudiante from "../pages/profesores/DetalleEstudiante";
 import { Navigate } from "react-router-dom";
 import RegistrarProfesor from "../pages/asistentes/RegistrarProfesor";
+import ListaComentarios from "../components/profesores/ListaComentarios";
 function Router() {
   //*El router funciona para redireccionar a los clientes a las paginas correspondientes.
   return (
@@ -38,7 +39,7 @@ function Router() {
         {/*Inicio routues de COMPARTIDAS */}
         <Route path="/planDeTrabajo" element={<PlanDeTrabajo />} />
         <Route path="/detallesActividad" element={<DetallesActividad />} />
-
+        <Route path="/listaComentarios" element={<ListaComentarios />} />
         {/*Fin routues de COMPARTIDAS */}
 
         {/*Inicio routes de ESTUDIANTES */}

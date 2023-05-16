@@ -31,6 +31,16 @@ class MainController {
   async crearActividad(dtoActividad) {
     return await this.adminActividades.crearActividad(dtoActividad);
   }
+/**
+   * Metodo para obtener los comentarios
+   * Trae los datos con la API.
+   * @returns {Array JSON} 
+   * 
+   */
+      async consultarComentarios(id) {
+        return await this.adminActividades.consultarComentarios(id);
+      }
+
   /**
    * Metodo para obtener el plan de trabajo.
    * @returns {JSON} plan de trabajo

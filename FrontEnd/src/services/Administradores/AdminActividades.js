@@ -3,7 +3,7 @@ import { API_URL } from '../config';
 
 //!BORRAR ESTE IMPORT DE DATOS.
 import { planDeTrabajo as pTEjemplo } from "../../datos";
-
+import { comentarios as pcomentarios } from '../../datos';
 class AdminActividades {
     //*Constructores
     constructor() { }
@@ -17,5 +17,22 @@ class AdminActividades {
         //Hacer peticion a la API, retornar el json.
         return await pTEjemplo;
     }
+    async consultarComentarios(id) {//TODO
+        //Hacer peticion a la API, retornar el json.
+        try {
+            //!API_URL Esta en el archivo services/config.js
+            //en caso que la profe nos pida subirlo a un host solo tenemos que cambiar ahi la ip y puerto
+            const response = await fetch(`${API_URL}/comentario/${id}`, {
+                method: 'GET'
+            });
+            let data = await response.json(); // Convertir datos a formato JSON
+            console.log("AminActividades consultarComentarios retorna :", data)
+            return data;
+        } catch (error) {
+            console.error('Error en AdminActividades, en metodo consultarComentarios: ', error);
+            return null;
+        }
+    }
+
 }
 export default AdminActividades;

@@ -13,7 +13,8 @@ const MainControllerContextProvider = ({ children }) => {
   let [planDeTrabajo, setPlanDeTrabajo] = useState({});
   //Profesores
   let [profesores, setProfesores] = useState([]);
-
+  //Comentarios
+  let [comentarios, setComentarios] = useState([]);
   //*PROFESORES
   /**
    * Metodo para registrar a un profesor.
@@ -85,6 +86,12 @@ const MainControllerContextProvider = ({ children }) => {
     setPlanDeTrabajo(data); //guarda datos de plan de trabajo
     return planDeTrabajo;
   };
+  const consultarComentarios = async (id) => {
+    let data = await mainController.consultarComentarios(id);
+    setComentarios(data);
+    return data;
+
+  }
 
   return (
     <MainControllerContext.Provider
@@ -99,7 +106,9 @@ const MainControllerContextProvider = ({ children }) => {
         consultarProfesores,
         actualizarProfesor,
         eliminarMiembro,
-        registrarProfesor
+        registrarProfesor,
+        comentarios,
+        consultarComentarios
       }}
     >
       {children}

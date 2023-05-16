@@ -130,6 +130,15 @@ export const profesores = [{
 
 
 ];
+export const comentarios = [
+    {"idActividad" :  1,
+    "descripcion" : "Gran Actividad",
+    "fecha" : "12/07/2014",
+    "Autor" : "Anthony Jimenez",
+    "idRespuesta" :  null
+
+}
+];
 
 export const profPlanilla = {
     id: 1,

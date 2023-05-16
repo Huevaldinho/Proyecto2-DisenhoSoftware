@@ -183,7 +183,7 @@ function FormularioDetallesActividad(props) {
           Aceptar
         </button>
       </div>
-      <ListaComentarios />
+      <ListaComentarios actividad = {actividad} />
     </div>
   );
 }
