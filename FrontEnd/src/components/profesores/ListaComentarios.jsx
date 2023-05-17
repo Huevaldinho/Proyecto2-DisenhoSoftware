@@ -4,14 +4,15 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import TablaComentarios from "../../components/compartidos/comentarios/TablaComentarios";
 
-function ListaComentarios({actividad}) {
+function ListaComentarios({ actividad }) {
   const navigate = useNavigate();
-  const { comentarios, consultarComentarios } = useContext(MainControllerContext);
+  const { comentarios, consultarComentarios } = useContext(
+    MainControllerContext
+  );
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/agregarComentario");
   };
-
 
   const updateState = () => {
     setTimeout(() => {
@@ -31,7 +32,6 @@ function ListaComentarios({actividad}) {
       </p>
     );
   }
-  console.log(comentarios)
   return (
     <div className="container">
       <div className="text-center" id="nombrePlanConteiner">

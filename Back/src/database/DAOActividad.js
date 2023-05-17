@@ -3,45 +3,45 @@ import mongoose from "mongoose";
 
 //Schema asociado a plan de actividades, es el cual se guardará en mongo
 const planSchema = new mongoose.Schema({
-    nombre: {type: String, required: true},
-    actividades: {type: Array, required: true}
+    nombre: { type: String, required: true },
+    actividades: { type: Array, required: true }
 });
 
 //Schema asociado a actividad, es el cual se guardara en mongo
 const actividadSchema = new mongoose.Schema({
-    nombre: {type: String, required: true},
-    fecha: {type: Date, required: true},
-    semana: {type: Number, required: true},
-    descripcion: {type: String, required: true},
-    tipo: {type: String, required: true},
-    responsable: {type: Number, required: true},
-    fechaPublicacion: {type: Date, required: true},
-    recordatorios: {type: Array, required: true},
-    modalidad: {type: Boolean, required: true},
-    enlace: {type: String, required: true},
-    afiche: {type: String, required: true},
-    estado: {type: String, required: true},
-    evidencia: {type: Array, required: true},
+    nombre: { type: String, required: true },
+    fecha: { type: Date, required: true },
+    semana: { type: Number, required: true },
+    descripcion: { type: String, required: true },
+    tipo: { type: String, required: true },
+    responsable: { type: Number, required: true },
+    fechaPublicacion: { type: Date, required: true },
+    recordatorios: { type: Array, required: true },
+    modalidad: { type: Boolean, required: true },
+    enlace: { type: String, required: true },
+    afiche: { type: String, required: true },
+    estado: { type: String, required: true },
+    evidencia: { type: Array, required: true },
 });
 
 //Schema asociado a comentario, es el cual se guardara en mongo
 const comentarioSchema = new mongoose.Schema({
-    idActividad: {type: ObjectId, required: true},
-    descripcion: {type: String, required: true},
-    fecha: {type: String, required: true},
-    autor: {type: String, required: true},
-    idRespuesta: {type: ObjectId},
+    idActividad: { type: ObjectId, required: true },
+    descripcion: { type: String, required: true },
+    fecha: { type: String, required: true },
+    autor: { type: String, required: true },
+    idRespuesta: { type: ObjectId },
 });
 
 // Objeto
-const Plan = mongoose.model('Plan',planSchema,'Plan'); //"Objeto plan" que actuara como conexión entre mongo y el api
-const Actividad = mongoose.model('Actividad',actividadSchema,'Actividad'); //"Objeto Actividad" que actuara como conexión entre mongo y el api
-const Comentario = mongoose.model('Comentario',comentarioSchema,'Comentario'); //"Objeto comentario" que actuara como conexión entre mongo y el api
+const Plan = mongoose.model('Plan', planSchema, 'Plan'); //"Objeto plan" que actuara como conexión entre mongo y el api
+const Actividad = mongoose.model('Actividad', actividadSchema, 'Actividad'); //"Objeto Actividad" que actuara como conexión entre mongo y el api
+const Comentario = mongoose.model('Comentario', comentarioSchema, 'Comentario'); //"Objeto comentario" que actuara como conexión entre mongo y el api
 
-async function guardarEnplanDB(nombreActividad){
+async function guardarEnplanDB(nombreActividad) {
     try {
         const plan = await Plan.findOne() //devuelve el primer plan que encuentre (el único)
-        const actividad = await Actividad.findOne({nombre: nombreActividad}) //tengo la actividad
+        const actividad = await Actividad.findOne({ nombre: nombreActividad }) //tengo la actividad
 
         plan.actividades.push(actividad._id) //agrega el id de la actividad al plan de trabajo
         await plan.save();
@@ -81,7 +81,7 @@ export const getActividadesDB = async () => {
         const plan = await Plan.findOne() //devuelve el primer plan que encuentre (el único)
         const idsActividades = plan.actividades
         console.log(idsActividades)
-        
+
         const actividades = await Actividad.find({ _id: { $in: idsActividades } });
 
         if (actividades) return actividades;
@@ -114,11 +114,11 @@ export const ingresarActividadDB = async (DTOActividad) => {
         })
         nuevaActividad.save()
 
-        const actividad = await Actividad.findOne({nombre: nuevaActividad.nombre}) //lo guardo para enviarlo con su id
+        const actividad = await Actividad.findOne({ nombre: nuevaActividad.nombre }) //lo guardo para enviarlo con su id
         guardarEnplanDB(actividad.nombre) //envía a guardar el id de la nueva actividad en el array de plan
 
         return actividad
-        
+
     } catch (error) {
         return error
     }
@@ -129,17 +129,17 @@ export const modificarActividadDB = async (DTOActividad) => {
     try {
         const actividadExistente = await Actividad.findById(DTOActividad._id);
         if (!actividadExistente) {
-          throw new Error(`No se encontró la actividad con id ${DTOActividad._id}`);
+            throw new Error(`No se encontró la actividad con id ${DTOActividad._id}`);
         }
-    
+
         Object.assign(actividadExistente, DTOActividad);
         const actividadActualizada = await actividadExistente.save();
-    
+
         return actividadActualizada;
-      } catch (error) {
+    } catch (error) {
         console.error(error);
         return error;
-      }
+    }
 };
 
 export const eliminarActividadDB = async (DTOActividad) => {
@@ -149,20 +149,20 @@ export const eliminarActividadDB = async (DTOActividad) => {
         const plan = await Plan.findOne() //devuelve el primer plan que encuentre (el único)
         plan.actividades.pull(DTOActividad._id)
         await plan.save()
-        
+
         return actividadEliminada
-      } catch (error) {
+    } catch (error) {
         console.error(error);
         return error;
-      }
+    }
 };
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 //Método que retorna todos los comentarios de una actividad en especifico
-export async function getComentariosActividad(idA){
+export async function getComentariosActividad(idA) {
     try {
-        const data = await Comentario.find({idActividad: idA}); 
+        const data = await Comentario.find({ idActividad: idA });
         if (data) {
             return data
         } else {
@@ -178,7 +178,7 @@ export async function getComentariosActividad(idA){
 export const agregarComentario = async (comentario) => {
     console.log("Post comentario middlewhere");
     try {
-        if(comentario.descripcion == '')
+        if (comentario.descripcion == '')
             return "1"
         let c = new Comentario({
             idActividad: comentario.idActividad,
@@ -189,7 +189,7 @@ export const agregarComentario = async (comentario) => {
         })
         c.save();
         return c;
-      } catch (error) {
+    } catch (error) {
         return error;
     }
 };
@@ -198,7 +198,7 @@ export const agregarComentario = async (comentario) => {
 export const agregarRespuesta = async (comentario) => {
     console.log("Put respuesta middlewhere");
     try {
-        if(comentario.descripcion == '')
+        if (comentario.descripcion == '')
             return "1"
         let c = new Comentario({
             idActividad: comentario.idActividad,
@@ -209,7 +209,7 @@ export const agregarRespuesta = async (comentario) => {
         })
         c.save();
         return c;
-      } catch (error) {
+    } catch (error) {
         return error;
     }
 };

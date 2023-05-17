@@ -1,9 +1,5 @@
 import { API_URL } from '../config';
 
-
-//!BORRAR ESTE IMPORT DE DATOS.
-import { planDeTrabajo as pTEjemplo } from "../../datos";
-import { comentarios as pcomentarios } from '../../datos';
 class AdminActividades {
     //*Constructores
     constructor() { }
@@ -29,11 +25,8 @@ class AdminActividades {
             return null;
         }
     }
-    async consultarComentarios(id) {//TODO
-        //Hacer peticion a la API, retornar el json.
+    async consultarComentarios(id) {
         try {
-            //!API_URL Esta en el archivo services/config.js
-            //en caso que la profe nos pida subirlo a un host solo tenemos que cambiar ahi la ip y puerto
             const response = await fetch(`${API_URL}/comentario/${id}`, {
                 method: 'GET'
             });
@@ -42,6 +35,30 @@ class AdminActividades {
             return data;
         } catch (error) {
             console.error('Error en AdminActividades, en metodo consultarComentarios: ', error);
+            return null;
+        }
+    }
+    /**
+   * Metodo para cambiar el nomrbe del plan de trabajo.
+   * @param {String} nuevoNombre 
+   * @returns {_id,nombre,Array[id actividades],__v}
+   */
+    async cambiarNombrePlanTrabajo(nuevoNombre) {
+        try {
+            const response = await fetch(`${API_URL}/planTrabajo/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "nombre": nuevoNombre
+                })
+            });
+            let data = await response.json(); // Convertir datos a formato JSON
+            console.log("AdminActividades cambiarNombrePlanTrabajo retorna :", data)
+            return data;
+        } catch (error) {
+            console.error('Error en AdminActividades, en metodo cambiarNombrePlanTrabajo: ', error);
             return null;
         }
     }

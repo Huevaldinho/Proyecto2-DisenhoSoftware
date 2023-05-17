@@ -78,9 +78,9 @@ const MainControllerContextProvider = ({ children }) => {
   };
   /**
    * Metodo para cambiar la contra de un correo.
-   * @param {String} correoIn 
+   * @param {String} correoIn
    * @param {String} contrasennaIn: nueva contrasenna
-   * @returns 
+   * @returns
    */
   const cambiarContrasenna = async (correoIn, contrasennaIn) => {
     const data = await mainController.cambiarContrasenna(
@@ -104,8 +104,11 @@ const MainControllerContextProvider = ({ children }) => {
     let data = await mainController.consultarComentarios(id);
     setComentarios(data);
     return data;
-
-  }
+  };
+  const cambiarNombrePlanTrabajo = async (nuevoNombre) => {
+    let data = await mainController.cambiarNombrePlanTrabajo(nuevoNombre);
+    return data;
+  };
 
   return (
     <MainControllerContext.Provider
@@ -123,7 +126,8 @@ const MainControllerContextProvider = ({ children }) => {
         eliminarMiembro,
         registrarProfesor,
         comentarios,
-        consultarComentarios
+        consultarComentarios,
+        cambiarNombrePlanTrabajo,
       }}
     >
       {children}
