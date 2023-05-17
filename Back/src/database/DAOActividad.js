@@ -214,3 +214,17 @@ export const agregarRespuesta = async (comentario) => {
     }
 };
 
+//Método que retorna todos los comentarios de una actividad en especifico
+export async function getRespuestas(idA){
+    try {
+        const data = await Comentario.find({idRespuesta: idA}); 
+        if (data) {
+            return data
+        } else {
+            return false
+        }
+    } catch (error) {
+        return error;
+    }
+};
+

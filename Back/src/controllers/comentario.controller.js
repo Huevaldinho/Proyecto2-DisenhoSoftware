@@ -1,7 +1,8 @@
 import {
     getComentariosActividad,
     agregarComentario,
-    agregarRespuesta
+    agregarRespuesta,
+    getRespuestas
 } from "../database/DAOActividad.js"; //Importación de DAOActividad
 
 //Método para obtener y mostrar todos los comentarios de una actividad en especifico
@@ -31,4 +32,12 @@ export const putComentario = async (req, res) => {
         console.log(comentarioNuevo);
         res.json(comentarioNuevo);
     }
+}
+
+
+//Método para recuperar todas las respuestas a un comentario
+export const getRespuesta = async (req, res) => {
+    const comentarios = await getRespuestas(req.params.idA);
+    console.log(comentarios);
+    res.json(comentarios);
 }
