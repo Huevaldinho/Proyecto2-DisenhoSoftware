@@ -54,6 +54,9 @@ async function guardarEnplanDB(nombreActividad){
 export const getPlanDB = async () => {
     try {
         const plan = await Plan.findOne()
+        const idsActividades = plan.actividades
+        const actividades = await Actividad.find({ _id: { $in: idsActividades } });
+        plan.actividades = actividades;
         if (plan) return plan
         return false
     } catch (error) {
