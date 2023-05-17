@@ -59,6 +59,12 @@ export const getPlanDB = async () => {
         const idsActividades = plan.actividades;
         const actividades = await Actividad.find({ _id: { $in: idsActividades } });
         plan.actividades = actividades;
+        for(let i in actividades) {
+            var actividad = actividades[i];
+            const idResponsables = actividad.responsable;
+            const responsables = await getProfesoresActividad(idResponsables);
+            actividad.responsable = responsables;
+        }
         if (plan) return plan
         return false
     } catch (error) {
