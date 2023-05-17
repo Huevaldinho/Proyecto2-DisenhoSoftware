@@ -1,5 +1,7 @@
 import { json } from "express";
 import mongoose from "mongoose"; //importación de librerias
+import fs from "fs";
+import { v2 as cloudinary } from 'cloudinary'
 
 const profesorSchema = new mongoose.Schema({
     codigo: {type: String, required: true},
@@ -16,7 +18,8 @@ const profesorSchema = new mongoose.Schema({
     estado: {type: String, required: true},
     coordinador: {type: String, required: true},
     rol: {type: String, required: true},
-    equipo: {type: String, required: true}
+    equipo: {type: String, required: true},
+    foto: {type: String}
 });
   
 const Profesor = mongoose.model('Profesor',profesorSchema,'Profesor');
@@ -60,6 +63,7 @@ export async function validarProfesorCambiarContra(correoP, contrasennaP){
 
 //Método para agregar un profesor
 //DTOProfesor es un json
+
 export const agregarProfesor = async (DTOProfesor) => {
     console.log("Post profesor middlewhere");
     try {
@@ -120,6 +124,19 @@ export const agregarProfesor = async (DTOProfesor) => {
                 codigoP = "LI-0" + num
             else
                 codigoP = "LI-" + num
+        cloudinary.uploader.upload(path, (error, result) => {
+            if (error) {
+                console.error(error);
+                return "11";
+            }
+                
+        // Eliminar el archivo temporal después de subirlo a Cloudinary
+        fs.unlinkSync(req.file.path);
+                
+        // Obtener el enlace público de la imagen subida en Cloudinary
+        const imageUrl = result.secure_url;
+            return imageUrl;
+        });
         let p = new Profesor({
             codigo: codigoP,
             cedula: DTOProfesor.cedula,
