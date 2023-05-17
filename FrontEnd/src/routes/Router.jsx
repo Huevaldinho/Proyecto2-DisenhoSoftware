@@ -24,6 +24,8 @@ import { Navigate } from "react-router-dom";
 import RegistrarProfesor from "../pages/asistentes/RegistrarProfesor";
 import ListaComentarios from "../components/profesores/ListaComentarios";
 import ListaRespuestas from "../components/profesores/ListaRespuestas";
+import AgregarComentario from "../components/profesores/AgregarComentario";
+import AgregarRespuesta from "../components/profesores/AgregarRespuesta";
 function Router() {
   return (
     <BrowserRouter>
@@ -35,6 +37,8 @@ function Router() {
         <Route path="/detallesActividad" element={<DetallesActividad />} />
         <Route path="/listaComentarios" element={<ListaComentarios />} />
         <Route path="/listaRespuestas" element={<ListaRespuestas />} />
+        <Route path="/agregarComentario" element={<AgregarComentario />} />
+        <Route path="/agregarRespuesta" element={<AgregarRespuesta />} />
         {/*Fin routues de COMPARTIDAS */}
 
         {/*Inicio routes de ESTUDIANTES */}

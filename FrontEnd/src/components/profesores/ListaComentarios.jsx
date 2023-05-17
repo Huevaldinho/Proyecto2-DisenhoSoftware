@@ -9,7 +9,7 @@ function ListaComentarios({actividad}) {
   const { comentarios, consultarComentarios } = useContext(MainControllerContext);
   const handleClick = (e) => {
     e.preventDefault();
-    navigate("/agregarActividad");
+    navigate("/agregarComentario");
   };
 
 

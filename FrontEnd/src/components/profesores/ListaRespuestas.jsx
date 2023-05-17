@@ -9,7 +9,7 @@ function ListaRespuestas({actividad}) {
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate("/agregarActividad");
+    navigate("/agregarRespuesta");
   };
 
   const updateState = () => {
