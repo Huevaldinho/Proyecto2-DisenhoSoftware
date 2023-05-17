@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FilaTablaActividades from "./FilaTablaActividades";
 
 function BodyTablaActividades({ actividades }) {
-  if (actividades.lenght == 0)
+  if (actividades.length == 0)
     return (
       <tbody className="bg-white divide-y divide-gray-200">
       </tbody>

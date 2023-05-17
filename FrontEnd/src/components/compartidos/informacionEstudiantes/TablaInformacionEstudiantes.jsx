@@ -4,6 +4,8 @@ import HeaderInformacionEstudiantes from "./HeaderInformacionEstudiantes";
 //Controlador
 import { MainControllerContext } from "../../../contexts/MainControllerContext";
 import { useContext, useEffect } from "react";
+
+
 function TablaInformacionEstudiantes(props) {
   const { estudiantes, verEstudiantes } = useContext(MainControllerContext);
   // Función que actualiza el estado de estudiantes al ejecutar la funcion verEstudiantes
