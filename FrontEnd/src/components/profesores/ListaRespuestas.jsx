@@ -2,16 +2,15 @@ import React from "react";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import TablaComentarios from "../../components/compartidos/comentarios/TablaComentarios";
-
-function ListaComentarios({actividad}) {
+import TablaRespuestas from "../../components/compartidos/respuestas/TablaRespuestas"
+function ListaRespuestas({actividad}) {
   const navigate = useNavigate();
   const { comentarios, consultarComentarios } = useContext(MainControllerContext);
+
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/agregarActividad");
   };
-
 
   const updateState = () => {
     setTimeout(() => {
@@ -39,7 +38,7 @@ function ListaComentarios({actividad}) {
       </div>
       <div className="text-center" id="tablaProfesores">
         {/*Las actividades se las pasa a la tabla por props */}
-        <TablaComentarios comentarios={comentarios} />
+        <TablaRespuestas comentarios={comentarios} />
       </div>
       <div
         className="text-center rounded-md bg-green-500 p-2 m-3 h-auto w-auto hover:bg-green-800"
@@ -47,11 +46,11 @@ function ListaComentarios({actividad}) {
       >
         {/*Boton para agregar una actividad nueva*/}
         <button className="text-center w-full h-full" onClick={handleClick}>
-          Agregar Comentario
+          Agregar Respuesta
         </button>
       </div>
     </div>
   );
 }
 
-export default ListaComentarios;
+export default ListaRespuestas;

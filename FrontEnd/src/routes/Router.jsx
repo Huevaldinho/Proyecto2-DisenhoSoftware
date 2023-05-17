@@ -23,6 +23,7 @@ import AgregarActividad from "../pages/profesores/coordinadores/AgregarActividad
 import { Navigate } from "react-router-dom";
 import RegistrarProfesor from "../pages/asistentes/RegistrarProfesor";
 import ListaComentarios from "../components/profesores/ListaComentarios";
+import ListaRespuestas from "../components/profesores/ListaRespuestas";
 function Router() {
   return (
     <BrowserRouter>
@@ -33,6 +34,7 @@ function Router() {
         <Route path="/planDeTrabajo" element={<PlanDeTrabajo />} />
         <Route path="/detallesActividad" element={<DetallesActividad />} />
         <Route path="/listaComentarios" element={<ListaComentarios />} />
+        <Route path="/listaRespuestas" element={<ListaRespuestas />} />
         {/*Fin routues de COMPARTIDAS */}
 
         {/*Inicio routes de ESTUDIANTES */}
