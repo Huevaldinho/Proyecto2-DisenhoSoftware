@@ -18,7 +18,7 @@ class AdminActividades {
         try {
             //!API_URL Esta en el archivo services/config.js
             //en caso que la profe nos pida subirlo a un host solo tenemos que cambiar ahi la ip y puerto
-            const response = await fetch(`${API_URL}/actividades`, {
+            const response = await fetch(`${API_URL}/planTrabajo`, {
                 method: 'GET'
             });
             let data = await response.json(); // Convertir datos a formato JSON

@@ -137,7 +137,7 @@ function FormularioDetallesActividad(props) {
             />
           </div>
           {/**Responsables */}
-          <div className={cssElementosForm}>
+          {/*<div className={cssElementosForm}>
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -151,7 +151,7 @@ function FormularioDetallesActividad(props) {
                 </li>
               ))}
             </ul>
-          </div>
+          </div>/*}
           {/**Recordatorios */}
           <div className={cssElementosForm}>
             <label
