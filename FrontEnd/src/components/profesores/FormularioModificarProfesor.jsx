@@ -60,6 +60,30 @@ function FormularioModificarProfesor(props) {
         );
         return false;
       }
+      case 7: {
+        alert(
+          "Ha ocurrido un error, el teléfono con el que quiere ingresar ya estaba registrado antes."
+        );
+        return false;
+      }
+      case 8: {
+        alert(
+          "Ha ocurrido un error, la cédula con el que quiere ingresar ya estaba registrado antes."
+        );
+        return false;
+      }
+      case 9: {
+        alert(
+          "Ha ocurrido un error, el celular con el que quiere ingresar ya estaba registrado antes."
+        );
+        return false;
+      }
+      case 10: {
+        alert(
+          "Ha ocurrido un error, el celular no cumple con el formato (empieza con +506 (2|4|6|7|8) seguido de 7 números)."
+        );
+        return false;
+      }
       default: {
         return true;
       }

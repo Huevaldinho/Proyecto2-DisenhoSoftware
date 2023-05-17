@@ -56,6 +56,30 @@ function FormularioAgregarProfesor(props) {
         );
         return false;
       }
+      case 7: {
+        alert(
+          "Ha ocurrido un error, el teléfono con el que quiere ingresar ya estaba registrado antes."
+        );
+        return false;
+      }
+      case 8: {
+        alert(
+          "Ha ocurrido un error, la cédula con el que quiere ingresar ya estaba registrado antes."
+        );
+        return false;
+      }
+      case 9: {
+        alert(
+          "Ha ocurrido un error, el celular con el que quiere ingresar ya estaba registrado antes."
+        );
+        return false;
+      }
+      case 10: {
+        alert(
+          "Ha ocurrido un error, el celular no cumple con el formato (empieza con +506 (2|4|6|7|8) seguido de 7 números)."
+        );
+        return false;
+      }
       default: {
         return true;
       }
@@ -88,7 +112,7 @@ function FormularioAgregarProfesor(props) {
       if (Object.keys(respuesta).length !== 0) {
         alert("Se ha registrado exitosamente al profesor.");
         navigate("/infoProfesores");
-      } else alert("No se ha podido modificado al profesor, intente de nuevo.");
+      } else alert("No se ha podido registar al profesor, intente de nuevo.");
     }
   };
 
