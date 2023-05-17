@@ -9,16 +9,7 @@ function PlanDeTrabajo(props) {
   const { consultarPlanDeTrabajo, planDeTrabajo } = useContext(
     MainControllerContext
   );
-
-  const updateState = () => {
-    setTimeout(() => {
-      consultarPlanDeTrabajo();
-    }, 1000);
-  };
-  useEffect(() => {
-    updateState();
-  }, []);
-
+  console.log(planDeTrabajo)
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/agregarActividad");
@@ -27,7 +18,19 @@ function PlanDeTrabajo(props) {
     e.preventDefault();
     navigate("/menuProfesores");
   };
-  if (Object.keys(planDeTrabajo).length === 0) {
+
+  const updateState = () => {
+    setTimeout(() => {
+      consultarPlanDeTrabajo();
+    }, 1000);
+  };
+  
+  useEffect(() => {
+    updateState();
+  }, []);
+
+  
+  if (Object.keys(planDeTrabajo).length == 0) {
     return (
       <p className="text-center font-semibold text-5xl">
         Cargando plan de trabajo...

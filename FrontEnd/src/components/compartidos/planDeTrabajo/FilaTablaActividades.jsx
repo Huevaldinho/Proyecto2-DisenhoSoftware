@@ -19,7 +19,7 @@ function FilaTablaActividades({ actividad, index }) {
   return (
     <tr onDoubleClick={handleClick} className={styleFilas}>
       <td className={styleRow}>{actividad.id}</td>
-      <td className={styleRow}>{actividad.nombreActividad}</td>
+      <td className={styleRow}>{actividad.nombre}</td>
       <td className={styleRow}>{actividad.fechaHora}</td>
       <td className={styleRow}>{actividad.semana}</td>
       <td className={styleRow}>{actividad.tipoActividad}</td>

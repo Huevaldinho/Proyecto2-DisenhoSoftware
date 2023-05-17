@@ -2,10 +2,12 @@ import React from "react";
 //Componentes de tabla
 import HeaderTablaActividades from "./HeaderTablaActividades";
 import BodyTablaActividades from "./BodyTablaActividades";
-
+import { useNavigate } from "react-router-dom";
 function TablaActividades({ actividades }) {
+  const navigate = useNavigate();
   //Valida que existan actividades para mostrar.
-  if (actividades.length == 0) {
+  console.log(actividades)
+  if (actividades.length === 0) {
     //Si no hay actividades todavia
     return (
       <div className="text-center font-bold text-4xl text-red-500">
