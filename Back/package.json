@@ -1,7 +1,7 @@
 {
   "name": "back",
   "version": "1.0.0",
-  "description": "",
+  "description": "Aplicación para la gestion de estudiantes de primer ingreso de la Escuela de Computacion del TEC",
   "main": "index.js",
   "type": "module",
   "scripts": {
