@@ -294,3 +294,17 @@ export const eliminarProfesorEquipo = async (_id) => {
         return error;
     }
 };
+
+//Metodo para hacer la consulta de todos los estudiantes
+export async function getProfesoresActividad(lista){
+    try {
+        const data = await Profesor.find({ _id: { $in: lista } });
+        if (data) {
+            return data
+        } else {
+            return []
+        }
+    } catch (error) {
+        return error;
+    }
+};

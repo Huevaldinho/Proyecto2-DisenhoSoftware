@@ -1,6 +1,8 @@
 import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
-
+import {
+    getProfesoresActividad
+} from "../database/DAOProfesor.js"; //Importación de DAOProfesor
 //Schema asociado a plan de actividades, es el cual se guardará en mongo
 const planSchema = new mongoose.Schema({
     nombre: {type: String, required: true},
@@ -14,7 +16,7 @@ const actividadSchema = new mongoose.Schema({
     semana: {type: Number, required: true},
     descripcion: {type: String, required: true},
     tipo: {type: String, required: true},
-    responsable: {type: Number, required: true},
+    responsable: {type: Array, required: true},
     fechaPublicacion: {type: Date, required: true},
     recordatorios: {type: Array, required: true},
     modalidad: {type: Boolean, required: true},
@@ -54,7 +56,7 @@ async function guardarEnplanDB(nombreActividad){
 export const getPlanDB = async () => {
     try {
         const plan = await Plan.findOne()
-        const idsActividades = plan.actividades
+        const idsActividades = plan.actividades;
         const actividades = await Actividad.find({ _id: { $in: idsActividades } });
         plan.actividades = actividades;
         if (plan) return plan
@@ -80,10 +82,14 @@ export const getActividadesDB = async () => {
     try {
         const plan = await Plan.findOne() //devuelve el primer plan que encuentre (el único)
         const idsActividades = plan.actividades
-        console.log(idsActividades)
         
         const actividades = await Actividad.find({ _id: { $in: idsActividades } });
-
+        for(let i in actividades) {
+            var actividad = actividades[i];
+            const idResponsables = actividad.responsable;
+            const responsables = await getProfesoresActividad(idResponsables);
+            actividad.responsable = responsables;
+        }
         if (actividades) return actividades;
         return false
 
