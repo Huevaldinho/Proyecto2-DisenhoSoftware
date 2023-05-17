@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 
-function AgregarRespuesta({comentario}) {
+function AgregarRespuesta({actividad,comentario}) {
     const navigate = useNavigate();
     const handleClick = (e) => {
         e.preventDefault();
