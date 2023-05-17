@@ -2,14 +2,10 @@ import React from "react";
 import { useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 //Main controller
-import {MainControllerContext} from "../../../contexts/MainControllerContext";
-//Componentes
-import ListaComentarios from "../../profesores/ListaComentarios";
 
 function FormularioDetallesActividad(props) {
   const { state } = useLocation();
-  const actividad = state?.actividad;
-  console.log("Actividad a ver:", actividad);
+  let actividad = state?.actividad;
 
   const cssElementosForm =
     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
@@ -161,19 +157,6 @@ function FormularioDetallesActividad(props) {
           {/**Afiche */}
         </form>
       </div>
-      <div className=" px-3 py-3">
-      <ListaComentarios actividad = {actividad} />
-      </div>
-      <div className={"text-center w-full "}>
-        {/*Boton aceptar */}
-        <button
-          type="submit"
-          className=" text-white bg-blue-700 hover:bg-blue-900  font-medium rounded-lg w-auto p-4  text-center "
-        >
-          Aceptar
-        </button>
-      </div>
-      
     </div>
   );
 }

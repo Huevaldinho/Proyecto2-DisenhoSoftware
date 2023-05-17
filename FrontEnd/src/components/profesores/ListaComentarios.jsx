@@ -1,17 +1,20 @@
 import React from "react";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
 import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import TablaComentarios from "../../components/compartidos/comentarios/TablaComentarios";
 
-function ListaComentarios({ actividad }) {
+function ListaComentarios(props) {
   const navigate = useNavigate();
   const { comentarios, consultarComentarios } = useContext(
     MainControllerContext
   );
+  const { state } = useLocation();
+  const actividad = state?.actividad;
+
   const handleClick = (e) => {
     e.preventDefault();
-    navigate("/agregarComentario");
+    navigate("/agregarComentario", { state: { actividad: actividad } });
   };
 
   const updateState = () => {
