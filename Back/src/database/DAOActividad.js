@@ -12,12 +12,12 @@ const planSchema = new mongoose.Schema({
 //Schema asociado a actividad, es el cual se guardara en mongo
 const actividadSchema = new mongoose.Schema({
     nombre: {type: String, required: true},
-    fecha: {type: Date, required: true},
+    fecha: {type: String, required: true},
     semana: {type: Number, required: true},
     descripcion: {type: String, required: true},
     tipo: {type: String, required: true},
     responsable: {type: Array, required: true},
-    fechaPublicacion: {type: Date, required: true},
+    fechaPublicacion: {type: String, required: true},
     recordatorios: {type: Array, required: true},
     modalidad: {type: Boolean, required: true},
     enlace: {type: String, required: true},
