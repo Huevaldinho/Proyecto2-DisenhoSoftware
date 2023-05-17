@@ -26,7 +26,7 @@ class AdminActividades {
                 method: 'GET'
             });
             let data = await response.json(); // Convertir datos a formato JSON
-            console.log("AminActividades consultarComentarios retorna :", data)
+            console.log("AdminActividades consultarComentarios retorna :", data)
             return data;
         } catch (error) {
             console.error('Error en AdminActividades, en metodo consultarComentarios: ', error);
