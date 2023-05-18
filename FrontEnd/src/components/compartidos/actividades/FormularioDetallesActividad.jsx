@@ -1,12 +1,13 @@
 import React from "react";
-import { useState, useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 //Main controller
 
 function FormularioDetallesActividad(props) {
   const { state } = useLocation();
+  console.log("STATE FORMULARIO:", state);
   let actividad = state?.actividad;
 
+  console.log("Actividad formulario:", actividad);
   const cssElementosForm =
     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
   return (
@@ -120,7 +121,7 @@ function FormularioDetallesActividad(props) {
             />
           </div>
           {/**Responsables */}
-          {/*<div className={cssElementosForm}>
+          <div className={cssElementosForm}>
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -134,14 +135,14 @@ function FormularioDetallesActividad(props) {
                 </li>
               ))}
             </ul>
-          </div>/*}
+          </div>
           {/**Recordatorios */}
           <div className={cssElementosForm}>
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Responsable(s)
+              Recordatorios
             </label>
             <ul>
               {actividad.recordatorios.map((recordatorio, index) => (

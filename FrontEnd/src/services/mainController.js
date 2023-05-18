@@ -56,6 +56,15 @@ class MainController {
   async cambiarNombrePlanTrabajo(nuevoNombre) {
     return await this.adminActividades.cambiarNombrePlanTrabajo(nuevoNombre);
   }
+  /**
+    * POST
+    * Comentario nuevo.
+    * @param {JSON = "idActividad","descripcion","fecha","autor","idRespuesta"} datos 
+    * Retorna 
+    */
+  async comentarActividad(datos) {
+    return await this.adminActividades.comentarActividad(datos);
+  }
 
   //*AUTH
 

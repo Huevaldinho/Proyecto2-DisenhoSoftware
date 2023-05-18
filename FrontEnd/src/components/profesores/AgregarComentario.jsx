@@ -1,15 +1,36 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
-
+import { useState, useContext } from "react";
+import { MainControllerContext } from "../../contexts/MainControllerContext";
 function AgregarComentario(props) {
+  const { comentarActividad, usuario } = useContext(MainControllerContext);
   const [comentario, setComentario] = useState(null);
   const navigate = useNavigate();
   const { state } = useLocation();
-  let actividad = state;
+  let actividad = state.actividad;
   const handleClick = (e) => {
     e.preventDefault();
-    navigate("/detallesActividad", { state: { actividad: actividad } });
+    let mandarDatos = {
+      idActividad: actividad._id,
+      descripcion: comentario,
+      fecha: new Date()
+        .toLocaleString("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+        .replace(/\//g, "-")
+        .replace(",", ""),
+      autor: usuario.nombre + " " + usuario.apellido1 + " " + usuario.apellido2,
+      idRespuesta: null,
+    };
+    console.log("Datos que se envian:", mandarDatos);
+    comentarActividad(mandarDatos);
+    //Redireccionar
+    navigate("/detallesActividad", { state: {actividad:actividad} });
   };
   const handleComentario = (e) => {
     setComentario(e.target.value);

@@ -59,6 +59,35 @@ class AdminActividades {
             return null;
         }
     }
+    /**
+     * POST
+     * Comentario nuevo.
+     * @param {JSON = "idActividad","descripcion","fecha","autor","idRespuesta"} datos 
+     * Retorna 
+     */
+    async comentarActividad(datos) {
+        try {
+            const response = await fetch(`${API_URL}/comentario/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "idActividad": datos.idActividad,
+                    "descripcion": datos.descripcion,
+                    "fecha": datos.fecha,
+                    "autor": datos.autor,
+                    "idRespuesta": "null"
+                })
+            });
+            let data = await response.json(); // Convertir datos a formato JSON
+            console.log("AdminActividades comentarActividad retorna :", data)
+            return data;
+        } catch (error) {
+            console.error('Error en AdminActividades, en metodo comentarActividad: ', error);
+            return null;
+        }
+    }
 
 }
 export default AdminActividades;

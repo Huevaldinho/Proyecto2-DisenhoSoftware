@@ -109,6 +109,17 @@ const MainControllerContextProvider = ({ children }) => {
     let data = await mainController.cambiarNombrePlanTrabajo(nuevoNombre);
     return data;
   };
+  /**
+   * POST
+   * Comentario nuevo.
+   * @param {JSON = "idActividad","descripcion","fecha","autor","idRespuesta"} datos
+   * Retorna
+   */
+  const comentarActividad = async (datos) => {
+    let data = await mainController.comentarActividad(datos);
+    consultarComentarios(datos.idActividad)
+    return data;
+  };
 
   return (
     <MainControllerContext.Provider
@@ -128,6 +139,7 @@ const MainControllerContextProvider = ({ children }) => {
         comentarios,
         consultarComentarios,
         cambiarNombrePlanTrabajo,
+        comentarActividad,
       }}
     >
       {children}

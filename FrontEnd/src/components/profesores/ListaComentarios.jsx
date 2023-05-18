@@ -30,9 +30,17 @@ function ListaComentarios(props) {
 
   if (comentarios.length == 0) {
     return (
-      <p className="text-center font-semibold text-5xl">
-        Cargando Comentarios...
-      </p>
+      <div className="p-3 m-3">
+        <h1 className="text-center font-semibold text-3xl p-2 m-1">
+          No hay comentarios disponibles...
+        </h1>
+        <button
+          className="text-center w-full h-full p-1 m-2 bg-green-500 hover:bg-green-800"
+          onClick={handleClick}
+        >
+          Agregar Comentario
+        </button>
+      </div>
     );
   }
   return (
