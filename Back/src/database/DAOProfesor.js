@@ -2,6 +2,15 @@ import { json } from "express";
 import mongoose from "mongoose"; //importación de librerias
 import fs from "fs";
 import { v2 as cloudinary } from 'cloudinary'
+import bodyParser from "body-parser";
+import multer from "multer";
+
+cloudinary.config({ //esto es privado
+    cloud_name: 'dge4tyjn4',
+    api_key: '918428231237698',
+    api_secret: 'VN0HAyWjh0kvBEsKd81ZY8ekE5M'
+  });
+  
 
 const profesorSchema = new mongoose.Schema({
     codigo: { type: String, required: true },
@@ -98,13 +107,13 @@ export const agregarProfesor = async (DTOProfesor, fileFoto) => {
             return "9" //error si ya existia el celular registrada
         if (!DTOProfesor.celular.match(celularReg))
             return "10"; //error si el celular no es aceptada
-        if (fileFoto != "")
-            fotoP = subirFotoNube(fileFoto);
-        if (fotoP == "11")
-            return "11";
-        else
+        if (fileFoto != "") {
+            fotoP = await subirFotoNube(fileFoto);
+            if (fotoP == "11")
+                return "11";
+            }
+        else 
             fotoP = "";
-
         const codigoP = await asignarCodigo(DTOProfesor.campus);
         let p = new Profesor({
             codigo: codigoP,
@@ -131,49 +140,62 @@ export const agregarProfesor = async (DTOProfesor, fileFoto) => {
     }
 };
 
-function subirFotoNube(path) {
-    cloudinary.uploader.upload(path, (error, result) => {
-        if (error) {
-            console.error(error);
-            return "11";
-        }
+// Configuración de Multer para manejar la subida de archivos
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/'); // Directorio donde se guardarán temporalmente los archivos subidos
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + '-' + file.originalname); // Nombre de archivo único
+    }
+  });
+  
+const upload = multer({ storage });
 
+function subirFotoNube(path) {
+    return new Promise((resolve, reject) => {
+      cloudinary.uploader.upload(path, (error, result) => {
+        if (error) {
+          console.error(error);
+          reject("11");
+        }
+  
         // Eliminar el archivo temporal después de subirlo a Cloudinary
         fs.unlinkSync(path);
-
+  
         // Obtener el enlace público de la imagen subida en Cloudinary
         const imageUrl = result.secure_url;
-
-        return imageUrl;
+        resolve(imageUrl);
+      });
     });
-}
+  }
 
 //Función que asigna el código cuando se registra un profesor
 async function asignarCodigo(campusP) {
     const lista = await Profesor.find({ campus: campusP });
     var num = lista.length + 1;
     var codigoP;
-    if (DTOProfesor.campus == "Campus Tecnológico Central Cartago")
+    if (campusP == "Campus Tecnológico Central Cartago")
         if (num < 100)
             return codigoP = "CA-0" + num
         else
             return codigoP = "CA-" + num
-    if (DTOProfesor.campus == "Campus Tecnológico Local San Carlos")
+    if (campusP == "Campus Tecnológico Local San Carlos")
         if (num < 100)
             return codigoP = "SC-0" + num
         else
             return codigoP = "SC-" + num
-    if (DTOProfesor.campus == "Campus Tecnológico Local San José")
+    if (campusP == "Campus Tecnológico Local San José")
         if (num < 100)
             return codigoP = "SJ-0" + num
         else
             return codigoP = "SJ-" + num
-    if (DTOProfesor.campus == "Centro Académico de Alajuela")
+    if (campusP == "Centro Académico de Alajuela")
         if (num < 100)
             return codigoP = "AL-0" + num
         else
             return codigoP = "AL-" + num
-    if (DTOProfesor.campus == "Centro Académico de Limón")
+    if (campusP == "Centro Académico de Limón")
         if (num < 100)
             return codigoP = "LI-0" + num
         else

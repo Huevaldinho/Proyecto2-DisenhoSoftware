@@ -6,7 +6,7 @@ const connectionParams={
     useNewUrlParser: true,
     useUnifiedTopology: true 
 }
-export const systemDB = mongoose.connect(url,connectionParams) //conexión con mongoDB Atlas
+export let systemDB = mongoose.connect(url,connectionParams) //conexión con mongoDB Atlas
     .then( () => {
         console.log('Connected to the database ')
     })
