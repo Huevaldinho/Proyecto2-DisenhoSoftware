@@ -70,9 +70,10 @@ export async function validarProfesorCambiarContra(correoP, contrasennaP){
 //Método para agregar un profesor
 //DTOProfesor es un json
 
-export const agregarProfesor = async (DTOProfesor) => {
+export const agregarProfesor = async (DTOProfesor,fileFoto) => {
     console.log("Post profesor middlewhere");
     try {
+        var fotoP;
         const data = await Profesor.findOne({ correo: DTOProfesor.correo}); 
         const dataT = await Profesor.findOne({ telefono: DTOProfesor.telefono}); 
         const dataC = await Profesor.findOne({ cedula: DTOProfesor.cedula}); 
@@ -97,6 +98,10 @@ export const agregarProfesor = async (DTOProfesor) => {
             return "9" //error si ya existia el celular registrada
         if (!DTOProfesor.celular.match(celularReg)) 
             return "10"; //error si el celular no es aceptada
+        if (fileFoto != "") 
+            fotoP = subirFotoNube(fileFoto);
+        else 
+            fotoP = "";
         let p = new Profesor({
             codigo: asignarCodigo(DTOProfesor.campus),
             cedula: DTOProfesor.cedula,
@@ -112,7 +117,8 @@ export const agregarProfesor = async (DTOProfesor) => {
             estado: "Activo",
             coordinador: DTOProfesor.coordinador,
             equipo: DTOProfesor.equipo,
-            rol: DTOProfesor.rol
+            rol: DTOProfesor.rol,
+            foto: fotoP
         })
         p.save();
         return p;

@@ -19,11 +19,11 @@ const actividadSchema = new mongoose.Schema({
     responsable: {type: Array, required: true},
     fechaPublicacion: {type: String, required: true},
     recordatorios: {type: Array, required: true},
-    modalidad: {type: Boolean, required: true},
-    enlace: {type: String, required: true},
+    modalidad: {type: String, required: true},
+    enlace: {type: String},
     afiche: {type: String, required: true},
     estado: {type: String, required: true},
-    evidencia: {type: Array, required: true},
+    evidencia: {type: Array},
 });
 
 //Schema asociado a comentario, es el cual se guardara en mongo
