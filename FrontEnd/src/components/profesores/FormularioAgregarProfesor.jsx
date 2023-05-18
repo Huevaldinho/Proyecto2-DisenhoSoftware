@@ -109,7 +109,9 @@ function FormularioAgregarProfesor(props) {
       celular,
       selectedImage === null ? "" : selectedImage
     );
+    console.log(profeAct)
     const respuesta = await registrarProfesor(profeAct);
+    console.log("Respuesta:",respuesta)
     if (manejoErrores(respuesta)) {
       //No hubo errores.
       if (Object.keys(respuesta).length !== 0) {
