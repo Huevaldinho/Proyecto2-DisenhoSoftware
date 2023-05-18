@@ -4,10 +4,42 @@ class AdminActividades {
     //*Constructores
     constructor() { }
     //*Metodos
-    async crearActividad(DTOActividad) {//TODO
-        //Hacer peticion a API.
-        //Tomar los datos del json y se debe instanciar una Activiadad para retornarla.        
-        return await null;
+    async crearActividad(dtoActividad) {//TODO Falta probarlo.
+        try {
+            // Crear un objeto FormData para almacenar el archivo
+            let formData = new FormData();
+            formData.append('file', dtoActividad.afiche);
+            // Agregar el objeto JSON al FormData
+            formData.append('json', JSON.stringify({
+                "nombre": dtoActividad.nombre,
+                "descripcion": dtoActividad.descripcion,
+                "enlace": dtoActividad.enlace,
+                "estado": dtoActividad.estado,
+                "evidencias": dtoActividad.evidencias,
+                "fechaHora": dtoActividad.fechaHora,
+                "fechaHoraPublicacion": dtoActividad.fechaHoraPublicacion,
+                "id": dtoActividad.id,
+                "modalidad": dtoActividad.modalidad,
+                "recordatorios": dtoActividad.recordatorios,
+                "responsables": dtoActividad.responsables,
+                "semana": dtoActividad.semana,
+                "tipoActividad": dtoActividad.tipoActividad
+            }));
+            const response = await fetch(`${API_URL}/actividades`, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('AdminActividades, en metodo crearActividad:', data);
+                return data;
+            } else {
+                throw new Error('AdminActividades, en metodo crearActividad:');
+            }
+        } catch (error) {
+            console.log('Error en AdminActividades, en metodo crearActividad:', error);
+        }
     }
     async consultarPlanDeTrabajo() {//TODO
         try {

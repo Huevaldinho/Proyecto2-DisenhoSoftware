@@ -21,7 +21,12 @@ function FormularioAgregarProfesor(props) {
     "Campus Tecnológico Central Cartago"
   );
   const [celular, setCelular] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null); //Imagen OPCIONAL
 
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setSelectedImage(file);
+  };
   const manejoErrores = async (respuesta) => {
     switch (respuesta) {
       case 1: {
@@ -102,11 +107,9 @@ function FormularioAgregarProfesor(props) {
       "Activo",
       "Equipo",
       celular,
-      ""
+      selectedImage === null ? "" : selectedImage
     );
-    //profeAct.toString();
     const respuesta = await registrarProfesor(profeAct);
-
     if (manejoErrores(respuesta)) {
       //No hubo errores.
       if (Object.keys(respuesta).length !== 0) {
@@ -307,6 +310,12 @@ function FormularioAgregarProfesor(props) {
                 );
               })}
             </select>
+          </div>
+          {/*Foto*/}
+          <div className={cssElementosForm}>
+            <h1>Seleccione la imagen</h1>
+            <input type="file" onChange={handleImageUpload} />
+            {selectedImage && <img src={selectedImage} alt="Seleccionada" />}
           </div>
         </form>
       </div>
