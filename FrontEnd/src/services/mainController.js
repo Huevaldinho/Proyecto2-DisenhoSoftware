@@ -31,15 +31,15 @@ class MainController {
   async crearActividad(dtoActividad) {
     return await this.adminActividades.crearActividad(dtoActividad);
   }
-/**
-   * Metodo para obtener los comentarios
-   * Trae los datos con la API.
-   * @returns {Array JSON} 
-   * 
-   */
-      async consultarComentarios(id) {
-        return await this.adminActividades.consultarComentarios(id);
-      }
+  /**
+     * Metodo para obtener los comentarios
+     * Trae los datos con la API.
+     * @returns {Array JSON} 
+     * 
+     */
+  async consultarComentarios(id) {
+    return await this.adminActividades.consultarComentarios(id);
+  }
 
   /**
    * Metodo para obtener el plan de trabajo.
@@ -47,6 +47,23 @@ class MainController {
    */
   async consultarPlanDeTrabajo() {
     return await this.adminActividades.consultarPlanDeTrabajo();
+  }
+  /**
+   * Metodo para cambiar el nomrbe del plan de trabajo.
+   * @param {String} nuevoNombre 
+   * @returns {_id,nombre,Array[id actividades],__v}
+   */
+  async cambiarNombrePlanTrabajo(nuevoNombre) {
+    return await this.adminActividades.cambiarNombrePlanTrabajo(nuevoNombre);
+  }
+  /**
+    * POST
+    * Comentario nuevo.
+    * @param {JSON = "idActividad","descripcion","fecha","autor","idRespuesta"} datos 
+    * Retorna 
+    */
+  async comentarActividad(datos) {
+    return await this.adminActividades.comentarActividad(datos);
   }
 
   //*AUTH

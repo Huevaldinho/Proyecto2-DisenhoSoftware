@@ -1,17 +1,21 @@
 import React from "react";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
 import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import TablaComentarios from "../../components/compartidos/comentarios/TablaComentarios";
 
-function ListaComentarios({actividad}) {
+function ListaComentarios(props) {
   const navigate = useNavigate();
-  const { comentarios, consultarComentarios } = useContext(MainControllerContext);
+  const { comentarios, consultarComentarios } = useContext(
+    MainControllerContext
+  );
+  const { state } = useLocation();
+  const actividad = state?.actividad;
+
   const handleClick = (e) => {
     e.preventDefault();
-    navigate("/agregarComentario");
+    navigate("/agregarComentario", { state: { actividad: actividad } });
   };
-
 
   const updateState = () => {
     setTimeout(() => {
@@ -26,12 +30,19 @@ function ListaComentarios({actividad}) {
 
   if (comentarios.length == 0) {
     return (
-      <p className="text-center font-semibold text-5xl">
-        Cargando Comentarios...
-      </p>
+      <div className="p-3 m-3">
+        <h1 className="text-center font-semibold text-3xl p-2 m-1">
+          No hay comentarios disponibles...
+        </h1>
+        <button
+          className="text-center w-full h-full p-1 m-2 bg-green-500 hover:bg-green-800"
+          onClick={handleClick}
+        >
+          Agregar Comentario
+        </button>
+      </div>
     );
   }
-  console.log(comentarios)
   return (
     <div className="container">
       <div className="text-center" id="nombrePlanConteiner">

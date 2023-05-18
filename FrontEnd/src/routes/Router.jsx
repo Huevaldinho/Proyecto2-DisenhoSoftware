@@ -32,6 +32,7 @@ function Router() {
       <Routes>
         {/*Ruta al iniciar aplicacion es login. */}
         <Route index element={<Navigate to="/login" />} />
+
         {/*Inicio routues de COMPARTIDAS */}
         <Route path="/planDeTrabajo" element={<PlanDeTrabajo />} />
         <Route path="/detallesActividad" element={<DetallesActividad />} />
@@ -39,7 +40,7 @@ function Router() {
         <Route path="/listaRespuestas" element={<ListaRespuestas />} />
         <Route path="/agregarComentario" element={<AgregarComentario />} />
         <Route path="/agregarRespuesta" element={<AgregarRespuesta />} />
-        {/*Fin routues de COMPARTIDAS */}
+        
 
         {/*Inicio routes de ESTUDIANTES */}
         <Route
