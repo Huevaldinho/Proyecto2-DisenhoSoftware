@@ -24,6 +24,12 @@ const profesorSchema = new mongoose.Schema({
   
 const Profesor = mongoose.model('Profesor',profesorSchema,'Profesor');
 
+const contrasennaReg = /^[0-9]{8}$/
+const correoReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const telefonoReg = /^(2|6|8){1}[0-9]{7}$/
+const cedulaReg = /^[1-9]{1}[0-9]{8}$/
+const celularReg = /^(\+506)?[24678]\d{7}$/;
+
 //Metodo para poder validar inicio de sesión de profesor
 export async function validarProfesor(correoP,contrasennaP){
     try {
@@ -64,14 +70,10 @@ export async function validarProfesorCambiarContra(correoP, contrasennaP){
 //Método para agregar un profesor
 //DTOProfesor es un json
 
-export const agregarProfesor = async (DTOProfesor) => {
+export const agregarProfesor = async (DTOProfesor,fileFoto) => {
     console.log("Post profesor middlewhere");
     try {
-        const contrasennaReg = /^[0-9]{8}$/
-        const correoReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const telefonoReg = /^(2|6|8){1}[0-9]{7}$/
-        const cedulaReg = /^[1-9]{1}[0-9]{8}$/
-        const celularReg = /^(\+506)?[24678]\d{7}$/;
+        var fotoP;
         const data = await Profesor.findOne({ correo: DTOProfesor.correo}); 
         const dataT = await Profesor.findOne({ telefono: DTOProfesor.telefono}); 
         const dataC = await Profesor.findOne({ cedula: DTOProfesor.cedula}); 
@@ -96,36 +98,14 @@ export const agregarProfesor = async (DTOProfesor) => {
             return "9" //error si ya existia el celular registrada
         if (!DTOProfesor.celular.match(celularReg)) 
             return "10"; //error si el celular no es aceptada
-        const lista = await Profesor.find({campus: DTOProfesor.campus}); 
-        var num = lista.length +1;
-        var codigoP;
-        if (DTOProfesor.campus == "Campus Tecnológico Central Cartago")
-            if (num < 100)
-                codigoP = "CA-0" + num
-            else
-                codigoP = "CA-" + num
-        if (DTOProfesor.campus == "Campus Tecnológico Local San Carlos")
-            if (num < 100)
-                codigoP = "SC-0" + num
-            else
-                codigoP = "SC-" + num
-        if (DTOProfesor.campus == "Campus Tecnológico Local San José")
-            if (num < 100)
-                codigoP = "SJ-0" + num
-            else
-                codigoP = "SJ-" + num
-        if (DTOProfesor.campus == "Centro Académico de Alajuela")
-            if (num < 100)
-                codigoP = "AL-0" + num
-            else
-                codigoP = "AL-" + num
-        if (DTOProfesor.campus == "Centro Académico de Limón")
-            if (num < 100)
-                codigoP = "LI-0" + num
-            else
-                codigoP = "LI-" + num
+        if (fileFoto != "") 
+            fotoP = subirFotoNube(fileFoto);
+            if (fotoP == "11")
+                return "11";
+        else 
+            fotoP = "";
         let p = new Profesor({
-            codigo: codigoP,
+            codigo: asignarCodigo(DTOProfesor.campus),
             cedula: DTOProfesor.cedula,
             nombre: DTOProfesor.nombre,
             nombre2: DTOProfesor.nombre2,
@@ -139,7 +119,8 @@ export const agregarProfesor = async (DTOProfesor) => {
             estado: "Activo",
             coordinador: DTOProfesor.coordinador,
             equipo: DTOProfesor.equipo,
-            rol: DTOProfesor.rol
+            rol: DTOProfesor.rol,
+            foto: fotoP
         })
         p.save();
         return p;
@@ -147,6 +128,55 @@ export const agregarProfesor = async (DTOProfesor) => {
         return error;
     }
 };
+
+function subirFotoNube(path) {
+    cloudinary.uploader.upload(path, (error, result) => {
+        if (error) {
+          console.error(error);
+          return "11";
+        }
+    
+        // Eliminar el archivo temporal después de subirlo a Cloudinary
+        fs.unlinkSync(path);
+    
+        // Obtener el enlace público de la imagen subida en Cloudinary
+        const imageUrl = result.secure_url;
+    
+        return imageUrl;
+      });
+}
+
+//Función que asigna el código cuando se registra un profesor
+async function asignarCodigo(campusP) {
+    const lista = await Profesor.find({campus: campusP}); 
+    var num = lista.length +1;
+    var codigoP;
+    if (DTOProfesor.campus == "Campus Tecnológico Central Cartago")
+        if (num < 100)
+            return codigoP = "CA-0" + num
+        else
+            return codigoP = "CA-" + num
+    if (DTOProfesor.campus == "Campus Tecnológico Local San Carlos")
+        if (num < 100)
+            return codigoP = "SC-0" + num
+        else
+            return codigoP = "SC-" + num
+    if (DTOProfesor.campus == "Campus Tecnológico Local San José")
+        if (num < 100)
+            return codigoP = "SJ-0" + num
+        else
+            return codigoP = "SJ-" + num
+    if (DTOProfesor.campus == "Centro Académico de Alajuela")
+        if (num < 100)
+            return codigoP = "AL-0" + num
+        else
+            return codigoP = "AL-" + num
+    if (DTOProfesor.campus == "Centro Académico de Limón")
+        if (num < 100)
+            return codigoP = "LI-0" + num
+        else
+            return codigoP = "LI-" + num
+}
 
 
 //Metodo para hacer la consulta de todos los estudiantes
@@ -168,14 +198,7 @@ export async function getProfesoresMongo(){
 export const modificarProfesor = async (DTOProfesor) => {
     console.log("put profesor middlewhere");
     try {
-        //const contrasennaReg = /^[0-9]{8}$/
-        const correoReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const telefonoReg = /^(2|6|8){1}[0-9]{7}$/
-        const cedulaReg = /^[1-9]{1}[0-9]{8}$/
-        const celularReg = /^(\+506)?[24678]\d{7}$/;
         var p = await Profesor.findOne({codigo: DTOProfesor.codigo}); 
-
-
         const data = await Profesor.findOne({ correo: DTOProfesor.correo}); 
         const dataT = await Profesor.findOne({ telefono: DTOProfesor.telefono}); 
         const dataC = await Profesor.findOne({ cedula: DTOProfesor.cedula}); 
