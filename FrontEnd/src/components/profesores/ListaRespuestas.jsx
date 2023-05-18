@@ -32,7 +32,7 @@ function ListaRespuestas({actividad}) {
   }
   console.log(comentarios)
   return (
-    <div className="container">
+    <div className="container m-auto">
       <div className="text-center" id="nombrePlanConteiner">
         <h1 className="text-center font-bold text-5xl p-5">Comentarios</h1>
       </div>

@@ -30,7 +30,7 @@ function ListaComentarios(props) {
 
   if (comentarios.length == 0) {
     return (
-      <div className="p-3 m-3">
+      <div className="p-3 m-auto">
         <h1 className="text-center font-semibold text-3xl p-2 m-1">
           No hay comentarios disponibles...
         </h1>
@@ -44,11 +44,11 @@ function ListaComentarios(props) {
     );
   }
   return (
-    <div className="container">
+    <div className="container m-auto">
       <div className="text-center" id="nombrePlanConteiner">
         <h1 className="text-center font-bold text-5xl p-5">Comentarios</h1>
       </div>
-      <div className="text-center" id="tablaProfesores">
+      <div className="text-center m-auto" id="tablaProfesores">
         {/*Las actividades se las pasa a la tabla por props */}
         <TablaComentarios comentarios={comentarios} />
       </div>

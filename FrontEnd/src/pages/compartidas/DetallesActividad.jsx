@@ -9,7 +9,7 @@ function DetallesActividad(props) {
     navigate("/planDeTrabajo");
   };
   return (
-    <div className="text-center">
+    <div className="text-center m-auto">
       {/*Texto */}
       <div>
         <h1 className="text-center font-semi p-3 m-3 text-5xl">

@@ -125,7 +125,7 @@ function FormularioAgregarProfesor(props) {
   const styleInputs =
     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
   return (
-    <div className=" p-3 m-4 text-center items-center">
+    <div className=" p-3 m-auto text-center items-center">
       <div className="text-center">
         <form className="text-center pt-5 pl-5 pr-5 mt-10 ml-10 mr-10 mb-2 rounded-2xl  grid grid-rows-3 grid-flow-col gap-1 bg-slate-800">
           {/*Carnet*/}

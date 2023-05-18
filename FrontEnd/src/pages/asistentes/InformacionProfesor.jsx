@@ -14,7 +14,7 @@ function InformacionProfesor(props) {
     navigate("/infoProfesores");
   };
   return (
-    <div className="container">
+    <div className="container m-auto">
       <h1 className="p-4 m-3 text-center font-bold text-4xl">
         Información de Profesor
       </h1>
