@@ -1,6 +1,8 @@
 import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
-
+import {
+    getProfesoresActividad
+} from "../database/DAOProfesor.js"; //Importación de DAOProfesor
 //Schema asociado a plan de actividades, es el cual se guardará en mongo
 const planSchema = new mongoose.Schema({
     nombre: {type: String, required: true},
@@ -10,12 +12,12 @@ const planSchema = new mongoose.Schema({
 //Schema asociado a actividad, es el cual se guardara en mongo
 const actividadSchema = new mongoose.Schema({
     nombre: {type: String, required: true},
-    fecha: {type: Date, required: true},
+    fecha: {type: String, required: true},
     semana: {type: Number, required: true},
     descripcion: {type: String, required: true},
     tipo: {type: String, required: true},
-    responsable: {type: Number, required: true},
-    fechaPublicacion: {type: Date, required: true},
+    responsable: {type: Array, required: true},
+    fechaPublicacion: {type: String, required: true},
     recordatorios: {type: Array, required: true},
     modalidad: {type: Boolean, required: true},
     enlace: {type: String, required: true},
@@ -54,9 +56,15 @@ async function guardarEnplanDB(nombreActividad){
 export const getPlanDB = async () => {
     try {
         const plan = await Plan.findOne()
-        const idsActividades = plan.actividades
+        const idsActividades = plan.actividades;
         const actividades = await Actividad.find({ _id: { $in: idsActividades } });
         plan.actividades = actividades;
+        for(let i in actividades) {
+            var actividad = actividades[i];
+            const idResponsables = actividad.responsable;
+            const responsables = await getProfesoresActividad(idResponsables);
+            actividad.responsable = responsables;
+        }
         if (plan) return plan
         return false
     } catch (error) {
@@ -80,10 +88,14 @@ export const getActividadesDB = async () => {
     try {
         const plan = await Plan.findOne() //devuelve el primer plan que encuentre (el único)
         const idsActividades = plan.actividades
-        console.log(idsActividades)
         
         const actividades = await Actividad.find({ _id: { $in: idsActividades } });
-
+        for(let i in actividades) {
+            var actividad = actividades[i];
+            const idResponsables = actividad.responsable;
+            const responsables = await getProfesoresActividad(idResponsables);
+            actividad.responsable = responsables;
+        }
         if (actividades) return actividades;
         return false
 
@@ -210,6 +222,20 @@ export const agregarRespuesta = async (comentario) => {
         c.save();
         return c;
       } catch (error) {
+        return error;
+    }
+};
+
+//Método que retorna todos los comentarios de una actividad en especifico
+export async function getRespuestas(idA){
+    try {
+        const data = await Comentario.find({idRespuesta: idA}); 
+        if (data) {
+            return data
+        } else {
+            return false
+        }
+    } catch (error) {
         return error;
     }
 };

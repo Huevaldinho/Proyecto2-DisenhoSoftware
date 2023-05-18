@@ -124,19 +124,6 @@ export const agregarProfesor = async (DTOProfesor) => {
                 codigoP = "LI-0" + num
             else
                 codigoP = "LI-" + num
-        cloudinary.uploader.upload(path, (error, result) => {
-            if (error) {
-                console.error(error);
-                return "11";
-            }
-                
-        // Eliminar el archivo temporal después de subirlo a Cloudinary
-        fs.unlinkSync(req.file.path);
-                
-        // Obtener el enlace público de la imagen subida en Cloudinary
-        const imageUrl = result.secure_url;
-            return imageUrl;
-        });
         let p = new Profesor({
             codigo: codigoP,
             cedula: DTOProfesor.cedula,
@@ -153,6 +140,7 @@ export const agregarProfesor = async (DTOProfesor) => {
             coordinador: DTOProfesor.coordinador,
             equipo: DTOProfesor.equipo,
             rol: DTOProfesor.rol,
+            foto: DTOProfesor.foto
         })
         p.save();
         return p;
@@ -303,6 +291,20 @@ export const eliminarProfesorEquipo = async (_id) => {
         p.save();
         return p;
       } catch (error) {
+        return error;
+    }
+};
+
+//Metodo para hacer la consulta de todos los estudiantes
+export async function getProfesoresActividad(lista){
+    try {
+        const data = await Profesor.find({ _id: { $in: lista } });
+        if (data) {
+            return data
+        } else {
+            return []
+        }
+    } catch (error) {
         return error;
     }
 };
