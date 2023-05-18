@@ -139,8 +139,7 @@ export const agregarProfesor = async (DTOProfesor) => {
             estado: "Activo",
             coordinador: DTOProfesor.coordinador,
             equipo: DTOProfesor.equipo,
-            rol: DTOProfesor.rol,
-            foto: DTOProfesor.foto
+            rol: DTOProfesor.rol
         })
         p.save();
         return p;
