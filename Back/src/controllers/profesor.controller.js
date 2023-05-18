@@ -14,11 +14,12 @@ export const getProfesores = async (req, res) => {
 
 //Método post para agregar un profesor, este recibe un Body con los datos que actuara como un DTOProfesor
 export const postProfesor = async (req, res) => {
+    console.log(req.body)
     var profesorNuevo;
-    if (!req.file)
+    if (!req.file || req.file == null)
         profesorNuevo = await agregarProfesor(req.body,"");
     else
-        profesorNuevo = await agregarProfesor(req.body,req.file);
+        profesorNuevo = await agregarProfesor(req.body,req.file.path);
     console.log(profesorNuevo);
     if (typeof profesorNuevo === 'string')
         res.send(profesorNuevo);
