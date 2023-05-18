@@ -100,6 +100,8 @@ export const agregarProfesor = async (DTOProfesor,fileFoto) => {
             return "10"; //error si el celular no es aceptada
         if (fileFoto != "") 
             fotoP = subirFotoNube(fileFoto);
+            if (fotoP == "11")
+                return "11";
         else 
             fotoP = "";
         let p = new Profesor({
