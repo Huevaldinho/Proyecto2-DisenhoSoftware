@@ -1,19 +1,25 @@
 import React from "react";
 //Main controller
-import { useContext } from "react";
+import { useContext ,useEffect} from "react";
 import {MainControllerContext} from "../../../../contexts/MainControllerContext";
-//Datos quemados de prueba
-import { profesores as profes } from "../../../../datos";
 
 function ResponsablesAgregarActividad({
   handleResponsableChange,
   cssElementosForm,
 }) {
   //*DOING
-  const mainController = useContext(MainControllerContext);
-  //Pedir profesores a la api.
-  let profesores = mainController.consultarProfesores();
-  profesores = profes; //!QUITAR CUANDO API FUNCIONE
+  const {profesores,consultarProfesores} = useContext(MainControllerContext);
+  
+   const updateState = () => {
+    setTimeout(() => {
+      consultarProfesores();
+    }, 1000);
+  };
+
+  // Efecto que actualiza el estado de myState después de que el componente ha sido montado
+  useEffect(() => {
+    updateState();
+  }, []);
 
   if (profesores.length == 0) {
     return (

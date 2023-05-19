@@ -14,28 +14,35 @@ class AdminProfesores {
      */
     async registrarProfesor(dtoProfe) {
         try {
+            var formData = new FormData();
+            var jsonBody = {
+                "cedula": dtoProfe.getCedula(),
+                "nombre": dtoProfe.getNombre(),
+                "nombre2": dtoProfe.getNombre2(),
+                "apellido1": dtoProfe.getApellido1(),
+                "apellido2": dtoProfe.getApellido2(),
+                "correo": dtoProfe.getCorreo(),
+                "contrasenna": dtoProfe.getContrasenna(),
+                "rol": dtoProfe.getRol(),
+                "coordinador": dtoProfe.getCoordinador(),
+                "telefono": dtoProfe.getTelefono(),
+                "campus": dtoProfe.getCampus(),
+                "equipo": dtoProfe.getEquipo(),
+                "celular": dtoProfe.getCelular(),
+                "foto": dtoProfe.foto
+            }
+            if (dtoProfe !== "") {//Si trae imagen la agrega.
+                formData.append("foto", dtoProfe.foto);//se lo pega al form
+            }
+            formData.append('json', JSON.stringify(jsonBody))
+            console.log("FORM DATA: ", formData)
+
+
             const response = await fetch(`${API_URL}/profesor`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "cedula": dtoProfe.getCedula(),
-                    "nombre": dtoProfe.getNombre(),
-                    "nombre2": dtoProfe.getNombre2(),
-                    "apellido1": dtoProfe.getApellido1(),
-                    "apellido2": dtoProfe.getApellido2(),
-                    "correo": dtoProfe.getCorreo(),
-                    "contrasenna": dtoProfe.getContrasenna(),
-                    "rol": dtoProfe.getRol(),
-                    "coordinador": dtoProfe.getCoordinador(),
-                    "telefono": dtoProfe.getTelefono(),
-                    "campus": dtoProfe.getCampus(),
-                    "equipo": dtoProfe.getEquipo(),
-                    "celular": dtoProfe.getCelular(),
-                })
+                body: formData
             });
-            let data = await response.json(); // Convertir datos a formato JSON
+            let data = await response; // Convertir datos a formato JSON
             return data;
         } catch (error) {
             console.error('Error en AdminProfesores, en metodo actualizarProfesor: ', error);
