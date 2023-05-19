@@ -31,7 +31,7 @@ class AdminProfesores {
                 "celular": dtoProfe.getCelular(),
                 "foto": dtoProfe.foto
             }
-            if (dtoProfe !== "") {
+            if (dtoProfe !== "") {//Si trae imagen la agrega.
                 formData.append("foto", dtoProfe.foto);//se lo pega al form
             }
             formData.append('json', JSON.stringify(jsonBody))
@@ -42,7 +42,7 @@ class AdminProfesores {
                 method: 'POST',
                 body: formData
             });
-            let data = await response.json(); // Convertir datos a formato JSON
+            let data = await response; // Convertir datos a formato JSON
             return data;
         } catch (error) {
             console.error('Error en AdminProfesores, en metodo actualizarProfesor: ', error);
