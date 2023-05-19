@@ -24,17 +24,17 @@ const FormularioAgregarProfesor = (props) => {
     const data = {
       nombre: "Prueba datos quemados",
       nombre2: "Prueba datis hqe am",
-      cedula: "901391105",
+      cedula: "901291102",
       apellido1: "ape1",
       apellido2: "tasd",
-      correo: "Corre@estudiantec.cr",
+      correo: "Corrase@estudiantec.cr",
       contrasenna: "12345678",
       rol: "Profesor",
       coordinador: "NOCOORDINADOR",
-      telefono: "25736777",
+      telefono: "25232777",
       campus: "Centro Académico de Limón",
       equipo: "Equipo",
-      celular: "71130683",
+      celular: "71120623",
     };
 
     // Crear una instancia de FormData para enviar el archivo
