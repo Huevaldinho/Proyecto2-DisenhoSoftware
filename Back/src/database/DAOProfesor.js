@@ -183,16 +183,16 @@ export async function getProfesoresMongo(){
 
 //Método para modificar un profesor, relacionado con la ruta de put de Profesor
 //DTOProfesor es un json que viene de Body
-export const modificarProfesor = async (DTOProfesor) => {
+export const modificarProfesor = async (DTOProfesor, path) => {
     console.log("put profesor middlewhere");
     try {
+        var fotoP;
         var p = await Profesor.findOne({codigo: DTOProfesor.codigo}); 
         const data = await Profesor.findOne({ correo: DTOProfesor.correo}); 
         const dataT = await Profesor.findOne({ telefono: DTOProfesor.telefono}); 
         const dataC = await Profesor.findOne({ cedula: DTOProfesor.cedula}); 
         const dataCel = await Profesor.findOne({ celular: DTOProfesor.celular}); 
-        /*if (!DTOProfesor.contrasenna.match(contrasennaReg)) 
-            return "1"; //error si la contraseña no es aceptada*/
+        var dataCoordinador = await Profesor.findOne({ campus: campusP,coordinador: "COORDINADOR"}); 
         if (!DTOProfesor.correo.match(correoReg)) 
             return "2"; //error si el correo no es aceptado
         if (!DTOProfesor.telefono.match(telefonoReg)) 
@@ -211,6 +211,13 @@ export const modificarProfesor = async (DTOProfesor) => {
             return "9" //error si ya existia el celular registrada
         if (!DTOProfesor.celular.match(celularReg)) 
             return "10"; //error si el celular no es aceptada 
+        if (fileFoto != "") {
+            fotoP = await subirFotoNube(fileFoto);
+            if (fotoP == "11")
+                return "11";
+            }
+        else 
+            fotoP = DTOProfesor.foto;
         p.cedula = DTOProfesor.cedula;
         p.nombre = DTOProfesor.nombre;
         p.nombre2 = DTOProfesor.nombre2;
@@ -221,10 +228,16 @@ export const modificarProfesor = async (DTOProfesor) => {
         p.celular = DTOProfesor.celular;
         p.campus = DTOProfesor.campus;
         p.contrasenna = DTOProfesor.contrasenna;
-        p.coordinador = DTOProfesor.coordinador;
+        if(p.coordinador == "NOCOORDINADOR" && DTOProfesor.coordinador == "COORDINADOR" && dataCoordinador) {
+            dataCoordinador.coordinador = "NOCOORDINADOR";
+            dataCoordinador.save();
+            p.coordinador = "COORDINADOR";
+        } else
+            p.coordinador == DTOProfesor.coordinador;
         p.estado = DTOProfesor.estado;
         p.rol =  DTOProfesor.rol;
         p.equipo = DTOProfesor.equipo
+        p.foto = fotoP;
         p.save();
         return p;
       } catch (error) {
