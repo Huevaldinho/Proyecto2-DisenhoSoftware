@@ -130,6 +130,9 @@ class MainController {
   async verEstudiantes() {
     return await this.adminEstudiantes.verEstudiantes();
   }
+  async registrarEstudiantes() {
+    return await this.adminEstudiantes.registrarEstudiantes();
+  }
   async modificarInformacionEstudiante() {
     return await this.adminEstudiantes.modificarInformacionEstudiante();
   }

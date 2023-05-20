@@ -1,11 +1,24 @@
 import React from 'react';
 import * as XLSX from 'xlsx';
 import { useState, useContext } from "react";
+import { MainControllerContext } from "../../contexts/MainControllerContext";
 function CargarExcel() {
   const [jsonData, setEstudiantes] = useState(null);
+  const { enviarEstudiantes, data } = useContext(MainControllerContext);
+  const handleClick = (e) => {
+    e.preventDefault();
+    let mandarDatos = jsonData;
+    console.log("Datos que se envian:", mandarDatos);
+    comentarActividad(mandarDatos);
+    //Redireccionar
+    navigate("/detallesActividad", { state: {actividad:actividad} });
+  };
+  
+  
    const handleFileUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
+
     reader.onload = (e) => {
       const data = new Uint8Array(e.target.result);
       const workbook = XLSX.read(data, { type: 'array' });
@@ -31,7 +44,7 @@ function CargarExcel() {
         </form>
         </div>
         <div>
-          {jsonData}
+          
         </div>
         <div className="pt-8">
         <button  className="px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">Subir</button>

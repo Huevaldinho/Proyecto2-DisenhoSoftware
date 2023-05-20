@@ -64,6 +64,11 @@ const MainControllerContextProvider = ({ children }) => {
     setEstudiantes(data); //Guarda en state de estudiantes
     return data;
   };
+  const registrarEstudiantes = async (dtoEstudiante) => {
+    const data = await mainController.registrarEstudiantes(dtoEstudiante);
+    verEstudiantes();
+    return data; //profe o error.
+  };
   //*AUTH
   /**
    * Metodo para iniciar sesion.
@@ -144,7 +149,8 @@ const MainControllerContextProvider = ({ children }) => {
         consultarComentarios,
         cambiarNombrePlanTrabajo,
         comentarActividad,
-        crearActividad
+        crearActividad,
+        registrarEstudiantes
       }}
     >
       {children}
