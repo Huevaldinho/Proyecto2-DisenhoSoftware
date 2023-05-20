@@ -18,13 +18,13 @@ import AficheAgregarActividad from "./AficheAgregarActividad";
 //Validar datos
 import { validarDatosActividad } from "../../../../validation/ValidarInputs";
 //Controlador
-import {MainControllerContext} from "../../../../contexts/MainControllerContext";
+import { MainControllerContext } from "../../../../contexts/MainControllerContext";
 //DTOActividad
 import DTOActividad from "../../../../services/DTOs/DTOActividad";
 
 function FormularioAgregarActividad(props) {
   //*Los permisos aun no se crean pero para agregar solo el coordinador puede hacerlo.
-  const mainController = useContext(MainControllerContext);
+  const { crearActividad } = useContext(MainControllerContext);
 
   //Use states
   const [nombreActividad, setNombreActividad] = useState(null); //Nombre
@@ -146,13 +146,8 @@ function FormularioAgregarActividad(props) {
           estadoSeleccionado,
           null //Evidencias.
         );
-        console.log("DTOActividad creado:", dtoActividad);
-        let respuestaMainController = await mainController.crearActividad(
-          dtoActividad
-        );
-        console.log("Respuesta mainController:", respuestaMainController);
+        let respuestaMainController = await crearActividad(dtoActividad);
         alert("Actividad creada exitosamente");
-
         break;
       }
       default: {

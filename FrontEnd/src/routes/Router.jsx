@@ -23,17 +23,24 @@ import AgregarActividad from "../pages/profesores/coordinadores/AgregarActividad
 import { Navigate } from "react-router-dom";
 import RegistrarProfesor from "../pages/asistentes/RegistrarProfesor";
 import ListaComentarios from "../components/profesores/ListaComentarios";
+import ListaRespuestas from "../components/profesores/ListaRespuestas";
+import AgregarComentario from "../components/profesores/AgregarComentario";
+import AgregarRespuesta from "../components/profesores/AgregarRespuesta";
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
         {/*Ruta al iniciar aplicacion es login. */}
         <Route index element={<Navigate to="/login" />} />
+
         {/*Inicio routues de COMPARTIDAS */}
         <Route path="/planDeTrabajo" element={<PlanDeTrabajo />} />
         <Route path="/detallesActividad" element={<DetallesActividad />} />
         <Route path="/listaComentarios" element={<ListaComentarios />} />
-        {/*Fin routues de COMPARTIDAS */}
+        <Route path="/listaRespuestas" element={<ListaRespuestas />} />
+        <Route path="/agregarComentario" element={<AgregarComentario />} />
+        <Route path="/agregarRespuesta" element={<AgregarRespuesta />} />
+        
 
         {/*Inicio routes de ESTUDIANTES */}
         <Route

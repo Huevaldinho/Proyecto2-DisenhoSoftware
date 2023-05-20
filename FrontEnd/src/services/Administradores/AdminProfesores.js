@@ -9,36 +9,27 @@ class AdminProfesores {
     /**
      * Metodo para registrar a un profesor.
      * Utiliza la API.
-     * @param {DTOProfesor} dtoProfe 
+     * @param {JSON} dtoProfe 
      * @returns {JSON} dtoProfe registrado
      */
-    async registrarProfesor(dtoProfe) {
+    async registrarProfesor(dtoProfe, foto) {
         try {
+            const formData = new FormData();
+            formData.append("image", foto); //Agrega la foto o null
+
+            // Agregar los campos de datos al FormData
+            for (let key in dtoProfe) {
+                formData.append(key, dtoProfe[key]);
+            }
             const response = await fetch(`${API_URL}/profesor`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "cedula": dtoProfe.getCedula(),
-                    "nombre": dtoProfe.getNombre(),
-                    "nombre2": dtoProfe.getNombre2(),
-                    "apellido1": dtoProfe.getApellido1(),
-                    "apellido2": dtoProfe.getApellido2(),
-                    "correo": dtoProfe.getCorreo(),
-                    "contrasenna": dtoProfe.getContrasenna(),
-                    "rol": dtoProfe.getRol(),
-                    "coordinador": dtoProfe.getCoordinador(),
-                    "telefono": dtoProfe.getTelefono(),
-                    "campus": dtoProfe.getCampus(),
-                    "equipo": dtoProfe.getEquipo(),
-                    "celular": dtoProfe.getCelular(),
-                })
+                body: formData
             });
-            let data = await response.json(); // Convertir datos a formato JSON
+            let data = await response.json();
+            console.log("AdminProfesores, en metodo registrarProfesor retorna:", data)
             return data;
         } catch (error) {
-            console.error('Error en AdminProfesores, en metodo actualizarProfesor: ', error);
+            console.error('Error en AdminProfesores, en metodo registrarProfesor: ', error);
         }
     }
     /**
@@ -63,34 +54,25 @@ class AdminProfesores {
     /**
      * Metodo para cambiar los datos de un profesor.
      * Hace peticion a la API.
-     * @param {DTOProfesor} dtoProfe 
+     * @param {JSON} dtoProfe 
+     * @param {File| null} foto del profe
      */
-    async actualizarProfesor(dtoProfe) {
+    async actualizarProfesor(dtoProfe, foto) {
         try {
+            const formData = new FormData();
+            formData.append("image", foto); //Agrega la foto o null
+
+            // Agregar los campos de datos al FormData
+            for (let key in dtoProfe) {
+                formData.append(key, dtoProfe[key]);
+            }
+            console.log("FormData:", formData);
             const response = await fetch(`${API_URL}/profesor`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "cedula": dtoProfe.getCedula(),
-                    "nombre": dtoProfe.getNombre(),
-                    "nombre2": dtoProfe.getNombre2(),
-                    "apellido1": dtoProfe.getApellido1(),
-                    "apellido2": dtoProfe.getApellido2(),
-                    "correo": dtoProfe.getCorreo(),
-                    "contrasenna": dtoProfe.getContrasenna(),
-                    "rol": dtoProfe.getRol(),
-                    "codigo": dtoProfe.getCodigo(),
-                    "coordinador": dtoProfe.getCoordinador(),
-                    "telefono": dtoProfe.getTelefono(),
-                    "campus": dtoProfe.getCampus(),
-                    "equipo": dtoProfe.getEquipo(),
-                    "celular": dtoProfe.getCelular(),
-                    "estado": dtoProfe.getEstado()
-                })
+                body: formData
             });
-            let data = await response.json(); // Convertir datos a formato JSON
+            let data = await response.json();
+            console.log("AdminProfesores, en metodo actualizarProfesor retorna:", data)
             return data;
         } catch (error) {
             console.error('Error en AdminProfesores, en metodo actualizarProfesor: ', error);

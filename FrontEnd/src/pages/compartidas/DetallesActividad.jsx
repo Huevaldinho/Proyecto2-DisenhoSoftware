@@ -1,15 +1,15 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FormularioDetallesActividad from "../../components/compartidos/actividades/FormularioDetallesActividad";
+import ListaComentarios from "../../components/profesores/ListaComentarios";
 function DetallesActividad(props) {
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/planDeTrabajo");
   };
-
   return (
-    <div className="text-center">
+    <div className="text-center m-auto">
       {/*Texto */}
       <div>
         <h1 className="text-center font-semi p-3 m-3 text-5xl">
@@ -17,6 +17,7 @@ function DetallesActividad(props) {
         </h1>
       </div>
       <FormularioDetallesActividad />
+      <ListaComentarios />
       {/*Boton regreso a plan de trabajo */}
       <div className="text-center">
         <button

@@ -25,6 +25,11 @@ function FormularioModificarProfesor(props) {
   ); //Coordinador
   const [celular, setCelular] = useState(profesor.celular); //Celular
   const [cedula, setCedula] = useState(profesor.cedula); //Cedula
+  const [file, setFile] = useState(null); //Imagen opcional
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
 
   const manejoErrores = async (respuesta) => {
     switch (respuesta) {
@@ -91,25 +96,27 @@ function FormularioModificarProfesor(props) {
   };
 
   const redireccionar = async () => {
-    let profeAct = new DTOProfesor(
+    let jsonProfe = {
       cedula,
       nombre1,
       nombre2,
       apellido1,
       apellido2,
       correo,
-      profesor.contrasenna,
-      profesor.rol,
-      profesor.codigo,
-      coordinador == "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR",
+      contrasenna: profesor.contrasenna,
+      rol: profesor.rol,
+      codigo: profesor.codigo,
+      coordinador: "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR",
       telefono,
-      profesor.campus,
+      campus: profesor.campus,
       estado,
-      profesor.equipo,
+      equipo: profesor.equipo,
       celular,
-      ""
-    );
-    const respuesta = await actualizarProfesor(profeAct);
+      foto: profesor.foto,
+    };
+    console.log("Modificar profe envia:", jsonProfe, file);
+
+    const respuesta = await actualizarProfesor(jsonProfe, file);
 
     if (manejoErrores(respuesta)) {
       //No hubo errores.
@@ -134,14 +141,48 @@ function FormularioModificarProfesor(props) {
     } else alert("No se ha podido eliminar al profesor, intente de nuevo.");
   };
 
+  console.log("INFO PROFE:", profesor);
   //*Styles
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
   const styleInputs =
     "text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
   return (
-    <div className=" p-3 m-4 text-center items-center">
+    <div className=" p-3 m-auto text-center items-center">
       <div className="text-center">
         <form className="text-center pt-5 pl-5 pr-5 mt-10 ml-10 mr-10 mb-2 rounded-2xl  grid grid-rows-3 grid-flow-col gap-1 bg-slate-800">
+          {/*Foto */}
+          <div className={cssElementosForm}>
+            <label
+              htmlFor="text"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Foto
+            </label>
+            {profesor.foto === "" ? (
+              <div className={cssElementosForm}>
+                <label htmlFor="file">Agregar foto:</label>
+                <input
+                  type="file"
+                  id="file"
+                  onChange={handleFileChange}
+                  required={false}
+                />
+              </div>
+            ) : (
+              <>
+                <img src={profesor.foto} alt="Imagen" />
+                <div className={cssElementosForm}>
+                  <label htmlFor="file">Cambiar foto:</label>
+                  <input
+                    type="file"
+                    id="file"
+                    onChange={handleFileChange}
+                    required={false}
+                  />
+                </div>
+              </>
+            )}
+          </div>
           {/*Codigo*/}
           <div className={cssElementosForm}>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -306,7 +347,6 @@ function FormularioModificarProfesor(props) {
               <option value="Inactivo">Inactivo</option>
             </select>
           </div>
-
           <br></br>
           <div className={cssElementosForm}>
             <label
@@ -329,11 +369,12 @@ function FormularioModificarProfesor(props) {
               <option value="No coordinador">No coordinador</option>
             </select>
           </div>
+
+          {/*Boton para eliminar al profe*/}
           <div
             className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
             id="containerBotonAgregarActividad"
           >
-            {/*Boton agilizar la eliminacion de un profesor*/}
             <button
               className="text-center w-full h-full"
               onClick={handleBorrar}

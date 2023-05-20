@@ -21,6 +21,11 @@ function FormularioAgregarProfesor(props) {
     "Campus Tecnológico Central Cartago"
   );
   const [celular, setCelular] = useState(null);
+  const [file, setFile] = useState(null); //Imagen opcional
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
 
   const manejoErrores = async (respuesta) => {
     switch (respuesta) {
@@ -85,28 +90,27 @@ function FormularioAgregarProfesor(props) {
       }
     }
   };
-  const redireccionar = async () => {
-    let profeAct = new DTOProfesor(
-      cedula,
-      nombre,
-      nombre2,
-      apellido1,
-      apellido2,
-      correo,
-      contrasenna,
-      "Profesor",
-      "",
-      coordinador == "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR",
-      telefono,
-      campusSeleccionado,
-      "Activo",
-      "Equipo",
-      celular,
-      ""
-    );
-    //profeAct.toString();
-    const respuesta = await registrarProfesor(profeAct);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Crear el objeto JSON
+    const data = {
+      cedula: cedula,
+      nombre: nombre,
+      nombre2: nombre2,
+      apellido1: apellido1,
+      apellido2: apellido2,
+      correo: correo,
+      contrasenna: contrasenna,
+      rol: "Profesor",
+      coordinador: "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR",
+      telefono: telefono,
+      campus: campusSeleccionado,
+      equipo: "Equipo",
+      celular: celular,
+      foto: "",
+    };
+    const respuesta = await registrarProfesor(data, file);
     if (manejoErrores(respuesta)) {
       //No hubo errores.
       if (Object.keys(respuesta).length !== 0) {
@@ -115,12 +119,10 @@ function FormularioAgregarProfesor(props) {
       } else alert("No se ha podido registar al profesor, intente de nuevo.");
     }
   };
-
-  const handleSubmit = (e) => {
+  const handleClickReturn = (e) => {
     e.preventDefault();
-    redireccionar();
+    navigate("/infoProfesores");
   };
-  //*Styles
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
   const styleInputs =
     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
@@ -308,6 +310,11 @@ function FormularioAgregarProfesor(props) {
               })}
             </select>
           </div>
+          {/*Foto*/}
+          <div className={cssElementosForm}>
+            <label htmlFor="file">Foto:</label>
+            <input type="file" id="file" onChange={handleFileChange} required />
+          </div>
         </form>
       </div>
       <div className={"text-center w-full "}>
@@ -320,8 +327,19 @@ function FormularioAgregarProfesor(props) {
           Aceptar
         </button>
       </div>
+      <div
+        className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
+        id="containerBotonAgregarActividad"
+      >
+        {/*Boton para regresar la menu profesores*/}
+        <button
+          className="text-center w-full h-full"
+          onClick={handleClickReturn}
+        >
+          Regresar al Menú de Profesores
+        </button>
+      </div>
     </div>
   );
 }
-
 export default FormularioAgregarProfesor;

@@ -14,11 +14,11 @@ function InformacionEstudiantes(props) {
     navigate("/menuProfesores");
   };
   return (
-    <div className="container">
+    <div className="container m-auto">
       <div className="text-center" id="nombrePlanConteiner">
         <h1 className="text-center font-bold text-5xl p-5">Estudiantes</h1>
       </div>
-      <div className="text-center" id="tablaActividades">
+      <div className="text-center m-auto" id="tablaActividades">
         {/*Las actividades se las pasa a la tabla por props */}
         <TablaInformacionEstudiantes />
       </div>

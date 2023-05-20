@@ -29,7 +29,7 @@ function MenuProfesoresGuia() {
   const estiloBotones =
     "text-center p-3 m-3bg-blue-600 border-collapse shadow-xl hover:bg-green-600 bg-blue-600 rounded-3xl";
   return (
-    <div className="container p-5 m-3">
+    <div className="container p-5 m-auto justify-center items-center"  >
       {/**
        <NavBarProfesores /> 
        */}

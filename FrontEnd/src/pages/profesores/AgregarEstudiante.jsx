@@ -8,7 +8,7 @@ function AgregarEstudiante() {
   */
     
       return (
-        <div className="container">
+        <div className="container m-auto">
           <h1 className="p-4 m-3 text-center font-bold text-4xl items-center">
             Agregar Estudiante
           </h1>

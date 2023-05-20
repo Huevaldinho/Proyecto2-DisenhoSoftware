@@ -30,14 +30,14 @@ function informacionProfesores(props) {
 
   if (profesores.length == 0) {
     return (
-      <p className="text-center font-semibold text-5xl">
+      <p className="text-center font-semibold text-5xl m-auto">
         Cargando profesores...
       </p>
     );
   }
 
   return (
-    <div className="container">
+    <div className="container m-auto ">
       <div className="text-center" id="nombrePlanConteiner">
         <h1 className="text-center font-bold text-5xl p-5">Profesores</h1>
       </div>

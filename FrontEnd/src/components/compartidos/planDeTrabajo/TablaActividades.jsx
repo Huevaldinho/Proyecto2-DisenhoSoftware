@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 function TablaActividades({ actividades }) {
   const navigate = useNavigate();
   //Valida que existan actividades para mostrar.
-  console.log(actividades)
   if (actividades.length === 0) {
     //Si no hay actividades todavia
     return (
@@ -15,12 +14,7 @@ function TablaActividades({ actividades }) {
       </div>
     );
   }
-  /*
-    Funcion para ordenar array por fecha mas proxima.
-    Array: array de objetos.
-    key: "fechaHora"
-    El return queda en el mismo array de input en parametro, pero ordenado.
-  */
+
   function sortByDate(array, key) {
     return array.sort((a, b) => {
       var dateA = new Date(
@@ -37,7 +31,7 @@ function TablaActividades({ actividades }) {
     });
   }
   //Ordena las actividades por fecha mas proxima.
-  sortByDate(actividades, "fechaHora");
+  //sortByDate(actividades, "fechaHora");
 
   //Si hay actividades para mostrar.
   return (

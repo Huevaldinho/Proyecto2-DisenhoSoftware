@@ -31,15 +31,15 @@ class MainController {
   async crearActividad(dtoActividad) {
     return await this.adminActividades.crearActividad(dtoActividad);
   }
-/**
-   * Metodo para obtener los comentarios
-   * Trae los datos con la API.
-   * @returns {Array JSON} 
-   * 
-   */
-      async consultarComentarios(id) {
-        return await this.adminActividades.consultarComentarios(id);
-      }
+  /**
+     * Metodo para obtener los comentarios
+     * Trae los datos con la API.
+     * @returns {Array JSON} 
+     * 
+     */
+  async consultarComentarios(id) {
+    return await this.adminActividades.consultarComentarios(id);
+  }
 
   /**
    * Metodo para obtener el plan de trabajo.
@@ -47,6 +47,23 @@ class MainController {
    */
   async consultarPlanDeTrabajo() {
     return await this.adminActividades.consultarPlanDeTrabajo();
+  }
+  /**
+   * Metodo para cambiar el nomrbe del plan de trabajo.
+   * @param {String} nuevoNombre 
+   * @returns {_id,nombre,Array[id actividades],__v}
+   */
+  async cambiarNombrePlanTrabajo(nuevoNombre) {
+    return await this.adminActividades.cambiarNombrePlanTrabajo(nuevoNombre);
+  }
+  /**
+    * POST
+    * Comentario nuevo.
+    * @param {JSON = "idActividad","descripcion","fecha","autor","idRespuesta"} datos 
+    * Retorna 
+    */
+  async comentarActividad(datos) {
+    return await this.adminActividades.comentarActividad(datos);
   }
 
   //*AUTH
@@ -75,11 +92,11 @@ class MainController {
   //*PROFESORES
   /**
    * Metodo para registrar un profesor.
-   * @param {DTOProfesor} dtoProfe 
+   * @param {JSON} dtoProfe 
    * @returns {JSON} dtoProfe registrado
    */
-  async registrarProfesor(dtoProfe) {
-    return this.adminProfesores.registrarProfesor(dtoProfe);
+  async registrarProfesor(dtoProfe,foto) {
+    return this.adminProfesores.registrarProfesor(dtoProfe,foto);
   }
   /**
        * Metodo para obtener los profesores
@@ -93,7 +110,9 @@ class MainController {
   }
   /**
    * Metodo para cambiar los datos de un profesor.
-   * @param {DTOProfesor} dtoProfe 
+   * @param {JSON} dtoProfe 
+     * @param {File| null} foto del profe
+   * 
    * @returns 
    */
   async actualizarProfesor(dtoProfe) {
@@ -112,6 +131,9 @@ class MainController {
   //*ESTUDIANTES
   async verEstudiantes() {
     return await this.adminEstudiantes.verEstudiantes();
+  }
+  async registrarEstudiantes(estudiantes) {
+    return await this.adminEstudiantes.registrarEstudiantes(estudiantes);
   }
   async modificarInformacionEstudiante() {
     return await this.adminEstudiantes.modificarInformacionEstudiante();

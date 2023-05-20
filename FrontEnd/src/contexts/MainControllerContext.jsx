@@ -18,11 +18,11 @@ const MainControllerContextProvider = ({ children }) => {
   //*PROFESORES
   /**
    * Metodo para registrar a un profesor.
-   * @param {DTOProfesor} dtoProfe
+   * @param {JSON} dtoProfe
    * @returns {JSON} profe registrado
    */
-  const registrarProfesor = async (dtoProfe) => {
-    const data = await mainController.registrarProfesor(dtoProfe);
+  const registrarProfesor = async (dtoProfe, foto) => {
+    const data = await mainController.registrarProfesor(dtoProfe, foto);
     consultarProfesores();
     return data; //profe o error.
   };
@@ -34,10 +34,12 @@ const MainControllerContextProvider = ({ children }) => {
   /**
    * Metodo para cambiar los datos de un profesor
    * @param {DTOProfesor} dtoProfe
+   * @param {File| null} foto del profe
+   *
    */
-  const actualizarProfesor = async (dtoProfe) => {
+  const actualizarProfesor = async (dtoProfe, foto) => {
     //Hacer cambio y actualizar los profes
-    const data = mainController.actualizarProfesor(dtoProfe);
+    const data = mainController.actualizarProfesor(dtoProfe, foto);
     consultarProfesores();
     return data;
   };
@@ -64,6 +66,11 @@ const MainControllerContextProvider = ({ children }) => {
     setEstudiantes(data); //Guarda en state de estudiantes
     return data;
   };
+  const registrarEstudiantes = async (dtoEstudiante) => {
+    const data = await mainController.registrarEstudiantes(dtoEstudiante);
+    verEstudiantes();
+    return data; //estudiantes o error
+  };
   //*AUTH
   /**
    * Metodo para iniciar sesion.
@@ -78,9 +85,9 @@ const MainControllerContextProvider = ({ children }) => {
   };
   /**
    * Metodo para cambiar la contra de un correo.
-   * @param {String} correoIn 
+   * @param {String} correoIn
    * @param {String} contrasennaIn: nueva contrasenna
-   * @returns 
+   * @returns
    */
   const cambiarContrasenna = async (correoIn, contrasennaIn) => {
     const data = await mainController.cambiarContrasenna(
@@ -91,6 +98,10 @@ const MainControllerContextProvider = ({ children }) => {
   };
 
   //*PLAN DE TRABAJO
+  const crearActividad = async () => {
+    let data = await mainController.crearActividad();
+    return data;
+  };
   /**
    * Metodo para obtener plan de trabajo.
    * @returns
@@ -104,8 +115,22 @@ const MainControllerContextProvider = ({ children }) => {
     let data = await mainController.consultarComentarios(id);
     setComentarios(data);
     return data;
-
-  }
+  };
+  const cambiarNombrePlanTrabajo = async (nuevoNombre) => {
+    let data = await mainController.cambiarNombrePlanTrabajo(nuevoNombre);
+    return data;
+  };
+  /**
+   * POST
+   * Comentario nuevo.
+   * @param {JSON = "idActividad","descripcion","fecha","autor","idRespuesta"} datos
+   * Retorna
+   */
+  const comentarActividad = async (datos) => {
+    let data = await mainController.comentarActividad(datos);
+    consultarComentarios(datos.idActividad);
+    return data;
+  };
 
   return (
     <MainControllerContext.Provider
@@ -123,7 +148,11 @@ const MainControllerContextProvider = ({ children }) => {
         eliminarMiembro,
         registrarProfesor,
         comentarios,
-        consultarComentarios
+        consultarComentarios,
+        cambiarNombrePlanTrabajo,
+        comentarActividad,
+        crearActividad,
+        registrarEstudiantes,
       }}
     >
       {children}

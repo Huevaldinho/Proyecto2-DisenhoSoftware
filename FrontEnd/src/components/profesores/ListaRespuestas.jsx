@@ -1,20 +1,15 @@
 import React from "react";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
 import { useContext, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import TablaComentarios from "../../components/compartidos/comentarios/TablaComentarios";
-
-function ListaComentarios(props) {
+import { useNavigate } from "react-router-dom";
+import TablaRespuestas from "../../components/compartidos/respuestas/TablaRespuestas"
+function ListaRespuestas({actividad}) {
   const navigate = useNavigate();
-  const { comentarios, consultarComentarios } = useContext(
-    MainControllerContext
-  );
-  const { state } = useLocation();
-  const actividad = state?.actividad;
+  const { comentarios, consultarComentarios } = useContext(MainControllerContext);
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate("/agregarComentario", { state: { actividad: actividad } });
+    navigate("/agregarRespuesta");
   };
 
   const updateState = () => {
@@ -30,27 +25,20 @@ function ListaComentarios(props) {
 
   if (comentarios.length == 0) {
     return (
-      <div className="p-3 m-auto">
-        <h1 className="text-center font-semibold text-3xl p-2 m-1">
-          No hay comentarios disponibles...
-        </h1>
-        <button
-          className="text-center w-full h-full p-1 m-2 bg-green-500 hover:bg-green-800"
-          onClick={handleClick}
-        >
-          Agregar Comentario
-        </button>
-      </div>
+      <p className="text-center font-semibold text-5xl">
+        Cargando Comentarios...
+      </p>
     );
   }
+  console.log(comentarios)
   return (
     <div className="container m-auto">
       <div className="text-center" id="nombrePlanConteiner">
         <h1 className="text-center font-bold text-5xl p-5">Comentarios</h1>
       </div>
-      <div className="text-center m-auto" id="tablaProfesores">
+      <div className="text-center" id="tablaProfesores">
         {/*Las actividades se las pasa a la tabla por props */}
-        <TablaComentarios comentarios={comentarios} />
+        <TablaRespuestas comentarios={comentarios} />
       </div>
       <div
         className="text-center rounded-md bg-green-500 p-2 m-3 h-auto w-auto hover:bg-green-800"
@@ -58,11 +46,11 @@ function ListaComentarios(props) {
       >
         {/*Boton para agregar una actividad nueva*/}
         <button className="text-center w-full h-full" onClick={handleClick}>
-          Agregar Comentario
+          Agregar Respuesta
         </button>
       </div>
     </div>
   );
 }
 
-export default ListaComentarios;
+export default ListaRespuestas;

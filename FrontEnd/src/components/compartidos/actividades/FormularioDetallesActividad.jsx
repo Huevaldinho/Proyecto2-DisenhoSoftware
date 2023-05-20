@@ -1,35 +1,19 @@
 import React from "react";
-import { useState, useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 //Main controller
-import {MainControllerContext} from "../../../contexts/MainControllerContext";
-//Componentes
-import ListaComentarios from "../../profesores/ListaComentarios";
 
 function FormularioDetallesActividad(props) {
   const { state } = useLocation();
-  const actividad = state?.actividad;
-  console.log("Actividad a ver:", actividad);
+  console.log("STATE FORMULARIO:", state);
+  let actividad = state?.actividad;
 
+  console.log("Actividad formulario:", actividad);
   const cssElementosForm =
     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
   return (
-    <div className=" p-3 m-4 text-center items-center">
+    <div className=" p-3 m-auto text-center items-center">
       <div className="text-center">
         <form className="text-center p-5 m-2 rounded-2xl  grid grid-rows-4 grid-flow-col gap-4 bg-slate-800">
-          {/*ID Actividad */}
-          <div className={cssElementosForm}>
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              ID
-            </label>
-            <input
-              type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
-              disabled={true}
-              value={actividad.id}
-            />
-            <p className="font-thin text-red-700">No modificable</p>
-          </div>
           {/*Nombre actividad */}
           <div className={cssElementosForm}>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -39,7 +23,7 @@ function FormularioDetallesActividad(props) {
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
               disabled={true}
-              value={actividad.nombreActividad}
+              value={actividad.nombre}
             />
           </div>
           {/*Semana  */}
@@ -74,7 +58,7 @@ function FormularioDetallesActividad(props) {
               type="text"
               className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               disabled={true}
-              value={actividad.tipoActividad}
+              value={actividad.tipo}
             />
           </div>
           {/*Modalidad */}
@@ -118,7 +102,7 @@ function FormularioDetallesActividad(props) {
             <input
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={actividad.fechaHora}
+              value={actividad.fecha}
             />
           </div>
           <br></br>
@@ -158,7 +142,7 @@ function FormularioDetallesActividad(props) {
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Responsable(s)
+              Recordatorios
             </label>
             <ul>
               {actividad.recordatorios.map((recordatorio, index) => (
@@ -174,16 +158,6 @@ function FormularioDetallesActividad(props) {
           {/**Afiche */}
         </form>
       </div>
-      <div className={"text-center w-full "}>
-        {/*Boton aceptar */}
-        <button
-          type="submit"
-          className=" text-white bg-blue-700 hover:bg-blue-900  font-medium rounded-lg w-auto p-4  text-center "
-        >
-          Aceptar
-        </button>
-      </div>
-      <ListaComentarios actividad = {actividad} />
     </div>
   );
 }
