@@ -29,7 +29,7 @@ router.get('/profesor', getProfesores);
 // Método post para agregar un profesor al sistema, recibe un body con los datos del profesor a cambiar
 router.post('/profesor', upload.single('image'), postProfesor);
 // Método put para modificar un profesor, recibe un body con los datos del profesor a cambiar
-router.put('/profesor', putProfesor);
+router.put('/profesor', upload.single('image'), putProfesor);
 // Método delete que cambia el estado de un profesor de activo a inactivo, recibe un id que es la cédula como parametro
 router.delete('/profesor/:id', deleteProfesor);
 

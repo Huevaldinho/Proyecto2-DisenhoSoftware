@@ -11,6 +11,7 @@ import equipoRoutes from "./src/routes/equipo.routes.js";
 import actividadesRoutes from "./src/routes/actividades.routes.js"
 import planRoutes from "./src/routes/plan.routes.js"
 import {systemDB}  from "./src/database/connection.js";
+import asistenteRoutes from "./src/routes/asistente.routes.js"
 /*import readXlsxFile from "read-excel-file/node";
 import fs from "fs";*/
 
@@ -47,6 +48,7 @@ app.use(planRoutes)
 app.use(actividadesRoutes); //rutas de relacionado a las actividades
 app.use(equipoRoutes);
 app.use(comentarioRoutes); //rutas relacionadas a los comentarios
+app.use(asistenteRoutes);
 
 
 /*readXlsxFile(fs.createReadStream('estudiantes.xlsx')).then((rows) => {

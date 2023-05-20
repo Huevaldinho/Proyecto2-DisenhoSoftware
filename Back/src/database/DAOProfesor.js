@@ -260,16 +260,16 @@ export const eliminarProfesor = async (_id) => {
 };
 
 //Método encargado de asignar un profesor a asistente
-//_id es el cedula del profesor
-export const asignarCoordinador = async (_id,campusP) => {
+//codigoP es el codigo del profesor
+export const asignarAsistente = async (codigoP,campusP) => {
     try {
-        var data = await Profesor.findOne({ campus: campusP,coordinador: "COORDINADOR"}); 
+        var data = await Profesor.findOne({ campus: campusP,rol: "Asistente"}); 
         if(data) {
-            data.coordinador = "NOCOORDINADOR";
+            data.rol = "Profesor";
             data.save();
         }
-        var p = await Profesor.findOne({cedula: _id});
-        p.coordinador = "COORDINADOR";
+        var p = await Profesor.findOne({codigo: codigoP});
+        p.rol = "Asistente";
         p.save();
         return p;
       } catch (error) {
