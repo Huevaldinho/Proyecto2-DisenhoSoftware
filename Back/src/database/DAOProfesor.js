@@ -192,7 +192,7 @@ export const modificarProfesor = async (DTOProfesor, path) => {
         const dataT = await Profesor.findOne({ telefono: DTOProfesor.telefono}); 
         const dataC = await Profesor.findOne({ cedula: DTOProfesor.cedula}); 
         const dataCel = await Profesor.findOne({ celular: DTOProfesor.celular}); 
-        var dataCoordinador = await Profesor.findOne({ campus: campusP,coordinador: "COORDINADOR"}); 
+        var dataCoordinador = await Profesor.findOne({ campus: DTOProfesor.campus,coordinador: "COORDINADOR"}); 
         if (!DTOProfesor.correo.match(correoReg)) 
             return "2"; //error si el correo no es aceptado
         if (!DTOProfesor.telefono.match(telefonoReg)) 
@@ -211,8 +211,8 @@ export const modificarProfesor = async (DTOProfesor, path) => {
             return "9" //error si ya existia el celular registrada
         if (!DTOProfesor.celular.match(celularReg)) 
             return "10"; //error si el celular no es aceptada 
-        if (fileFoto != "") {
-            fotoP = await subirFotoNube(fileFoto);
+        if (path != "") {
+            fotoP = await subirFotoNube(path);
             if (fotoP == "11")
                 return "11";
             }
@@ -228,9 +228,11 @@ export const modificarProfesor = async (DTOProfesor, path) => {
         p.celular = DTOProfesor.celular;
         p.campus = DTOProfesor.campus;
         p.contrasenna = DTOProfesor.contrasenna;
-        if(p.coordinador == "NOCOORDINADOR" && DTOProfesor.coordinador == "COORDINADOR" && dataCoordinador) {
-            dataCoordinador.coordinador = "NOCOORDINADOR";
-            dataCoordinador.save();
+        if(p.coordinador == "NOCOORDINADOR" && DTOProfesor.coordinador == "COORDINADOR") {
+            if (dataCoordinador) {
+                dataCoordinador.coordinador = "NOCOORDINADOR";
+                dataCoordinador.save();
+            }
             p.coordinador = "COORDINADOR";
         } else
             p.coordinador == DTOProfesor.coordinador;
