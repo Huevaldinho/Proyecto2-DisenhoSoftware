@@ -11,10 +11,11 @@ function CargarExcel() {
       const workbook = XLSX.read(data, { type: 'array' });
       const worksheet = workbook.Sheets[workbook.SheetNames[0]];
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      jsonData.shift();
       const jsonString = JSON.stringify(jsonData)
-      setEstudiantes(jsonString);
+      setEstudiantes(jsonData);
       // Aquí puedes hacer lo que quieras con los datos de Excel (por ejemplo, mostrarlos en la consola)
-      console.log(jsonString);
+      console.log(jsonData);
     };
 
     reader.readAsArrayBuffer(file);
