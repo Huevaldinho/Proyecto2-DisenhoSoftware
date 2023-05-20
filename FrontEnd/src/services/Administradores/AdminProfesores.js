@@ -1,11 +1,28 @@
 import { API_URL } from '../config';
-import { profesores as profEjemplo } from "../../datos";
-import DTOProfesor from '../DTOs/DTOProfesor';
-
 class AdminProfesores {
     //*Constructores
     constructor() { }
     //*Metodos
+    //*SUPER USUARIO
+    /**
+    * Metodo para asignar asistente
+    * @param {String} codigo de asistente
+    * @param {String} campus a asigar asistente
+    */
+    async asignarAsistente(codigo, campus) {
+        try {
+            const response = await fetch(`${API_URL}/asistente/${codigo}/${campus}`, {
+                method: 'POST'
+            });
+            let data = await response.json();
+            console.error('AdminProfesores,  metodo asignarAsistente retorna: ', data);
+
+            return data;
+        } catch (error) {
+            console.error('Error en AdminProfesores, en metodo asignarAsistente: ', error);
+        }
+    }
+
     /**
      * Metodo para registrar a un profesor.
      * Utiliza la API.

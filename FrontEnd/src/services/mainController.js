@@ -21,6 +21,15 @@ class MainController {
   }
 
   //*Metodos
+  //*SUPER USUARIO
+  /**
+  * Metodo para asignar asistente
+  * @param {String} codigo de asistente
+  * @param {String} campus a asigar asistente
+  */
+  async asignarAsistente(codigo, campus) {
+    return await this.adminProfesores.asignarAsistente(codigo, campus);
+  };
 
   //*PLAN DE TRABAJO
   /**
@@ -66,6 +75,7 @@ class MainController {
     return await this.adminActividades.comentarActividad(datos);
   }
 
+
   //*AUTH
 
   /**
@@ -95,8 +105,8 @@ class MainController {
    * @param {JSON} dtoProfe 
    * @returns {JSON} dtoProfe registrado
    */
-  async registrarProfesor(dtoProfe,foto) {
-    return this.adminProfesores.registrarProfesor(dtoProfe,foto);
+  async registrarProfesor(dtoProfe, foto) {
+    return this.adminProfesores.registrarProfesor(dtoProfe, foto);
   }
   /**
        * Metodo para obtener los profesores
@@ -115,8 +125,8 @@ class MainController {
    * 
    * @returns 
    */
-  async actualizarProfesor(dtoProfe,foto) {
-    return await this.adminProfesores.actualizarProfesor(dtoProfe,foto);
+  async actualizarProfesor(dtoProfe, foto) {
+    return await this.adminProfesores.actualizarProfesor(dtoProfe, foto);
   }
   /**
      * Metodo para eliminar (inactivar )a un miembro del equipo.

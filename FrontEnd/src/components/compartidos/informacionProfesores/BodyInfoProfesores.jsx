@@ -7,7 +7,11 @@ function BodyInfoProfesores({ profesores }) {
   return (
     <tbody className="bg-white divide-y divide-gray-200">
       {profesores.map((profesor, index) => (
-        <FilaInfoProfesores key={index} profesor={profesor} index={index} />
+        <FilaInfoProfesores
+          key={index}
+          profesor={profesor}
+          index={index}
+        />
       ))}
     </tbody>
   );

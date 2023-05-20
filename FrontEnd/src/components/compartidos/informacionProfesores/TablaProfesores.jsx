@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 //Componentes de tabla
 import HeaderInfoProfesores from "./HeaderInfoProfesores";
 import BodyInfoProfesores from "./BodyInfoProfesores";
 
 function TablaProfesores({ profesores }) {
+
   //Valida que existan actividades para mostrar.
   if (profesores.length == 0) {
     //Si no hay actividades todavia
@@ -13,6 +14,7 @@ function TablaProfesores({ profesores }) {
       </div>
     );
   }
+
   return (
     <div className="flex flex-col mt-8 text-center">
       <h1 className="text-center font-light p-2 text-blue-600">
@@ -23,7 +25,9 @@ function TablaProfesores({ profesores }) {
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
               <HeaderInfoProfesores />
-              <BodyInfoProfesores profesores={profesores} />
+              <BodyInfoProfesores
+                profesores={profesores}
+              />
             </table>
           </div>
         </div>

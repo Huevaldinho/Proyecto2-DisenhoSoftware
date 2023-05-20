@@ -15,6 +15,16 @@ const MainControllerContextProvider = ({ children }) => {
   let [profesores, setProfesores] = useState([]);
   //Comentarios
   let [comentarios, setComentarios] = useState([]);
+  //*SUPER USUARIO
+  /**
+   * Metodo para asignar asistente
+   * @param {String} codigo de asistente
+   * @param {String} campus a asigar asistente
+   */
+  const asignarAsistente = async (codigo, campus) => {
+    const data = await mainController.asignarAsistente(codigo, campus);
+    return data;
+  };
   //*PROFESORES
   /**
    * Metodo para registrar a un profesor.
@@ -153,6 +163,7 @@ const MainControllerContextProvider = ({ children }) => {
         comentarActividad,
         crearActividad,
         registrarEstudiantes,
+        asignarAsistente,
       }}
     >
       {children}
