@@ -22,26 +22,21 @@ class AdminEstudiantes {
             return null;
         }
     }
-    async registrarEstudiantes() {
+    async registrarEstudiantes(estudiantes) {
+        console.log(estudiantes)
         try {
-            const response = await fetch(`${API_URL}/comentario/`, {
+            const response = await fetch(`${API_URL}/estudiantes/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    "idActividad": datos.idActividad,
-                    "descripcion": datos.descripcion,
-                    "fecha": datos.fecha,
-                    "autor": datos.autor,
-                    "idRespuesta": "null"
-                })
+                body: JSON.stringify(estudiantes)
             });
             let data = await response.json(); // Convertir datos a formato JSON
-            console.log("AdminActividades comentarActividad retorna :", data)
+            console.log("AdminEstudiantes registrarEstudiantes retorna :", data)
             return data;
         } catch (error) {
-            console.error('Error en AdminActividades, en metodo comentarActividad: ', error);
+            console.error('Error en AdminEstudiantes, en metodo registrarEstudiantes: ', error);
             return null;
         }
     }

@@ -14,6 +14,7 @@ export const getEstudiantes = async (req, res) => {
 
 //Método post para insertar todos los estudiantes, recibe una lista por el body u los inserta
 export const postEstudiantes = async (req, res) => {
+    console.log(req.body)
     const estudiantes = await ingresarEstudiantes(req.body);
     console.log(estudiantes);
     res.json(estudiantes);

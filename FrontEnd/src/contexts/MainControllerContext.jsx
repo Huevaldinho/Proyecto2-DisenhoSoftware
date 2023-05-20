@@ -67,7 +67,7 @@ const MainControllerContextProvider = ({ children }) => {
   const registrarEstudiantes = async (dtoEstudiante) => {
     const data = await mainController.registrarEstudiantes(dtoEstudiante);
     verEstudiantes();
-    return data; //profe o error.
+    return data; //estudiantes o error
   };
   //*AUTH
   /**
