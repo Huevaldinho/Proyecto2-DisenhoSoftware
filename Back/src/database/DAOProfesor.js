@@ -238,7 +238,6 @@ export const modificarProfesor = async (DTOProfesor, path) => {
         p.estado = DTOProfesor.estado;
         p.rol =  DTOProfesor.rol;
         p.equipo = DTOProfesor.equipo
-
         p.save();
         return p;
       } catch (error) {
