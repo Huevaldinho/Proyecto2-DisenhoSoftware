@@ -30,11 +30,12 @@ export const postProfesor = async (req, res) => {
 
 //Método post para agregar un profesor, este recibe un Body con los datos que actuara como un DTOProfesor
 export const putProfesor = async (req, res) => {
-    let profesorMod;
+    var profesorMod;
     if (!req.file || req.file == null)
         profesorMod = await modificarProfesor(req.body,"");
     else
         profesorMod = await modificarProfesor(req.body,req.file.path);
+    console.log(profesorMod);
     if (typeof profesorMod === 'string')
         res.send(profesorMod);
     else
