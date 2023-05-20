@@ -92,11 +92,11 @@ class MainController {
   //*PROFESORES
   /**
    * Metodo para registrar un profesor.
-   * @param {DTOProfesor} dtoProfe 
+   * @param {JSON} dtoProfe 
    * @returns {JSON} dtoProfe registrado
    */
-  async registrarProfesor(dtoProfe) {
-    return this.adminProfesores.registrarProfesor(dtoProfe);
+  async registrarProfesor(dtoProfe,foto) {
+    return this.adminProfesores.registrarProfesor(dtoProfe,foto);
   }
   /**
        * Metodo para obtener los profesores

@@ -18,11 +18,11 @@ const MainControllerContextProvider = ({ children }) => {
   //*PROFESORES
   /**
    * Metodo para registrar a un profesor.
-   * @param {DTOProfesor} dtoProfe
+   * @param {JSON} dtoProfe
    * @returns {JSON} profe registrado
    */
-  const registrarProfesor = async (dtoProfe) => {
-    const data = await mainController.registrarProfesor(dtoProfe);
+  const registrarProfesor = async (dtoProfe,foto) => {
+    const data = await mainController.registrarProfesor(dtoProfe,foto);
     consultarProfesores();
     return data; //profe o error.
   };
