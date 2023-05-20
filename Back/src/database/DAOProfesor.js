@@ -215,9 +215,8 @@ export const modificarProfesor = async (DTOProfesor, path) => {
             fotoP = await subirFotoNube(path);
             if (fotoP == "11")
                 return "11";
-            }
-        else 
-            fotoP = DTOProfesor.foto;
+            p.foto = fotoP;
+        }
         p.cedula = DTOProfesor.cedula;
         p.nombre = DTOProfesor.nombre;
         p.nombre2 = DTOProfesor.nombre2;
@@ -239,7 +238,7 @@ export const modificarProfesor = async (DTOProfesor, path) => {
         p.estado = DTOProfesor.estado;
         p.rol =  DTOProfesor.rol;
         p.equipo = DTOProfesor.equipo
-        p.foto = fotoP;
+
         p.save();
         return p;
       } catch (error) {

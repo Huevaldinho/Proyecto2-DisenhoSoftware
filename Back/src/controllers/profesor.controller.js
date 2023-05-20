@@ -33,9 +33,9 @@ export const putProfesor = async (req, res) => {
     const profesorMod = await modificarProfesor(req.body);
     console.log(profesorMod);
     if (!req.file || req.file == null)
-        profesorNuevo = await modificarProfesor(req.body,"");
+        profesorMod = await modificarProfesor(req.body,"");
     else
-         profesorNuevo = await modificarProfesor(req.body,req.file.path);
+        profesorMod = await modificarProfesor(req.body,req.file.path);
     if (typeof profesorMod === 'string')
         res.send(profesorMod);
     else
