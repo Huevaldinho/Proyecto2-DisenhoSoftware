@@ -98,7 +98,7 @@ function FormularioModificarProfesor(props) {
   const redireccionar = async () => {
     let jsonProfe = {
       cedula,
-      nombre1,
+      nombre:nombre1,
       nombre2,
       apellido1,
       apellido2,
@@ -114,8 +114,6 @@ function FormularioModificarProfesor(props) {
       celular,
       foto: profesor.foto,
     };
-    console.log("Modificar profe envia:", jsonProfe, file);
-
     const respuesta = await actualizarProfesor(jsonProfe, file);
 
     if (manejoErrores(respuesta)) {
@@ -141,7 +139,6 @@ function FormularioModificarProfesor(props) {
     } else alert("No se ha podido eliminar al profesor, intente de nuevo.");
   };
 
-  console.log("INFO PROFE:", profesor);
   //*Styles
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
   const styleInputs =

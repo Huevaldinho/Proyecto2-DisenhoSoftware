@@ -115,8 +115,8 @@ class MainController {
    * 
    * @returns 
    */
-  async actualizarProfesor(dtoProfe) {
-    return await this.adminProfesores.actualizarProfesor(dtoProfe);
+  async actualizarProfesor(dtoProfe,foto) {
+    return await this.adminProfesores.actualizarProfesor(dtoProfe,foto);
   }
   /**
      * Metodo para eliminar (inactivar )a un miembro del equipo.
