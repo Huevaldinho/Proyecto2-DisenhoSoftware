@@ -2,10 +2,12 @@ import React from "react";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import TablaRespuestas from "../../components/compartidos/respuestas/TablaRespuestas"
-function ListaRespuestas({actividad}) {
+import TablaRespuestas from "../../components/compartidos/respuestas/TablaRespuestas";
+function ListaRespuestas({ actividad }) {
   const navigate = useNavigate();
-  const { comentarios, consultarComentarios } = useContext(MainControllerContext);
+  const { comentarios, consultarComentarios } = useContext(
+    MainControllerContext
+  );
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -23,6 +25,8 @@ function ListaRespuestas({actividad}) {
     updateState();
   }, []);
 
+  console.log("Actividad en ListaRespuestas:", actividad);
+
   if (comentarios.length == 0) {
     return (
       <p className="text-center font-semibold text-5xl">
@@ -30,7 +34,6 @@ function ListaRespuestas({actividad}) {
       </p>
     );
   }
-  console.log(comentarios)
   return (
     <div className="container m-auto">
       <div className="text-center" id="nombrePlanConteiner">

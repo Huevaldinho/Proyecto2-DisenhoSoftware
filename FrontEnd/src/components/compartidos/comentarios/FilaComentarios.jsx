@@ -6,6 +6,7 @@ function FilaComentarios({ comentario, index }) {
   const navigate = useNavigate();
   if (comentario == {}) return <tr></tr>;
 
+  console.log("Comentario en fila comentarios:", comentario);
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/listaRespuestas", { state: { comentario: comentario } });
@@ -16,16 +17,14 @@ function FilaComentarios({ comentario, index }) {
     index % 2 === 0
       ? "bg-gray-200 hover:bg-blue-300"
       : "bg-gray-100 hover:bg-blue-300";
-      if (comentario.idRespuesta == null)
-  return (
-    <tr onDoubleClick={handleClick} className={styleFilas}>
-      <td className={styleRow}>{comentario.descripcion}</td>
-      <td className={styleRow}>
-        {comentario.autor}
-      </td>
-      <td className={styleRow}>{comentario.fecha}</td>
-    </tr>
-  );
+  if (comentario.idRespuesta == null)
+    return (
+      <tr onDoubleClick={handleClick} className={styleFilas}>
+        <td className={styleRow}>{comentario.descripcion}</td>
+        <td className={styleRow}>{comentario.autor}</td>
+        <td className={styleRow}>{comentario.fecha}</td>
+      </tr>
+    );
 }
 
 export default FilaComentarios;
