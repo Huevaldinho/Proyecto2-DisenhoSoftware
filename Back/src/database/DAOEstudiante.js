@@ -76,17 +76,17 @@ export const ingresarEstudiantes = async (lista) => {
     try {
         for (const DTOEstudiante of lista) {
             let e = new Estudiante({
-                carnet: DTOEstudiante.carnet,
-                nombre: DTOEstudiante.nombre,
-                nombre2: DTOEstudiante.nombre2,
-                apellido1: DTOEstudiante.apellido1,
-                apellido2: DTOEstudiante.apellido2,
-                correo: DTOEstudiante.correo,
-                campus: DTOEstudiante.campus,
-                contrasenna: DTOEstudiante.contrasenna,
-                estado: DTOEstudiante.estado,
-                celular: DTOEstudiante.celular,
-                rol: DTOEstudiante.rol
+                carnet: DTOEstudiante[0],
+                nombre: DTOEstudiante[1],
+                nombre2: DTOEstudiante[2],
+                apellido1: DTOEstudiante[3],
+                apellido2: DTOEstudiante[4],
+                correo: DTOEstudiante[5],
+                campus: DTOEstudiante[8],
+                contrasenna: DTOEstudiante[6],
+                estado: DTOEstudiante[9],
+                celular: DTOEstudiante[10],
+                rol: DTOEstudiante[7]
             })
             e.save();
         }; 
