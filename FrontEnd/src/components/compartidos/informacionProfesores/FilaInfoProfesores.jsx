@@ -13,9 +13,13 @@ function FilaInfoProfesores({ profesor, index }) {
   };
   const handleAsignarAsistente = async (e) => {
     e.preventDefault();
-    console.log("Asistente asignado:", profesor);
     let respuesta = await asignarAsistente(profesor.codigo, profesor.campus);
-    console.log("RESPUESTA OBTENIDA AL ASIGNAR ASISTENTE:", respuesta);
+    //No hubo errores.
+    if (Object.keys(respuesta).length !== 0) {
+      alert("Asistente asignado correctamente.");
+      navigate("/infoProfesores");
+    } else
+      alert("No se ha podido modificado asignar asistente, intente de nuevo.");
   };
   const styleRow =
     "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900";
@@ -40,18 +44,14 @@ function FilaInfoProfesores({ profesor, index }) {
       <td className={styleRow}>
         {profesor.coordinador == "NOCOORDINADOR" ? "No" : "Si"}
       </td>
-      {profesor.rol == "Asistente" ? (
-        <td className={styleRow}>
-          <button
-            onClick={handleAsignarAsistente}
-            className="text-center bg-green-500 hover:bg-green-800 rounded-md p-1 "
-          >
-            Asignar
-          </button>
-        </td>
-      ) : (
-        <></>
-      )}
+      <td className={styleRow}>
+        <button
+          onClick={handleAsignarAsistente}
+          className="text-center bg-green-500 hover:bg-green-800 rounded-md p-1 "
+        >
+          Asignar
+        </button>
+      </td>
     </tr>
   );
 }

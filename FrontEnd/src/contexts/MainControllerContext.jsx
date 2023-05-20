@@ -23,6 +23,7 @@ const MainControllerContextProvider = ({ children }) => {
    */
   const asignarAsistente = async (codigo, campus) => {
     const data = await mainController.asignarAsistente(codigo, campus);
+    consultarProfesores();
     return data;
   };
   //*PROFESORES

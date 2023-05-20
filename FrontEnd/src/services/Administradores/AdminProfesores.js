@@ -15,8 +15,7 @@ class AdminProfesores {
                 method: 'POST'
             });
             let data = await response.json();
-            console.error('AdminProfesores,  metodo asignarAsistente retorna: ', data);
-
+            console.log('AdminProfesores,  metodo asignarAsistente retorna: ', data);
             return data;
         } catch (error) {
             console.error('Error en AdminProfesores, en metodo asignarAsistente: ', error);
