@@ -110,7 +110,9 @@ class MainController {
   }
   /**
    * Metodo para cambiar los datos de un profesor.
-   * @param {DTOProfesor} dtoProfe 
+   * @param {JSON} dtoProfe 
+     * @param {File| null} foto del profe
+   * 
    * @returns 
    */
   async actualizarProfesor(dtoProfe) {

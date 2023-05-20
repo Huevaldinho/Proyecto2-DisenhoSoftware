@@ -108,9 +108,9 @@ function FormularioAgregarProfesor(props) {
       campus: campusSeleccionado,
       equipo: "Equipo",
       celular: celular,
+      foto: "",
     };
     const respuesta = await registrarProfesor(data, file);
-    console.log("Respuesta:", respuesta);
     if (manejoErrores(respuesta)) {
       //No hubo errores.
       if (Object.keys(respuesta).length !== 0) {

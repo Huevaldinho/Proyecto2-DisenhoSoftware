@@ -21,8 +21,8 @@ const MainControllerContextProvider = ({ children }) => {
    * @param {JSON} dtoProfe
    * @returns {JSON} profe registrado
    */
-  const registrarProfesor = async (dtoProfe,foto) => {
-    const data = await mainController.registrarProfesor(dtoProfe,foto);
+  const registrarProfesor = async (dtoProfe, foto) => {
+    const data = await mainController.registrarProfesor(dtoProfe, foto);
     consultarProfesores();
     return data; //profe o error.
   };
@@ -34,10 +34,12 @@ const MainControllerContextProvider = ({ children }) => {
   /**
    * Metodo para cambiar los datos de un profesor
    * @param {DTOProfesor} dtoProfe
+   * @param {File| null} foto del profe
+   *
    */
-  const actualizarProfesor = async (dtoProfe) => {
+  const actualizarProfesor = async (dtoProfe, foto) => {
     //Hacer cambio y actualizar los profes
-    const data = mainController.actualizarProfesor(dtoProfe);
+    const data = mainController.actualizarProfesor(dtoProfe, foto);
     consultarProfesores();
     return data;
   };
@@ -126,7 +128,7 @@ const MainControllerContextProvider = ({ children }) => {
    */
   const comentarActividad = async (datos) => {
     let data = await mainController.comentarActividad(datos);
-    consultarComentarios(datos.idActividad)
+    consultarComentarios(datos.idActividad);
     return data;
   };
 
@@ -150,7 +152,7 @@ const MainControllerContextProvider = ({ children }) => {
         cambiarNombrePlanTrabajo,
         comentarActividad,
         crearActividad,
-        registrarEstudiantes
+        registrarEstudiantes,
       }}
     >
       {children}
