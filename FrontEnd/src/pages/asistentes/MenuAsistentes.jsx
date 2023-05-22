@@ -71,7 +71,7 @@ function MenuProfesoresGuia() {
         </div>
         <div className="text-center">
           <button
-            className="text-center bg-red-500 hover:bg-red-800  rounded-xl p-3 m-2"
+            className="text-center rounded-xl p-3 m-2 bg-red-500 hover:bg-red-800  "
             onClick={handleSalir}
           >
             Salir
