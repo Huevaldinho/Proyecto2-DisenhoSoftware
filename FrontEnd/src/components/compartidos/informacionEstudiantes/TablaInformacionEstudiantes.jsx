@@ -65,7 +65,7 @@ function TablaInformacionEstudiantes(props) {
         </div>
       </div>
       <div
-        className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
+        className="text-center rounded-md bg-blue-500 p-2 m-3 h-auto w-auto hover:bg-blue-800"
         id="containerBotonAgregarActividad"
       >
         {/*Boton para regresar la menu profesores*/}
