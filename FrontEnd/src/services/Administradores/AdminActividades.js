@@ -4,7 +4,7 @@ class AdminActividades {
     //*Constructores
     constructor() { }
     //*Metodos
-    async crearActividad(dtoActividad) {//TODO Falta probarlo.
+    async crearActividad(dtoActividad) {
         try {
             // Crear un objeto FormData para almacenar el archivo
             let formData = new FormData();
@@ -41,7 +41,7 @@ class AdminActividades {
             console.log('Error en AdminActividades, en metodo crearActividad:', error);
         }
     }
-    async consultarPlanDeTrabajo() {//TODO
+    async consultarPlanDeTrabajo() {
         try {
             const response = await fetch(`${API_URL}/planTrabajo`, {
                 method: 'GET'
@@ -117,6 +117,19 @@ class AdminActividades {
             return data;
         } catch (error) {
             console.error('Error en AdminActividades, en metodo comentarActividad: ', error);
+            return null;
+        }
+    }
+    async consultarRespuestas(idComentario) {//FALTA QUE CREEN LA RUTA
+        try {
+            const response = await fetch(`${API_URL}/respuestas/${idComentario}`, {
+                method: 'GET'
+            });
+            let data = await response.json(); // Convertir datos a formato JSON
+            console.log("AdminActividades consultarRespuestas retorna :", data)
+            return data;
+        } catch (error) {
+            console.error('Error en AdminActividades, en metodo consultarRespuestas: ', error);
             return null;
         }
     }

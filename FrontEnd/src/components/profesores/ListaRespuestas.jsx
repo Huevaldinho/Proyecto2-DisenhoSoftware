@@ -1,22 +1,26 @@
 import React from "react";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
 import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import TablaRespuestas from "../../components/compartidos/respuestas/TablaRespuestas";
-function ListaRespuestas({ actividad }) {
+function ListaRespuestas(props) {
   const navigate = useNavigate();
-  const { comentarios, consultarComentarios } = useContext(
-    MainControllerContext
-  );
+  const { consultarRespuestas, respuestas } = useContext(MainControllerContext);
+  const { state } = useLocation();
+
+  let comentario = state?.comentario;
+  let actividad = state?.actividad;
 
   const handleClick = (e) => {
     e.preventDefault();
-    navigate("/agregarRespuesta");
+    navigate("/agregarRespuesta", {
+      state: { comentario: comentario, actividad: actividad },
+    });
   };
 
   const updateState = () => {
     setTimeout(() => {
-      consultarComentarios(actividad._id);
+      consultarRespuestas(comentario._id);
     }, 1000);
   };
 
@@ -25,23 +29,29 @@ function ListaRespuestas({ actividad }) {
     updateState();
   }, []);
 
-  console.log("Actividad en ListaRespuestas:", actividad);
-
-  if (comentarios.length == 0) {
+  if (respuestas == null || respuestas.length == 0) {
     return (
-      <p className="text-center font-semibold text-5xl">
-        Cargando Comentarios...
-      </p>
+      <div className="p-3 m-auto">
+        <h1 className="text-center font-semibold text-3xl p-2 m-1">
+          No hay respuestas disponibles...
+        </h1>
+        <button
+          className="text-center w-full h-full p-1 m-2 bg-green-500 hover:bg-green-800"
+          onClick={handleClick}
+        >
+          Agregar respuesta
+        </button>
+      </div>
     );
   }
   return (
     <div className="container m-auto">
       <div className="text-center" id="nombrePlanConteiner">
-        <h1 className="text-center font-bold text-5xl p-5">Comentarios</h1>
+        <h1 className="text-center font-bold text-5xl p-5">Respuestas</h1>
       </div>
       <div className="text-center" id="tablaProfesores">
         {/*Las actividades se las pasa a la tabla por props */}
-        <TablaRespuestas comentarios={comentarios} />
+        <TablaRespuestas respuestas={respuestas} />
       </div>
       <div
         className="text-center rounded-md bg-green-500 p-2 m-3 h-auto w-auto hover:bg-green-800"

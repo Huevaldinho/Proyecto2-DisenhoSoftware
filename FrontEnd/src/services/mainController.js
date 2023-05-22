@@ -49,6 +49,16 @@ class MainController {
   async consultarComentarios(id) {
     return await this.adminActividades.consultarComentarios(id);
   }
+  /**
+   * Metodo para obtener las respuestas de un comentario
+   * Trae los datos con la API.
+   * @returns {Array JSON} 
+   * 
+   */
+  async consultarRespuestas(idComenatrio) {
+    return await this.adminActividades.consultarRespuestas(idComenatrio);
+  }
+
 
   /**
    * Metodo para obtener el plan de trabajo.

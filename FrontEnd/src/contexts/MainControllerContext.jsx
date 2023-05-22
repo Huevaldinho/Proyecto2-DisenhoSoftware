@@ -15,6 +15,10 @@ const MainControllerContextProvider = ({ children }) => {
   let [profesores, setProfesores] = useState([]);
   //Comentarios
   let [comentarios, setComentarios] = useState([]);
+  //Respuesta a comentario
+  let [respuestas, setRespuestas] = useState([]);
+
+
   //*SUPER USUARIO
   /**
    * Metodo para asignar asistente
@@ -142,6 +146,11 @@ const MainControllerContextProvider = ({ children }) => {
     consultarComentarios(datos.idActividad);
     return data;
   };
+  const consultarRespuestas = async (idComentario)=>{
+    let data = await mainController.consultarRespuestas(idComentario);
+    setRespuestas(data);
+    return data;
+  }
 
   return (
     <MainControllerContext.Provider
@@ -165,6 +174,8 @@ const MainControllerContextProvider = ({ children }) => {
         crearActividad,
         registrarEstudiantes,
         asignarAsistente,
+        consultarRespuestas,
+        respuestas
       }}
     >
       {children}
