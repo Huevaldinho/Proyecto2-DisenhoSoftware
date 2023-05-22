@@ -24,7 +24,7 @@ function DetallesActividad(props) {
           className="text-center bg-red-500 hover:bg-red-800  rounded-xl p-3 m-2"
           onClick={handleClick}
         >
-          Regresar a Plan de Trabajo
+          Regresar al plan de trabajo
         </button>
       </div>
     </div>

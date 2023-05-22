@@ -58,7 +58,9 @@ class MainController {
   async consultarRespuestas(idComenatrio) {
     return await this.adminActividades.consultarRespuestas(idComenatrio);
   }
-
+  async responderComentario(datos){
+    return await this.adminActividades.responderComentario(datos);
+  }
 
   /**
    * Metodo para obtener el plan de trabajo.

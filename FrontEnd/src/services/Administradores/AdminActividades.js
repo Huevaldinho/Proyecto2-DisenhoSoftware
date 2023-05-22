@@ -120,9 +120,9 @@ class AdminActividades {
             return null;
         }
     }
-    async consultarRespuestas(idComentario) {//FALTA QUE CREEN LA RUTA
+    async consultarRespuestas(idComentario) {
         try {
-            const response = await fetch(`${API_URL}/respuestas/${idComentario}`, {
+            const response = await fetch(`${API_URL}/respuesta/${idComentario}`, {
                 method: 'GET'
             });
             let data = await response.json(); // Convertir datos a formato JSON
@@ -130,6 +130,31 @@ class AdminActividades {
             return data;
         } catch (error) {
             console.error('Error en AdminActividades, en metodo consultarRespuestas: ', error);
+            return null;
+        }
+    }
+    async responderComentario(datos) {
+        try {
+            console.log("Datos responderComentario:", datos)
+
+            const response = await fetch(`${API_URL}/comentario/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "idActividad": datos.idActividad,
+                    "descripcion": datos.descripcion,
+                    "fecha": datos.fecha,
+                    "autor": datos.autor,
+                    "idRespuesta": datos.idRespuesta
+                })
+            });
+            let data = await response.json(); // Convertir datos a formato JSON
+            console.log("AdminActividades responderComentario retorna :", data)
+            return data;
+        } catch (error) {
+            console.error('Error en AdminActividades, en metodo responderComentario: ', error);
             return null;
         }
     }

@@ -126,7 +126,6 @@ function FormularioAgregarActividad(props) {
     return datesString;
   };
   const handleErrores = async (respuestaValidacion) => {
-    console.log("HandleErrores:", respuestaValidacion);
     switch (respuestaValidacion) {
       case 0: {
         //Validacion exitosa
@@ -146,6 +145,7 @@ function FormularioAgregarActividad(props) {
           estadoSeleccionado,
           null //Evidencias.
         );
+        console.log("Actividad a crear:",dtoActividad)
         let respuestaMainController = await crearActividad(dtoActividad);
         alert("Actividad creada exitosamente");
         break;

@@ -3,15 +3,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useContext } from "react";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
 function AgregarRespuesta(props) {
-  const { comentarActividad, usuario } = useContext(MainControllerContext);
+  const { usuario,responderComentario } = useContext(MainControllerContext);
   const [respuesta, setRespuesta] = useState(null); //Para la descripcion
   const navigate = useNavigate();
   const { state } = useLocation();
   let comentario = state.comentario; //Saca el comentario al que le esta respondiendo
   let actividad = state.actividad;
-
-  console.log("respondiendo a actividad:", actividad);
-  console.log("respondiendo a comentario:", comentario);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -33,13 +30,18 @@ function AgregarRespuesta(props) {
       idRespuesta: comentario._id,
     };
 
-    comentarActividad(mandarDatos);
+    responderComentario(mandarDatos);
     //Redireccionar
     navigate("/detallesActividad", { state: { actividad: actividad } });
   };
   const handleRespuesta = (e) => {
     setRespuesta(e.target.value);
   };
+  const handleRegresar = (e)=>{
+    e.preventDefault();
+    navigate("/detallesActividad", { state: { actividad: actividad } });
+
+  }
   return (
     <div>
       <div className=" p-3 m-4 text-center items-center">
@@ -66,10 +68,19 @@ function AgregarRespuesta(props) {
           id="containerBotonAgregarActividad"
         >
           <button className="text-center  " onClick={handleClick}>
-            Agregar Comentario
+            Agregar Respuesta
           </button>
         </div>
       </form>
+      {/*Boton regreso a detalles actividad */}
+      <div className="text-center">
+        <button
+          className="text-center bg-red-500 hover:bg-red-800  rounded-xl p-3 m-2"
+          onClick={handleRegresar}
+        >
+          Regresar a detalles actividad
+        </button>
+      </div>
     </div>
   );
 }

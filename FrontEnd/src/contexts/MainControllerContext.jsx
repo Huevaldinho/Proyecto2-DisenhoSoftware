@@ -151,6 +151,17 @@ const MainControllerContextProvider = ({ children }) => {
     setRespuestas(data);
     return data;
   }
+   /**
+   * PUT
+   * Respuesta a comentario
+   * @param {JSON = "idActividad","descripcion","fecha","autor","idRespuesta"} datos
+   * Retorna
+   */
+   const responderComentario = async (datos) => {
+    let data = await mainController.responderComentario(datos);
+    consultarComentarios(datos.idActividad);
+    return data;
+  };
 
   return (
     <MainControllerContext.Provider
@@ -175,7 +186,8 @@ const MainControllerContextProvider = ({ children }) => {
         registrarEstudiantes,
         asignarAsistente,
         consultarRespuestas,
-        respuestas
+        respuestas,
+        responderComentario
       }}
     >
       {children}
