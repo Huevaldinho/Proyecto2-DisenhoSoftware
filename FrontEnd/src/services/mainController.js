@@ -37,8 +37,8 @@ class MainController {
    * @param {DTOActividad} dtoActividad: Datos de la actividad.
    * @returns {Actividad} actividad: Actividad creada.
    */
-  async crearActividad(dtoActividad) {
-    return await this.adminActividades.crearActividad(dtoActividad);
+  async crearActividad(dtoActividad, afiche) {
+    return await this.adminActividades.crearActividad(dtoActividad, afiche);
   }
   /**
      * Metodo para obtener los comentarios
@@ -58,7 +58,7 @@ class MainController {
   async consultarRespuestas(idComenatrio) {
     return await this.adminActividades.consultarRespuestas(idComenatrio);
   }
-  async responderComentario(datos){
+  async responderComentario(datos) {
     return await this.adminActividades.responderComentario(datos);
   }
 

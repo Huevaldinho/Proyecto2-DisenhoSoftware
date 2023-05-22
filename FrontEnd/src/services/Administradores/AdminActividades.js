@@ -4,41 +4,41 @@ class AdminActividades {
     //*Constructores
     constructor() { }
     //*Metodos
-    async crearActividad(dtoActividad) {
+    async crearActividad(dtoActividad, afiche) {
         try {
-            // Crear un objeto FormData para almacenar el archivo
-            let formData = new FormData();
-            formData.append('file', dtoActividad.afiche);
-            // Agregar el objeto JSON al FormData
-            formData.append('json', JSON.stringify({
-                "nombre": dtoActividad.nombre,
-                "descripcion": dtoActividad.descripcion,
-                "enlace": dtoActividad.enlace,
-                "estado": dtoActividad.estado,
-                "evidencias": dtoActividad.evidencias,
-                "fechaHora": dtoActividad.fechaHora,
-                "fechaHoraPublicacion": dtoActividad.fechaHoraPublicacion,
-                "id": dtoActividad.id,
-                "modalidad": dtoActividad.modalidad,
-                "recordatorios": dtoActividad.recordatorios,
-                "responsables": dtoActividad.responsables,
-                "semana": dtoActividad.semana,
-                "tipoActividad": dtoActividad.tipoActividad
-            }));
+            const formData = new FormData();
+            formData.append("afiche", afiche); //Agrega el afiche o null
+
+            // Agregar los campos de datos al FormData
+            for (let key in dtoActividad) {
+                if (key === "recordatorios") {
+                    const recordatorios = dtoActividad[key];
+                    recordatorios.forEach((recordatorio, index) => {
+                        formData.set(`recordatorios[${index}]`, recordatorio);
+                    });
+                } else if (key === 'responsables') {
+                    const responsables = dtoActividad[key];
+                    responsables.forEach((responsable, index) => {
+                        formData.set(`responsables[${index}]`, responsable);
+                    });
+                }
+                else {
+                    formData.append(key, dtoActividad[key]);
+                }
+            }
+
+            console.log("Form que se envia al back:", formData)
+
             const response = await fetch(`${API_URL}/actividades`, {
                 method: 'POST',
                 body: formData
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log('AdminActividades, en metodo crearActividad:', data);
-                return data;
-            } else {
-                throw new Error('AdminActividades, en metodo crearActividad:');
-            }
+            let data = await response.json();
+            console.log("AdminActividades, en metodo crearActividad retorna:", data)
+            return data;
         } catch (error) {
-            console.log('Error en AdminActividades, en metodo crearActividad:', error);
+            console.error('Error en AdminActividades, en metodo crearActividad:', error);
         }
     }
     async consultarPlanDeTrabajo() {

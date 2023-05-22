@@ -113,8 +113,8 @@ const MainControllerContextProvider = ({ children }) => {
   };
 
   //*PLAN DE TRABAJO
-  const crearActividad = async () => {
-    let data = await mainController.crearActividad();
+  const crearActividad = async (dtoActividad,afiche) => {
+    let data = await mainController.crearActividad(dtoActividad,afiche);
     return data;
   };
   /**

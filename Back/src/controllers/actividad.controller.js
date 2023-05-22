@@ -15,9 +15,9 @@ export const postActividad = async (req, res) => {
   let nuevaActividad = "";
   if (!req.file || req.file == null)
     nuevaActividad = await ingresarActividadDB(req.body, "");
-  else 
+  else
     nuevaActividad = await ingresarActividadDB(req.body, req.file.path);
-
+  console.log("Nueva actividad:", nuevaActividad)
   res.json(nuevaActividad);
 };
 
@@ -25,7 +25,7 @@ export const putActividad = async (req, res) => {
   let nuevaActividad = "";
   if (!req.file || req.file == null)
     nuevaActividad = await modificarActividadDB(req.body, "");
-  else 
+  else
     nuevaActividad = await modificarActividadDB(req.body, req.file.path);
 
   res.json(nuevaActividad);

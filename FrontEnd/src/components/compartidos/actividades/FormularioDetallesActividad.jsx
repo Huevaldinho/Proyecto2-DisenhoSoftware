@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 //Main controller
 
 function FormularioDetallesActividad(props) {
   const { state } = useLocation();
-  console.log("STATE FORMULARIO:", state);
+  const [afiche, setAfiche] = useState(null); //Afiche opcional
   let actividad = state?.actividad;
-
-  console.log("Actividad formulario:", actividad);
-  const cssElementosForm =
-    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
+  const handleFileChange = (event) => {
+    setAfiche(event.target.files[0]);
+  };
+  const cssElementosForm = "text-center";
   return (
     <div className=" p-3 m-auto text-center items-center">
       <div className="text-center">
@@ -58,7 +58,7 @@ function FormularioDetallesActividad(props) {
               type="text"
               className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               disabled={true}
-              value={actividad.tipo}
+              value={actividad.tipoActividad}
             />
           </div>
           {/*Modalidad */}
@@ -101,8 +101,8 @@ function FormularioDetallesActividad(props) {
             </label>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={actividad.fecha}
+              className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              value={actividad.fechaHora}
             />
           </div>
           <br></br>
@@ -116,12 +116,12 @@ function FormularioDetallesActividad(props) {
             </label>
             <input
               type="text"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={actividad.fechaPublicacion}
+              className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              value={actividad.fechaHoraPublicacion}
             />
           </div>
-          {/**Responsables */}
-          <div className={cssElementosForm}>
+          {/**Responsables 
+           <div className={cssElementosForm}>
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -129,13 +129,16 @@ function FormularioDetallesActividad(props) {
               Responsable(s)
             </label>
             <ul>
-              {actividad.responsable.map((persona) => (
+              {actividad.responsables.map((persona) => (
                 <li key={persona.codigo}>
                   {"* "} {persona.nombre} {persona.apellido1}
                 </li>
               ))}
             </ul>
           </div>
+           * 
+          */}
+
           {/**Recordatorios */}
           <div className={cssElementosForm}>
             <label
@@ -144,9 +147,9 @@ function FormularioDetallesActividad(props) {
             >
               Recordatorios
             </label>
-            <ul>
+            <ul className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
               {actividad.recordatorios.map((recordatorio, index) => (
-                <li key={index}>
+                <li key={index} className="hover:bg-slate-500">
                   {" "}
                   {"* "}
                   {recordatorio}
@@ -156,6 +159,41 @@ function FormularioDetallesActividad(props) {
           </div>
           {/**Evidencias*/}
           {/**Afiche */}
+          <div className={cssElementosForm}>
+            <label
+              htmlFor="text"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Afiche
+            </label>
+            {actividad.afiche === "" ? (
+              <div
+                className={
+                  "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                }
+              >
+                <input
+                  type="file"
+                  id="file"
+                  onChange={handleFileChange}
+                  required={false}
+                />
+              </div>
+            ) : (
+              <>
+                <img src={actividad.afiche} alt="Imagen" />
+                <div className={cssElementosForm}>
+                  <label htmlFor="file">Cambiar afiche:</label>
+                  <input
+                    type="file"
+                    id="file"
+                    onChange={handleFileChange}
+                    required={false}
+                  />
+                </div>
+              </>
+            )}
+          </div>
         </form>
       </div>
     </div>

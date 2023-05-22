@@ -21,7 +21,7 @@ const actividadSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
   recordatorios: { type: Array, required: true },
   responsables: { type: Array, required: true },
-  semana: { type: Number, required: true },
+  semana: { type: String, required: true },
   tipoActividad: { type: String, required: true },
 });
 
@@ -103,6 +103,7 @@ export const getActividadesDB = async () => {
 
 export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
   try {
+    console.log("Entra dtoActividad:", DTOActividad)
     const actividadExistente = await Actividad.findOne({
       nombre: DTOActividad.nombre,
     }); //si ya existe con ese nombre
@@ -110,6 +111,9 @@ export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
 
     let rutaFoto = filePhoto !== "" ? await subirFotoNube(filePhoto) : ""; //si la ruta está vacía, el campo es ""
     if (rutaFoto === "11") rutaFoto = ""; //si es "11" no se pudo subir
+
+
+    console.log("Responsable:", DTOActividad.responsables)
 
     const idsResponsables = DTOActividad.responsables.map(
       (responsable) => responsable._id
@@ -136,6 +140,7 @@ export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
 
     return nuevaActividad;
   } catch (error) {
+    console.log("Error:", error)
     return error;
   }
 };
@@ -157,7 +162,7 @@ export const modificarActividadDB = async (DTOActividad, filePhoto) => {
     actividadExistente.enlace = DTOActividad.enlace
     actividadExistente.estado = DTOActividad.estado
     actividadExistente.evidencias = DTOActividad.evidencias,
-    actividadExistente.fechaHora = DTOActividad.fechaHora
+      actividadExistente.fechaHora = DTOActividad.fechaHora
     actividadExistente.fechaHoraPublicacion = DTOActividad.fechaHoraPublicacion
     actividadExistente.modalidad = DTOActividad.modalidad
     actividadExistente.nombre = DTOActividad.nombre
