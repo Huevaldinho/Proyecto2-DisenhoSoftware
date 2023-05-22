@@ -4,8 +4,8 @@ import HeaderInformacionEstudiantes from "./HeaderInformacionEstudiantes";
 //Controlador
 import { MainControllerContext } from "../../../contexts/MainControllerContext";
 import { useContext, useEffect } from "react";
-
-
+import { useNavigate } from "react-router-dom";
+import * as XLSX from 'xlsx';
 function TablaInformacionEstudiantes(props) {
   const { estudiantes, verEstudiantes } = useContext(MainControllerContext);
   // Función que actualiza el estado de estudiantes al ejecutar la funcion verEstudiantes
@@ -15,7 +15,27 @@ function TablaInformacionEstudiantes(props) {
       verEstudiantes();
     }, 1000);
   };
+  const navigate = useNavigate();
+    const handleGenerateExcel = (e) => {
+      e.preventDefault();
+      // Datos en formato JSON
+      console.log("Estudiantes en tabla estudiantes: ", estudiantes)
 
+      const jsonData = estudiantes
+      const jsonDataWithoutAge = jsonData.map(({ _id , ...rest }) => rest);
+      const jsonDataFinal = jsonDataWithoutAge.map(({ __v , ...rest }) => rest);
+      // Crear una hoja de cálculo nueva
+      const workbook = XLSX.utils.book_new();
+      const worksheet = XLSX.utils.json_to_sheet(jsonDataFinal);
+  
+      // Agregar la hoja de cálculo al libro
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
+  
+      // Guardar el archivo como Excel
+      XLSX.writeFile(workbook, 'datos.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      navigate("/informacionEstudiantesProfesores");
+    };
+  
   // Efecto que actualiza el estado de myState después de que el componente ha sido montado
   useEffect(() => {
     updateState();
@@ -43,6 +63,18 @@ function TablaInformacionEstudiantes(props) {
             </table>
           </div>
         </div>
+      </div>
+      <div
+        className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
+        id="containerBotonAgregarActividad"
+      >
+        {/*Boton para regresar la menu profesores*/}
+        <button
+          className="text-center w-full h-full"
+          onClick={handleGenerateExcel}
+        >
+          Generar Resporte 
+        </button>
       </div>
     </div>
   );
