@@ -46,7 +46,7 @@ app.use(inicioRoutes); //rutas de la ventana de Inicio Sesión
 app.use(estudiantesRoutes); //rutas de la ventana de los estudiantes
 app.use(profesoresRoutes); //rutas de la ventana de los profesores
 app.use(planRoutes) // rutas relacionadas al plan
-app.use(actividadesRoutes); //rutas de relacionado a las actividades
+app.use(actividadesRoutes); //rutas relacionadas a las actividades
 app.use(equipoRoutes);
 app.use(comentarioRoutes); //rutas relacionadas a los comentarios
 app.use(asistenteRoutes); //rutas relacionadas a los asistentes
