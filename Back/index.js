@@ -12,6 +12,7 @@ import actividadesRoutes from "./src/routes/actividades.routes.js"
 import planRoutes from "./src/routes/plan.routes.js"
 import {systemDB}  from "./src/database/connection.js";
 import asistenteRoutes from "./src/routes/asistente.routes.js"
+import respuestaRoutes from "./src/routes/respuesta.routes.js"
 /*import readXlsxFile from "read-excel-file/node";
 import fs from "fs";*/
 
@@ -44,12 +45,12 @@ app.use(express.static('public'));
 app.use(inicioRoutes); //rutas de la ventana de Inicio Sesión
 app.use(estudiantesRoutes); //rutas de la ventana de los estudiantes
 app.use(profesoresRoutes); //rutas de la ventana de los profesores
-app.use(planRoutes)
+app.use(planRoutes) // rutas relacionadas al plan
 app.use(actividadesRoutes); //rutas de relacionado a las actividades
 app.use(equipoRoutes);
 app.use(comentarioRoutes); //rutas relacionadas a los comentarios
-app.use(asistenteRoutes);
-
+app.use(asistenteRoutes); //rutas relacionadas a los asistentes
+app.use(respuestaRoutes);
 
 /*readXlsxFile(fs.createReadStream('estudiantes.xlsx')).then((rows) => {
     console.log(rows);
