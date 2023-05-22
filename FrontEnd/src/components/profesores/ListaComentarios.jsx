@@ -35,7 +35,7 @@ function ListaComentarios(props) {
           No hay comentarios disponibles...
         </h1>
         <button
-          className="text-center w-full h-full p-1 m-2 bg-green-500 hover:bg-green-800"
+          className="text-center  rounded-xl p-3 m-2 bg-green-500 hover:bg-green-800"
           onClick={handleClick}
         >
           Agregar Comentario

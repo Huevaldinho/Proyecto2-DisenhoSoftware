@@ -8,16 +8,25 @@ function PlanDeTrabajo(props) {
   const navigate = useNavigate();
   const [nombrePlan, setNombrePlan] = useState(null);
 
-  const { consultarPlanDeTrabajo, planDeTrabajo, cambiarNombrePlanTrabajo } =
-    useContext(MainControllerContext);
+  const {
+    consultarPlanDeTrabajo,
+    planDeTrabajo,
+    cambiarNombrePlanTrabajo,
+    usuario,
+  } = useContext(MainControllerContext);
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/agregarActividad");
   };
-  const handleClickReturn = (e) => {
+  const handleReturnMenuProfes = (e) => {
     e.preventDefault();
     navigate("/menuProfesores");
   };
+  const handleReturnMenuAsistentes = (e) => {
+    e.preventDefault();
+    navigate("/menuAsistentes");
+  };
+
   function esJSON(variable) {
     if (
       typeof variable === "object" &&
@@ -55,6 +64,8 @@ function PlanDeTrabajo(props) {
       </p>
     );
   }
+
+
   return (
     <div className="container text-center m-auto">
       <div className="text-center" id="nombrePlanConteiner">
@@ -97,13 +108,22 @@ function PlanDeTrabajo(props) {
         className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
         id="containerBotonAgregarActividad"
       >
-        {/*Boton para regresar la menu profesores*/}
-        <button
-          className="text-center w-full h-full"
-          onClick={handleClickReturn}
-        >
-          Regresar al Menú de Profesores
-        </button>
+        {/*Boton para regresar la menu correspondiente*/}
+        {usuario.rol == "Asistente" ? (
+          <button
+            className="text-center w-full h-full"
+            onClick={handleReturnMenuAsistentes}
+          >
+            Regresar al Menú de Asistentes
+          </button>
+        ) : (
+          <button
+            className="text-center w-full h-full"
+            onClick={handleReturnMenuProfes}
+          >
+            Regresar al Menú de Profesores
+          </button>
+        )}
       </div>
     </div>
   );

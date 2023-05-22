@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import FormularioDetallesActividad from "../../components/compartidos/actividades/FormularioDetallesActividad";
 import ListaComentarios from "../../components/profesores/ListaComentarios";
+import { MainControllerContext } from "../../contexts/MainControllerContext";
 function DetallesActividad(props) {
   const navigate = useNavigate();
+  const { usuario } = useContext(MainControllerContext);
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/planDeTrabajo");
@@ -17,11 +19,12 @@ function DetallesActividad(props) {
         </h1>
       </div>
       <FormularioDetallesActividad />
-      <ListaComentarios />
+      {/*Muestra los comentarios solo a los profesores */}
+      {usuario.rol == "Profesor" ? <ListaComentarios /> : <></>}
       {/*Boton regreso a plan de trabajo */}
       <div className="text-center">
         <button
-          className="text-center bg-red-500 hover:bg-red-800  rounded-xl p-3 m-2"
+          className="text-center  rounded-xl p-3 m-2 bg-red-500 hover:bg-red-800 "
           onClick={handleClick}
         >
           Regresar al plan de trabajo
