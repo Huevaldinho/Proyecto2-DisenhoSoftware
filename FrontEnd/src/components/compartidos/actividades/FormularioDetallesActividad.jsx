@@ -197,6 +197,7 @@ function FormularioDetallesActividad(props) {
     } else alert("No se ha podido modificar la actividad, intente de nuevo.");
   };
 
+  console.log("Activida seleccionada:", actividad);
   return (
     <div className=" p-3 m-auto text-center items-center">
       <div className="text-center">
