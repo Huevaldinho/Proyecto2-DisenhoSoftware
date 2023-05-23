@@ -104,6 +104,10 @@ function FormularioDetallesActividad(props) {
       agregarRecordatorio(recordatorioIn);
     }
   };
+  const handleEliminarRecordatorio = (e) => {
+    eliminarRecordatorio(e.target.getAttribute("index"));
+  };
+
   const handleEliminarResponsable = (evento) => {
     const index = evento.target.getAttribute("index");
     const newArray = [
@@ -370,15 +374,30 @@ function FormularioDetallesActividad(props) {
             />
             {/*Muestra los recordatorios seleccionados */}
             <div className="text-center">
-              <p className="text-center font-light text-yellow-300">
-                Fechas seleccionadas (vuelve a seleccionarla en el calendario
-                para eliminarla)
-              </p>
-              <ul>
-                {recordatorios.map((date) => (
-                  <li key={date.toString()}>{date}</li>
-                ))}
-              </ul>
+              {recordatorios.length > 0 ? (
+                <>
+                  <p className="text-center font-light text-yellow-300">
+                    Fechas de recordatorio seleccionadas (doble click para
+                    eliminarla)
+                  </p>
+                  <ul>
+                    {recordatorios.map((date, index) => (
+                      <li
+                        key={date.toString()}
+                        index={index}
+                        onDoubleClick={handleEliminarRecordatorio}
+                        className="hover:bg-red-900"
+                      >
+                        {date}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <p className="text-center text-red-500 font-light">
+                  No se han seleccionado recordatorios.
+                </p>
+              )}
             </div>
           </div>
           {/**Evidencias*/}
@@ -406,7 +425,11 @@ function FormularioDetallesActividad(props) {
               </div>
             ) : (
               <>
-                <img src={actividad.afiche} alt="Imagen" />
+                <img
+                  src={actividad.afiche}
+                  className="max-w-full max-h-96"
+                  alt="Imagen"
+                />
                 <div className={cssElementosForm}>
                   <label htmlFor="file">Cambiar afiche:</label>
                   <input
