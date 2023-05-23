@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useLocation,useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { MainControllerContext } from "../../../contexts/MainControllerContext";
 import Estado from "../../../services/enums/estado";
@@ -74,12 +74,9 @@ function FormularioDetallesActividad(props) {
       "0" + fecha.getSeconds()
     ).slice(-2)}`;
   };
-
-  //Para agregar recordatorio
   const agregarRecordatorio = (recordatorio) => {
     setRecordatorios([...recordatorios, recordatorio]);
   };
-  //Para eliminar responsables
   const eliminarRecordatorio = (i) => {
     const indiceAEliminar = i;
     if (indiceAEliminar > -1) {
@@ -88,7 +85,6 @@ function FormularioDetallesActividad(props) {
       setRecordatorios(nuevoArray);
     }
   };
-  //Para manejar los recordatorios
   const handleRecordatoriosChange = (recordatorioIn) => {
     console.log("Recordatorios:", recordatorios);
 
@@ -110,7 +106,6 @@ function FormularioDetallesActividad(props) {
   const handleEliminarRecordatorio = (e) => {
     eliminarRecordatorio(e.target.getAttribute("index"));
   };
-
   const handleEliminarResponsable = (evento) => {
     const index = evento.target.getAttribute("index");
     const newArray = [
@@ -119,7 +114,6 @@ function FormularioDetallesActividad(props) {
     ];
     setResponsables(newArray);
   };
-
   const handleResponsableChange = (responsableIn) => {
     if (responsables.length == 0) {
       //Si no hay responsables en el arreglo
@@ -151,8 +145,8 @@ function FormularioDetallesActividad(props) {
       estado,
       modalidad,
       tipoActividad,
-      fechaHora:fecheHora,
-      fechaHoraPublicacion:fecheHoraPublicacion,
+      fechaHora: fecheHora,
+      fechaHoraPublicacion: fecheHoraPublicacion,
       enlace,
       afiche: actividad.afiche,
       responsables,
@@ -173,7 +167,6 @@ function FormularioDetallesActividad(props) {
     } else alert("No se ha podido modificar la actividad, intente de nuevo.");
   };
 
-  console.log("Actividad seleccionada:", actividad);
   return (
     <div className=" p-3 m-auto text-center items-center">
       <div className="text-center">
@@ -388,6 +381,7 @@ function FormularioDetallesActividad(props) {
               className="border rounded-md  text-center"
               inputProps={{
                 id: "fecha-hora",
+                disabled: puedeModificar,
                 className: "text-center w-full h-full",
               }}
             />
@@ -406,6 +400,7 @@ function FormularioDetallesActividad(props) {
                         index={index}
                         onDoubleClick={handleEliminarRecordatorio}
                         className="hover:bg-red-900"
+                        disabled={puedeModificar}
                       >
                         {date}
                       </li>
@@ -425,9 +420,14 @@ function FormularioDetallesActividad(props) {
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Evidencias
+              Evidencias {actividad.evidencias.length} registradas
             </label>
-            <input type="file" multiple onChange={handleEvidencias} />
+            <input
+              type="file"
+              disabled={puedeModificar}
+              multiple
+              onChange={handleEvidencias}
+            />
           </div>
           {/**Afiche */}
           <div className={cssElementosForm}>
