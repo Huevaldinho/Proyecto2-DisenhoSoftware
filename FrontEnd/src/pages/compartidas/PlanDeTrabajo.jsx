@@ -13,6 +13,7 @@ function PlanDeTrabajo(props) {
     planDeTrabajo,
     cambiarNombrePlanTrabajo,
     usuario,
+    setUsuario,
   } = useContext(MainControllerContext);
   const handleClick = (e) => {
     e.preventDefault();
@@ -47,9 +48,16 @@ function PlanDeTrabajo(props) {
     }
   };
 
+  let storedUser = usuario;
   const updateState = () => {
     setTimeout(() => {
       consultarPlanDeTrabajo();
+      storedUser = JSON.parse(localStorage.getItem("usuario"));
+      try {
+        JSON.parse(storedUser);
+      } catch (error) {
+        setUsuario(storedUser);
+      }
     }, 1000);
   };
 
@@ -64,10 +72,11 @@ function PlanDeTrabajo(props) {
       </p>
     );
   }
+
   //Se utiliza para mostrar el boton de agregar actividad
   //tambien para poder cambiar el nombre del plan de trabajo
   let permisoAgregarActividad =
-    usuario.rol == "Profesor" && usuario.coordinador == "COORDINADOR";
+    storedUser.rol == "Profesor" && storedUser.coordinador == "COORDINADOR";
   return (
     <div className="container text-center ">
       <div className="text-center" id="nombrePlanConteiner">
@@ -120,7 +129,7 @@ function PlanDeTrabajo(props) {
         id="containerBotonAgregarActividad"
       >
         {/*Boton para regresar la menu correspondiente*/}
-        {usuario.rol == "Asistente" ? (
+        {storedUser.rol == "Asistente" ? (
           <button
             className="text-center w-full h-full"
             onClick={handleReturnMenuAsistentes}

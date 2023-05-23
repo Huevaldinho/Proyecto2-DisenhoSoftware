@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import MainController from "../services/mainController";
 
 const MainControllerContext = createContext();
@@ -17,7 +17,6 @@ const MainControllerContextProvider = ({ children }) => {
   let [comentarios, setComentarios] = useState([]);
   //Respuesta a comentario
   let [respuestas, setRespuestas] = useState([]);
-
 
   //*SUPER USUARIO
   /**
@@ -95,6 +94,11 @@ const MainControllerContextProvider = ({ children }) => {
    */
   const iniciarSesion = async (correoIn, contrasennaIn) => {
     const data = await mainController.iniciarSesion(correoIn, contrasennaIn);
+    localStorage.setItem("usuario", JSON.stringify(data));
+    console.log(
+      "usuario en localStorage:",
+      JSON.parse(localStorage.getItem("usuario"))
+    );
     setUsuario(data); //guarda datos de usuario
     return data;
   };
@@ -113,8 +117,8 @@ const MainControllerContextProvider = ({ children }) => {
   };
 
   //*PLAN DE TRABAJO
-  const crearActividad = async (dtoActividad,afiche) => {
-    let data = await mainController.crearActividad(dtoActividad,afiche);
+  const crearActividad = async (dtoActividad, afiche) => {
+    let data = await mainController.crearActividad(dtoActividad, afiche);
     return data;
   };
   /**
@@ -146,18 +150,18 @@ const MainControllerContextProvider = ({ children }) => {
     consultarComentarios(datos.idActividad);
     return data;
   };
-  const consultarRespuestas = async (idComentario)=>{
+  const consultarRespuestas = async (idComentario) => {
     let data = await mainController.consultarRespuestas(idComentario);
     setRespuestas(data);
     return data;
-  }
-   /**
+  };
+  /**
    * PUT
    * Respuesta a comentario
    * @param {JSON = "idActividad","descripcion","fecha","autor","idRespuesta"} datos
    * Retorna
    */
-   const responderComentario = async (datos) => {
+  const responderComentario = async (datos) => {
     let data = await mainController.responderComentario(datos);
     consultarComentarios(datos.idActividad);
     return data;
@@ -187,7 +191,8 @@ const MainControllerContextProvider = ({ children }) => {
         asignarAsistente,
         consultarRespuestas,
         respuestas,
-        responderComentario
+        responderComentario,
+        setUsuario,
       }}
     >
       {children}
