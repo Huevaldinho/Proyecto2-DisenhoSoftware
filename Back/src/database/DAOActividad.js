@@ -174,13 +174,13 @@ export const modificarActividadDB = async (DTOActividad, filePhoto) => {
     const idsResponsables = DTOActividad.responsables.map(
       (responsable) => responsable._id
     ); //obtiene únicamente los ids de los responsables
-
-    actividadExistente.afiche = rutaFoto; //guarda la ruta del archivo en la nube, sea PDF o JPG o similar
+    if (rutaFoto != "")
+        actividadExistente.afiche = rutaFoto; //guarda la ruta del archivo en la nube, sea PDF o JPG o similar
     actividadExistente.descripcion = DTOActividad.descripcion;
     actividadExistente.enlace = DTOActividad.enlace;
     actividadExistente.estado = DTOActividad.estado;
     (actividadExistente.evidencias = DTOActividad.evidencias),
-      (actividadExistente.fechaHora = DTOActividad.fechaHora);
+    (actividadExistente.fechaHora = DTOActividad.fechaHora);
     actividadExistente.fechaHoraPublicacion = DTOActividad.fechaHoraPublicacion;
     actividadExistente.modalidad = DTOActividad.modalidad;
     actividadExistente.nombre = DTOActividad.nombre;
