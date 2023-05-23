@@ -14,7 +14,7 @@ const actividadSchema = new mongoose.Schema({
   descripcion: { type: String, required: true },
   enlace: { type: String, required: false },
   estado: { type: String, required: true },
-  evidencias: { type: String, required: false },
+  evidencias: { type: Array, required: false },
   fechaHora: { type: String, required: true },
   fechaHoraPublicacion: { type: String, required: true },
   modalidad: { type: String, required: true },
@@ -143,7 +143,7 @@ export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
       descripcion: DTOActividad.descripcion,
       enlace: DTOActividad.enlace,
       estado: DTOActividad.estado,
-      evidencias: DTOActividad.evidencias,
+      evidencias: [],
       fechaHora: DTOActividad.fechaHora,
       fechaHoraPublicacion: DTOActividad.fechaHoraPublicacion,
       modalidad: DTOActividad.modalidad,
@@ -163,24 +163,18 @@ export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
   }
 };
 
-export const modificarActividadDB = async (DTOActividad, filePhoto) => {
+export const modificarActividadDB = async (DTOActividad, archivos) => {
   try {
     const actividadExistente = await Actividad.findById(DTOActividad._id);
     if (!actividadExistente) return "-1";
-
-    let rutaFoto = filePhoto !== "" ? await subirFotoNube(filePhoto) : ""; //si la ruta está vacía, el campo es ""
-    if (rutaFoto === "11") rutaFoto = ""; //si es "11" no se pudo subir
-
+    
     const idsResponsables = DTOActividad.responsables.map(
       (responsable) => responsable._id
     ); //obtiene únicamente los ids de los responsables
-    if (rutaFoto != "")
-        actividadExistente.afiche = rutaFoto; //guarda la ruta del archivo en la nube, sea PDF o JPG o similar
     actividadExistente.descripcion = DTOActividad.descripcion;
     actividadExistente.enlace = DTOActividad.enlace;
     actividadExistente.estado = DTOActividad.estado;
-    (actividadExistente.evidencias = DTOActividad.evidencias),
-    (actividadExistente.fechaHora = DTOActividad.fechaHora);
+    actividadExistente.fechaHora = DTOActividad.fechaHora;
     actividadExistente.fechaHoraPublicacion = DTOActividad.fechaHoraPublicacion;
     actividadExistente.modalidad = DTOActividad.modalidad;
     actividadExistente.nombre = DTOActividad.nombre;
@@ -188,6 +182,19 @@ export const modificarActividadDB = async (DTOActividad, filePhoto) => {
     actividadExistente.responsables = idsResponsables; //guarda el array del id de los responsables
     actividadExistente.semana = DTOActividad.semana;
     actividadExistente.tipoActividad = DTOActividad.tipoActividad;
+    if ((archivos[0] != null || archivos[0]) && archivos[0] != "") {
+      let rutaFoto = await subirFotoNube(archivos[0]);
+      actividadExistente.afiche = rutaFoto
+    }
+    if (archivos.length > 1) {
+      for (let i = 1 ;i <= archivos.length ;i++) {
+        if (archivos[i] != null || archivos[i]) {
+          let rutaFoto = await subirFotoNube(archivos[i]);
+          actividadExistente.evidencias.push(rutaFoto)
+        }
+      }
+    }
+  
     actividadExistente.save();
 
     return actividadExistente;
