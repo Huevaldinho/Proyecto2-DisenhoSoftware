@@ -61,7 +61,6 @@ class MainController {
   async responderComentario(datos) {
     return await this.adminActividades.responderComentario(datos);
   }
-
   /**
    * Metodo para obtener el plan de trabajo.
    * @returns {JSON} plan de trabajo
@@ -86,10 +85,10 @@ class MainController {
   async comentarActividad(datos) {
     return await this.adminActividades.comentarActividad(datos);
   }
-
-
+  async actualizarActividad(dtoActividad, afiche) {
+    return this.adminActividades.actualizarActividad(dtoActividad, afiche);
+  }
   //*AUTH
-
   /**
    * Metodo para iniciar sesion.
    * @param {String} correoIn 

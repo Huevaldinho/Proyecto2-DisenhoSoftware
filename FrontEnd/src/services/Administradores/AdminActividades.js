@@ -158,6 +158,43 @@ class AdminActividades {
             return null;
         }
     }
+    async actualizarActividad(dtoActividad, afiche) {//TODO Falta evidencias
+        try {
+            const formData = new FormData();
+            formData.append("afiche", afiche); //Agrega el afiche o null
+
+            // Agregar los campos de datos al FormData
+            for (let key in dtoActividad) {
+                if (key === "recordatorios") {
+                    const recordatorios = dtoActividad[key];
+                    recordatorios.forEach((recordatorio, index) => {
+                        formData.set(`recordatorios[${index}]`, recordatorio);
+                    });
+                } else if (key === 'responsables') {
+                    const responsables = dtoActividad[key];
+                    responsables.forEach((responsable, index) => {
+                        formData.set(`responsables[${index}]`, responsable);
+                    });
+                }
+                else {
+                    formData.append(key, dtoActividad[key]);
+                }
+            }
+
+            console.log("Form que se envia al back:", formData)
+
+            const response = await fetch(`${API_URL}/actividades`, {
+                method: 'PUT',
+                body: formData
+            });
+
+            let data = await response.json();
+            console.log("AdminActividades, en metodo actualizarActividad retorna:", data)
+            return data;
+        } catch (error) {
+            console.error('Error en AdminActividades, en metodo actualizarActividad:', error);
+        }
+    }
 
 }
 export default AdminActividades;

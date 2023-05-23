@@ -1,16 +1,15 @@
 import React from "react";
 //Main controller
-import { useContext ,useEffect} from "react";
-import {MainControllerContext} from "../../../../contexts/MainControllerContext";
+import { useContext, useEffect } from "react";
+import { MainControllerContext } from "../../../../contexts/MainControllerContext";
 
 function ResponsablesAgregarActividad({
   handleResponsableChange,
   cssElementosForm,
 }) {
-  //*DOING
-  const {profesores,consultarProfesores} = useContext(MainControllerContext);
-  
-   const updateState = () => {
+  const { profesores, consultarProfesores } = useContext(MainControllerContext);
+
+  const updateState = () => {
     setTimeout(() => {
       consultarProfesores();
     }, 1000);
@@ -43,7 +42,10 @@ function ResponsablesAgregarActividad({
             className="w-fit p-2 m-2"
           />
 
-          <label htmlFor={`responsable-${index}`} className="text-center w-fit">
+          <label
+            htmlFor={`responsable-${index}`}
+            className="text-center w-fit hover:bg-green-500"
+          >
             {"  " +
               responsable.nombre +
               " " +

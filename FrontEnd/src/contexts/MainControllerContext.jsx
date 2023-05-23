@@ -166,6 +166,10 @@ const MainControllerContextProvider = ({ children }) => {
     consultarComentarios(datos.idActividad);
     return data;
   };
+  const actualizarActividad = async (dtoActividad, afiche) => {
+    let data = await mainController.actualizarActividad(dtoActividad, afiche);
+    return data;
+  };
 
   return (
     <MainControllerContext.Provider
@@ -193,6 +197,7 @@ const MainControllerContextProvider = ({ children }) => {
         respuestas,
         responderComentario,
         setUsuario,
+        actualizarActividad
       }}
     >
       {children}

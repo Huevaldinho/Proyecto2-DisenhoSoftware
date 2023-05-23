@@ -4,6 +4,9 @@ import Select from "react-select";
 import { MainControllerContext } from "../../../contexts/MainControllerContext";
 import Estado from "../../../services/enums/estado";
 import TipoActividad from "../../../services/enums/tipoActividad";
+import Datetime from "react-datetime";
+import "react-datetime/css/react-datetime.css";
+import ResponsablesAgregarActividad from "../../profesores/coordinadores/agregarActividad/ResponsablesAgregarActividad";
 
 function FormularioDetallesActividad(props) {
   const { setUsuario, usuario } = useContext(MainControllerContext);
@@ -11,6 +14,7 @@ function FormularioDetallesActividad(props) {
   const semanas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
   const estadosActividad = Object.values(Estado);
   const tipoActividades = Object.values(TipoActividad);
+  const modalidades = ["Presencial", "Virtual"];
 
   const cssElementosForm = "text-center";
 
@@ -30,6 +34,7 @@ function FormularioDetallesActividad(props) {
   const [responsables, setResponsables] = useState(actividad.responsables); //Responsables
 
   const [afiche, setAfiche] = useState(actividad.afiche); //Afiche opcional
+  const [enlace, setEnlace] = useState(actividad.enlace); //Enlace depende de modalidad
 
   const handleFileChange = (event) => {
     setAfiche(event.target.files[0]);
@@ -56,6 +61,94 @@ function FormularioDetallesActividad(props) {
   const puedeModificar = !(
     usuario.rol === "Profesor" && usuario.coordinador === "COORDINADOR"
   );
+  const convertirDateAString = (fecha) => {
+    return `${("0" + fecha.getDate()).slice(-2)}-${(
+      "0" +
+      (fecha.getMonth() + 1)
+    ).slice(-2)}-${fecha.getFullYear()} ${("0" + fecha.getHours()).slice(
+      -2
+    )}:${("0" + fecha.getMinutes()).slice(-2)}:${(
+      "0" + fecha.getSeconds()
+    ).slice(-2)}`;
+  };
+
+  //Para agregar recordatorio
+  const agregarRecordatorio = (recordatorio) => {
+    setRecordatorios([...recordatorios, recordatorio]);
+  };
+  //Para eliminar responsables
+  const eliminarRecordatorio = (i) => {
+    const indiceAEliminar = i;
+    if (indiceAEliminar > -1) {
+      const nuevoArray = [...recordatorios];
+      nuevoArray.splice(indiceAEliminar, 1);
+      setRecordatorios(nuevoArray);
+    }
+  };
+  //Para manejar los recordatorios
+  const handleRecordatoriosChange = (recordatorioIn) => {
+    console.log("Recordatorios:", recordatorios);
+
+    recordatorioIn = convertirDateAString(recordatorioIn);
+    console.log("Recordatorio in:", recordatorioIn);
+    if (recordatorios.length == 0) {
+      //Si no hay recordatorios en el arreglo
+      agregarRecordatorio(recordatorioIn);
+    } else {
+      for (let i = 0; i < recordatorios.length; i++) {
+        if (recordatorios[i] === recordatorioIn) {
+          eliminarRecordatorio(i);
+          return;
+        }
+      }
+      agregarRecordatorio(recordatorioIn);
+    }
+  };
+  const handleEliminarResponsable = (evento) => {
+    const index = evento.target.getAttribute("index");
+    const newArray = [
+      ...responsables.slice(0, index),
+      ...responsables.slice(index + 1),
+    ];
+    setResponsables(newArray);
+  };
+
+  const handleResponsableChange = (responsableIn) => {
+    if (responsables.length == 0) {
+      //Si no hay responsables en el arreglo
+      setResponsables([...responsables, responsableIn]);
+    } else {
+      //Si ya hay responsables, hay que fijarse si el responsableIn ya esta registrado
+      //si esta registrado es porque se está desmarcando.
+      for (let i = 0; i < responsables.length; i++) {
+        if (responsables[i]._id == responsableIn._id) {
+          handleEliminarResponsable(i);
+          return;
+        }
+      }
+      setResponsables([...responsables, responsableIn]);
+    }
+  };
+
+  const handleEnviar = (e) => {
+    e.preventDefault();
+    let datos = {
+      nombre,
+      descripcion,
+      semana,
+      estado,
+      modalidad,
+      tipoActividad,
+      fecheHora,
+      fecheHoraPublicacion,
+      enlace,
+      afiche,
+      responsables,
+      recordatorios,
+    };
+
+    console.log("Actividad a modificar:", datos);
+  };
 
   console.log("Actividad seleccionada:", actividad);
   return (
@@ -92,11 +185,10 @@ function FormularioDetallesActividad(props) {
               }))}
               value={{ value: parseInt(semana), label: parseInt(semana) }}
               onChange={(semanaSeleccionada) =>
-                setSemana(semanaSeleccionada?.value)
+                setSemana(semanaSeleccionada?.value.toString())
               }
             ></Select>
           </div>
-
           {/*Descripcion */}
           <div className={cssElementosForm}>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -104,7 +196,10 @@ function FormularioDetallesActividad(props) {
             </label>
             <textarea
               disabled={puedeModificar}
-              value={actividad.descripcion}
+              defaultValue={actividad.descripcion}
+              onChange={(e) => {
+                setDescripcion(e.target.value);
+              }}
               className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             ></textarea>
           </div>
@@ -128,20 +223,43 @@ function FormularioDetallesActividad(props) {
             ></Select>
           </div>
           {/*Modalidad */}
-          <div className={cssElementosForm}>
-            <label
-              htmlFor="text"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Modalidad
-            </label>
-            <input
+          <div className="text-center">
+            <label htmlFor="modalidad">Modalidad:</label>
+            <Select
+              id="modalidadSelect"
+              className="text-center"
               disabled={puedeModificar}
+              options={modalidades.map((modalidad, index) => ({
+                key: index,
+                value: modalidad,
+                label: modalidad.toString(),
+              }))}
+              value={{ value: modalidad, label: modalidad }}
+              onChange={(modalidadSeleccionada) =>
+                setModalidad(modalidadSeleccionada.value)
+              }
+            ></Select>
+          </div>
+          {/**Enlace */}
+          <div className="text-center">
+            <label htmlFor="enlace">Enlace:</label>
+            <input
               type="text"
-              id="modalidad"
-              className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={actividad.modalidad ? "Presencial" : "Virtual"}
+              id="enlace"
+              disabled={modalidad == "Presencial" ? true : false}
+              className={"text-center p-1 m-2 h-auto w-auto"}
+              onChange={(e) => setEnlace(e.target.value)}
             />
+            {modalidad == "Presencial" ? (
+              <p className="text-center font-light text-red-600">
+                No requiere enlace
+              </p>
+            ) : (
+              <p className="text-center font-light text-blue-600">
+                {" "}
+                Ingrese enlace de la reunión
+              </p>
+            )}
           </div>
           {/*Estado */}
           <div className="text-center">
@@ -163,75 +281,105 @@ function FormularioDetallesActividad(props) {
               }
             ></Select>
           </div>
-          {/*Fecha hora actividad */}
-          <div className={cssElementosForm}>
-            <label
-              htmlFor="text"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Fecha y hora
-            </label>
-            <input
-              disabled={puedeModificar}
-              type="text"
-              className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={actividad.fechaHora}
+          {/*Fecha hora actividad*/}
+          <div className="flex flex-col text-center">
+            <label htmlFor="fecha-hora">Fecha y hora de la actividad:</label>
+            <Datetime
+              value={fecheHora}
+              onChange={(fechaHoraSeleccionada) => {
+                setFechaHora(convertirDateAString(fechaHoraSeleccionada._d));
+              }}
+              dateFormat="DD/MM/YYYY"
+              timeFormat="HH:mm"
+              className="border rounded-md  text-center"
+              inputProps={{
+                id: "fecha-hora",
+                className: "text-center w-full h-full",
+              }}
             />
           </div>
+
           <br></br>
           {/*Fecha de publicacion */}
-          <div className={cssElementosForm}>
-            <label
-              htmlFor="text"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Fecha y hora de publicación
-            </label>
-            <input
-              disabled={puedeModificar}
-              type="text"
-              className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={actividad.fechaHoraPublicacion}
+          <div className="flex flex-col text-center">
+            <label htmlFor="fecha-hora">Fecha y hora de publicación:</label>
+            <Datetime
+              value={fecheHoraPublicacion}
+              onChange={(fechaHoraSeleccionada) => {
+                setFechaHoraPublicacion(
+                  convertirDateAString(fechaHoraSeleccionada._d)
+                );
+              }}
+              dateFormat="DD/MM/YYYY"
+              timeFormat="HH:mm"
+              className="border rounded-md  text-center"
+              inputProps={{
+                id: "fecha-hora",
+                className: "text-center w-full h-full",
+              }}
             />
           </div>
           {/**Responsables */}
           <div className={cssElementosForm}>
-            <label
-              htmlFor="text"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Responsable(s)
-            </label>
+            <ResponsablesAgregarActividad
+              cssElementosForm={cssElementosForm}
+              handleResponsableChange={handleResponsableChange}
+            />
+            {responsables.length > 0 ? (
+              <p className="text-light text-yellow-500">
+                Doble click para eliminar responsable
+              </p>
+            ) : (
+              <p className="text-red-500">No hay responsables registrados</p>
+            )}
             <ul>
-              {actividad.responsables.map((persona) => (
-                <li key={persona.codigo}>
-                  {"* "} {persona.nombre} {persona.apellido1}
-                </li>
-              ))}
+              {responsables.length > 0 ? (
+                responsables.map((persona, index) => (
+                  <>
+                    <li
+                      className="hover:bg-red-900"
+                      key={persona.codigo}
+                      index={index}
+                      onDoubleClick={handleEliminarResponsable}
+                    >
+                      {"* "} {persona.nombre} {persona.apellido1}
+                    </li>
+                  </>
+                ))
+              ) : (
+                <></>
+              )}
             </ul>
           </div>
 
           {/**Recordatorios */}
-          <div className={cssElementosForm}>
-            <label
-              htmlFor="text"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Recordatorios
+          <div className="flex flex-col text-center">
+            <label htmlFor="fecha-hora">
+              Seleccione las fechas de recordatorio:
             </label>
-            <ul className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              {actividad.recordatorios.map((recordatorio, index) => (
-                <li
-                  disabled={puedeModificar}
-                  key={index}
-                  className="hover:bg-slate-500"
-                >
-                  {" "}
-                  {"* "}
-                  {recordatorio}
-                </li>
-              ))}
-            </ul>
+            <Datetime
+              onChange={(e) => {
+                handleRecordatoriosChange(e._d);
+              }}
+              dateFormat="DD/MM/YYYY"
+              className="border rounded-md  text-center"
+              inputProps={{
+                id: "fecha-hora",
+                className: "text-center w-full h-full",
+              }}
+            />
+            {/*Muestra los recordatorios seleccionados */}
+            <div className="text-center">
+              <p className="text-center font-light text-yellow-300">
+                Fechas seleccionadas (vuelve a seleccionarla en el calendario
+                para eliminarla)
+              </p>
+              <ul>
+                {recordatorios.map((date) => (
+                  <li key={date.toString()}>{date}</li>
+                ))}
+              </ul>
+            </div>
           </div>
           {/**Evidencias*/}
           {/**Afiche */}
@@ -273,6 +421,16 @@ function FormularioDetallesActividad(props) {
             )}
           </div>
         </form>
+        {/*Boton enviar */}
+        <div className="text-center bg-green-500 hover:bg-green-800 rounded-2xl p-3 m-5">
+          <button
+            type="submit"
+            className="text-center w-full"
+            onClick={handleEnviar}
+          >
+            Enviar
+          </button>
+        </div>
       </div>
     </div>
   );

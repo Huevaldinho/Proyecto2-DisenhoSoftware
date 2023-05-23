@@ -61,16 +61,11 @@ function FormularioAgregarActividad(props) {
       //Si no hay recordatorios en el arreglo
       agregarRecordatorio(recordatorioIn);
     } else {
-      //Si ya hay recordatorios, hay que fijarse si el recordatorioIn ya esta registrado
-      //, si esta registrado es porque se está desmarcando.
       for (let i = 0; i < recordatorios.length; i++) {
-        //!ESTO NO ES ASI PARA EL RECORDATORIO.
         if (
           recordatorios[i].toISOString().substr(0, 10) ===
           recordatorioIn.toISOString().substr(0, 10)
         ) {
-          console.log("Recordatorio:", recordatorios[i]);
-          console.log("Compara:", recordatorioIn);
           eliminarRecordatorio(i);
           return;
         }
@@ -144,7 +139,6 @@ function FormularioAgregarActividad(props) {
           estado: estadoSeleccionado,
           evidencias: null, //Evidencias.
         };
-        console.log("Actividad a crear:", dtoActividad);
         let respuestaMainController = await crearActividad(
           dtoActividad,
           afiche
