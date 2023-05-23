@@ -21,6 +21,15 @@ class MainController {
   }
 
   //*Metodos
+  //*SUPER USUARIO
+  /**
+  * Metodo para asignar asistente
+  * @param {String} codigo de asistente
+  * @param {String} campus a asigar asistente
+  */
+  async asignarAsistente(codigo, campus) {
+    return await this.adminProfesores.asignarAsistente(codigo, campus);
+  };
 
   //*PLAN DE TRABAJO
   /**
@@ -40,6 +49,16 @@ class MainController {
   async consultarComentarios(id) {
     return await this.adminActividades.consultarComentarios(id);
   }
+  /**
+   * Metodo para obtener las respuestas de un comentario
+   * Trae los datos con la API.
+   * @returns {Array JSON} 
+   * 
+   */
+  async consultarRespuestas(idComenatrio) {
+    return await this.adminActividades.consultarRespuestas(idComenatrio);
+  }
+
 
   /**
    * Metodo para obtener el plan de trabajo.
@@ -65,6 +84,7 @@ class MainController {
   async comentarActividad(datos) {
     return await this.adminActividades.comentarActividad(datos);
   }
+
 
   //*AUTH
 
@@ -95,8 +115,8 @@ class MainController {
    * @param {JSON} dtoProfe 
    * @returns {JSON} dtoProfe registrado
    */
-  async registrarProfesor(dtoProfe,foto) {
-    return this.adminProfesores.registrarProfesor(dtoProfe,foto);
+  async registrarProfesor(dtoProfe, foto) {
+    return this.adminProfesores.registrarProfesor(dtoProfe, foto);
   }
   /**
        * Metodo para obtener los profesores
@@ -115,8 +135,8 @@ class MainController {
    * 
    * @returns 
    */
-  async actualizarProfesor(dtoProfe) {
-    return await this.adminProfesores.actualizarProfesor(dtoProfe);
+  async actualizarProfesor(dtoProfe, foto) {
+    return await this.adminProfesores.actualizarProfesor(dtoProfe, foto);
   }
   /**
      * Metodo para eliminar (inactivar )a un miembro del equipo.

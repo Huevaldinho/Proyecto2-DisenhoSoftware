@@ -1,12 +1,19 @@
 import React from "react";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TablaProfesores from "../../components/compartidos/informacionProfesores/TablaProfesores";
 
 function informacionProfesores(props) {
   const navigate = useNavigate();
   const { profesores, consultarProfesores } = useContext(MainControllerContext);
+  const [filaSeleccionada, setfilaSeleccionada] = useState(null);
+
+  const handleFilaSeleccionada = (e) => {//TODO
+    e.preventDefault();
+    console.log(e);
+
+  };
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -39,7 +46,9 @@ function informacionProfesores(props) {
   return (
     <div className="container m-auto ">
       <div className="text-center" id="nombrePlanConteiner">
-        <h1 className="text-center font-bold text-5xl p-5">Profesores</h1>
+        <h1 className="text-center font-bold text-5xl p-5">
+          Información del Equipo
+        </h1>
       </div>
       <div className="text-center" id="tablaProfesores">
         {/*Las actividades se las pasa a la tabla por props */}

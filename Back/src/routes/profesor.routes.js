@@ -3,26 +3,26 @@ var router = express.Router();
 import multer from "multer";
 
 import {
-    getProfesores,
-    postProfesor,
-    putProfesor,
-    deleteProfesor
+  getProfesores,
+  postProfesor,
+  putProfesor,
+  deleteProfesor
 } from "../controllers/profesor.controller.js"; //importación de métodos de controller profesor
 
 
 //ME FALTA PARA ASIGNAR ASISTENTE
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/'); // Directorio donde se guardarán temporalmente los archivos subidos
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now() + '-' + file.originalname); // Nombre de archivo único
-    }
-  });
-  
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Directorio donde se guardarán temporalmente los archivos subidos
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname); // Nombre de archivo único
+  }
+});
+
 const upload = multer({ storage });
-  
+
 
 // Método get para recuperar todos los profesores y mostrarlos
 router.get('/profesor', getProfesores);

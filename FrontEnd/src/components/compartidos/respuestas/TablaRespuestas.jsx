@@ -1,13 +1,12 @@
 import React from "react";
 //Componentes de tabla
 
-
 import HeaderRespuestas from "./HeaderRespuestas";
 import BodyRespuestas from "./BodyRespuestas";
 
-function TablaComentarios({ comentarios }) {
+function TablaRespuestas({ respuestas }) {
   //Valida que existan actividades para mostrar.
-  if (comentarios.length == 0) {
+  if (respuestas.length == 0) {
     //Si no hay actividades todavia
     return (
       <div className="text-center font-bold text-4xl text-red-500">
@@ -25,7 +24,7 @@ function TablaComentarios({ comentarios }) {
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
               <HeaderRespuestas />
-              <BodyRespuestas comentarios={comentarios} />
+              <BodyRespuestas respuestas={respuestas} />
             </table>
           </div>
         </div>
@@ -34,4 +33,4 @@ function TablaComentarios({ comentarios }) {
   );
 }
 
-export default TablaComentarios;
+export default TablaRespuestas;
