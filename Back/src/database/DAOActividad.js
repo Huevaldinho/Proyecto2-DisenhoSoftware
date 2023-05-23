@@ -161,11 +161,15 @@ export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
 
 export const modificarActividadDB = async (DTOActividad, archivos) => {
   try {
+    console.log(DTOActividad)
     const actividadExistente = await Actividad.findById(DTOActividad._id);
     if (!actividadExistente) return "-1";
     const idsResponsables = DTOActividad.responsables.map(
       (responsable) => responsable._id
     ); //obtiene únicamente los ids de los responsables
+    for(let i = 0; i <= DTOActividad.responsables.length; i++) {
+        console.log(DTOActividad.responsables[i])
+    }
     actividadExistente.descripcion = DTOActividad.descripcion;
     actividadExistente.enlace = DTOActividad.enlace;
     actividadExistente.estado = DTOActividad.estado;
