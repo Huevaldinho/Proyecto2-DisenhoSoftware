@@ -122,7 +122,6 @@ export const getActividadesDB = async () => {
 
 export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
   try {
-    console.log("Entra dtoActividad:", DTOActividad);
     const actividadExistente = await Actividad.findOne({
       nombre: DTOActividad.nombre,
     }); //si ya existe con ese nombre
@@ -130,9 +129,6 @@ export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
 
     let rutaFoto = filePhoto !== "" ? await subirFotoNube(filePhoto) : ""; //si la ruta está vacía, el campo es ""
     if (rutaFoto === "11") rutaFoto = ""; //si es "11" no se pudo subir
-
-    console.log("Responsable:", DTOActividad.responsables);
-
     const idsResponsables = DTOActividad.responsables.map(
       (responsable) => responsable._id
     ); //obtiene únicamente los ids de los responsables
@@ -165,9 +161,10 @@ export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
 
 export const modificarActividadDB = async (DTOActividad, archivos) => {
   try {
+    console.log("Archivos:", archivos)
     const actividadExistente = await Actividad.findById(DTOActividad._id);
     if (!actividadExistente) return "-1";
-    
+
     const idsResponsables = DTOActividad.responsables.map(
       (responsable) => responsable._id
     ); //obtiene únicamente los ids de los responsables
@@ -187,14 +184,14 @@ export const modificarActividadDB = async (DTOActividad, archivos) => {
       actividadExistente.afiche = rutaFoto
     }
     if (archivos.length > 1) {
-      for (let i = 1 ;i <= archivos.length ;i++) {
+      for (let i = 1; i <= archivos.length; i++) {
         if (archivos[i] != null || archivos[i]) {
           let rutaFoto = await subirFotoNube(archivos[i]);
           actividadExistente.evidencias.push(rutaFoto)
         }
       }
     }
-  
+
     actividadExistente.save();
 
     return actividadExistente;

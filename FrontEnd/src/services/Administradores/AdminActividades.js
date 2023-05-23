@@ -158,10 +158,19 @@ class AdminActividades {
             return null;
         }
     }
-    async actualizarActividad(dtoActividad, afiche) {//TODO Falta evidencias
+    async actualizarActividad(dtoActividad, afiche, evidencias) {
         try {
             const formData = new FormData();
-            formData.append("afiche", afiche); //Agrega el afiche o null
+            // Convierte la FileList en un array porque FileList no puede agregar cosas
+            //const filesArray = Array.from(evidencias);
+            //filesArray.unshift(afiche);//Mete el afiche al principio
+            // console.log("Array con todos los archivos:", filesArray)
+
+            //Mete la lista de archivos al form
+            formData.append('archivos', afiche)
+            for (let i = 0; i < evidencias.length; i++) {
+                formData.append('archivos', evidencias[i]);
+            }
 
             // Agregar los campos de datos al FormData
             for (let key in dtoActividad) {
@@ -187,10 +196,12 @@ class AdminActividades {
                 method: 'PUT',
                 body: formData
             });
-
             let data = await response.json();
-            console.log("AdminActividades, en metodo actualizarActividad retorna:", data)
+            console.log(" AdminActividades, en metodo actualizarActividad retorna:", data)
             return data;
+            //let data = await response.json();
+            //console.log("AdminActividades, en metodo actualizarActividad retorna:", data)
+            //return data;
         } catch (error) {
             console.error('Error en AdminActividades, en metodo actualizarActividad:', error);
         }

@@ -166,8 +166,8 @@ const MainControllerContextProvider = ({ children }) => {
     consultarComentarios(datos.idActividad);
     return data;
   };
-  const actualizarActividad = async (dtoActividad, afiche) => {
-    let data = await mainController.actualizarActividad(dtoActividad, afiche);
+  const actualizarActividad = async (dtoActividad, afiche,evidencias) => {
+    let data = await mainController.actualizarActividad(dtoActividad, afiche,evidencias);
     return data;
   };
 

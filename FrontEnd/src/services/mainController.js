@@ -85,8 +85,8 @@ class MainController {
   async comentarActividad(datos) {
     return await this.adminActividades.comentarActividad(datos);
   }
-  async actualizarActividad(dtoActividad, afiche) {
-    return this.adminActividades.actualizarActividad(dtoActividad, afiche);
+  async actualizarActividad(dtoActividad, afiche,evidencias) {
+    return this.adminActividades.actualizarActividad(dtoActividad, afiche,evidencias);
   }
   //*AUTH
   /**

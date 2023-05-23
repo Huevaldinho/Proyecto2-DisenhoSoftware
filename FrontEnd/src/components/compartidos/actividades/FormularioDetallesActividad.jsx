@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate} from "react-router-dom";
 import Select from "react-select";
 import { MainControllerContext } from "../../../contexts/MainControllerContext";
 import Estado from "../../../services/enums/estado";
@@ -9,7 +9,10 @@ import "react-datetime/css/react-datetime.css";
 import ResponsablesAgregarActividad from "../../profesores/coordinadores/agregarActividad/ResponsablesAgregarActividad";
 
 function FormularioDetallesActividad(props) {
-  const { setUsuario, usuario } = useContext(MainControllerContext);
+  const { setUsuario, usuario, actualizarActividad } = useContext(
+    MainControllerContext
+  );
+  const navigate = useNavigate();
   const { state } = useLocation();
   const semanas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
   const estadosActividad = Object.values(Estado);
@@ -32,9 +35,9 @@ function FormularioDetallesActividad(props) {
   ); //Fecha hora publicacion
   const [recordatorios, setRecordatorios] = useState(actividad.recordatorios); //Recordatorios
   const [responsables, setResponsables] = useState(actividad.responsables); //Responsables
-
-  const [afiche, setAfiche] = useState(actividad.afiche); //Afiche opcional
+  const [afiche, setAfiche] = useState(null); //Afiche opcional
   const [enlace, setEnlace] = useState(actividad.enlace); //Enlace depende de modalidad
+  const [evidencias, setEvidencias] = useState([]);
 
   const handleFileChange = (event) => {
     setAfiche(event.target.files[0]);
@@ -133,25 +136,41 @@ function FormularioDetallesActividad(props) {
       setResponsables([...responsables, responsableIn]);
     }
   };
+  const handleEvidencias = (evento) => {
+    const files = evento.target.files;
+    setEvidencias(files);
+  };
 
-  const handleEnviar = (e) => {
+  const handleEnviar = async (e) => {
     e.preventDefault();
     let datos = {
+      _id: actividad._id,
       nombre,
       descripcion,
       semana,
       estado,
       modalidad,
       tipoActividad,
-      fecheHora,
-      fecheHoraPublicacion,
+      fechaHora:fecheHora,
+      fechaHoraPublicacion:fecheHoraPublicacion,
       enlace,
-      afiche,
+      afiche: actividad.afiche,
       responsables,
       recordatorios,
     };
-
-    console.log("Actividad a modificar:", datos);
+    console.log(
+      "Actividad a modificar:",
+      datos,
+      " \n Afiche:",
+      afiche,
+      "\n Evidencias:",
+      evidencias
+    );
+    let respuesta = await actualizarActividad(datos, afiche, evidencias);
+    if (Object.keys(respuesta).length !== 0) {
+      alert("Se ha modificado exitosamente la actividad.");
+      navigate("/planDeTrabajo");
+    } else alert("No se ha podido modificar la actividad, intente de nuevo.");
   };
 
   console.log("Actividad seleccionada:", actividad);
@@ -401,6 +420,15 @@ function FormularioDetallesActividad(props) {
             </div>
           </div>
           {/**Evidencias*/}
+          <div className={cssElementosForm}>
+            <label
+              htmlFor="text"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Evidencias
+            </label>
+            <input type="file" multiple onChange={handleEvidencias} />
+          </div>
           {/**Afiche */}
           <div className={cssElementosForm}>
             <label
