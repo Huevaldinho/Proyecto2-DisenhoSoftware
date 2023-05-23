@@ -52,16 +52,35 @@ async function guardarEnplanDB(nombreActividad) {
 }
 
 export const getPlanDB = async () => {
+  // try {
+  //   const plan = await Plan.findOne(); //devuelve el primer plan que encuentre (el único)
+  //   const idsActividades = plan.actividades;
+
+  //   const actividades = await Actividad.find({
+  //     _id: { $in: idsActividades },
+  //   });
+  //   for (let i in actividades) {
+  //     var actividad = actividades[i];
+  //     const idResponsables = actividad.responsables;
+  //     const responsables = await getProfesoresActividad(idResponsables);
+  //     actividad.responsables = responsables;
+  //   }
+  //   if (actividades) return actividades;
+  //   return false;
+  // } catch (error) {
+  //   return error;
+  // }
   try {
     const plan = await Plan.findOne();
     const idsActividades = plan.actividades;
+
     const actividades = await Actividad.find({ _id: { $in: idsActividades } });
-    plan.actividades = actividades;
+    plan.actividades = actividades
     for (let i in actividades) {
       var actividad = actividades[i];
       const idResponsables = actividad.responsables;
       const responsables = await getProfesoresActividad(idResponsables);
-      actividad.responsable = responsables;
+      actividad.responsables = responsables;
     }
     if (plan) return plan;
     return false;
@@ -103,7 +122,7 @@ export const getActividadesDB = async () => {
 
 export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
   try {
-    console.log("Entra dtoActividad:", DTOActividad)
+    console.log("Entra dtoActividad:", DTOActividad);
     const actividadExistente = await Actividad.findOne({
       nombre: DTOActividad.nombre,
     }); //si ya existe con ese nombre
@@ -112,8 +131,7 @@ export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
     let rutaFoto = filePhoto !== "" ? await subirFotoNube(filePhoto) : ""; //si la ruta está vacía, el campo es ""
     if (rutaFoto === "11") rutaFoto = ""; //si es "11" no se pudo subir
 
-
-    console.log("Responsable:", DTOActividad.responsables)
+    console.log("Responsable:", DTOActividad.responsables);
 
     const idsResponsables = DTOActividad.responsables.map(
       (responsable) => responsable._id
@@ -140,7 +158,7 @@ export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
 
     return nuevaActividad;
   } catch (error) {
-    console.log("Error:", error)
+    console.log("Error:", error);
     return error;
   }
 };
@@ -157,23 +175,22 @@ export const modificarActividadDB = async (DTOActividad, filePhoto) => {
       (responsable) => responsable._id
     ); //obtiene únicamente los ids de los responsables
 
-    actividadExistente.afiche = rutaFoto //guarda la ruta del archivo en la nube, sea PDF o JPG o similar
-    actividadExistente.descripcion = DTOActividad.descripcion
-    actividadExistente.enlace = DTOActividad.enlace
-    actividadExistente.estado = DTOActividad.estado
-    actividadExistente.evidencias = DTOActividad.evidencias,
-      actividadExistente.fechaHora = DTOActividad.fechaHora
-    actividadExistente.fechaHoraPublicacion = DTOActividad.fechaHoraPublicacion
-    actividadExistente.modalidad = DTOActividad.modalidad
-    actividadExistente.nombre = DTOActividad.nombre
-    actividadExistente.recordatorios = DTOActividad.recordatorios
-    actividadExistente.responsables = idsResponsables //guarda el array del id de los responsables
-    actividadExistente.semana = DTOActividad.semana
-    actividadExistente.tipoActividad = DTOActividad.tipoActividad
-    actividadExistente.save()
+    actividadExistente.afiche = rutaFoto; //guarda la ruta del archivo en la nube, sea PDF o JPG o similar
+    actividadExistente.descripcion = DTOActividad.descripcion;
+    actividadExistente.enlace = DTOActividad.enlace;
+    actividadExistente.estado = DTOActividad.estado;
+    (actividadExistente.evidencias = DTOActividad.evidencias),
+      (actividadExistente.fechaHora = DTOActividad.fechaHora);
+    actividadExistente.fechaHoraPublicacion = DTOActividad.fechaHoraPublicacion;
+    actividadExistente.modalidad = DTOActividad.modalidad;
+    actividadExistente.nombre = DTOActividad.nombre;
+    actividadExistente.recordatorios = DTOActividad.recordatorios;
+    actividadExistente.responsables = idsResponsables; //guarda el array del id de los responsables
+    actividadExistente.semana = DTOActividad.semana;
+    actividadExistente.tipoActividad = DTOActividad.tipoActividad;
+    actividadExistente.save();
 
-    return actividadExistente
-
+    return actividadExistente;
   } catch (error) {
     console.error(error);
     return error;
