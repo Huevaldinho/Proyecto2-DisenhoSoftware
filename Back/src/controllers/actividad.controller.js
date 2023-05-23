@@ -23,7 +23,6 @@ export const postActividad = async (req, res) => {
 
 export const putActividad = async (req, res) => {
   let nuevasRutas = [];
-  console.log("Req body:", req.body)
   if (!req.files || req.files.length === 0) {
     nuevasRutas.push(""); // Agregar una ruta vacía al array
   } else {
