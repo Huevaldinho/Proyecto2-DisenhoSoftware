@@ -31,7 +31,7 @@ function TablaActividades({ actividades }) {
     });
   }
   //Ordena las actividades por fecha mas proxima.
-  //sortByDate(actividades, "fechaHora");
+  sortByDate(actividades, "fechaHora");
 
   //Si hay actividades para mostrar.
   return (
