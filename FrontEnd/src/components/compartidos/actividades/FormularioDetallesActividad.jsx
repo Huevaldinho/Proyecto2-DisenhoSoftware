@@ -7,7 +7,7 @@ import TipoActividad from "../../../services/enums/tipoActividad";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import ResponsablesAgregarActividad from "../../profesores/coordinadores/agregarActividad/ResponsablesAgregarActividad";
-
+import FullScreenImage from "./FullScreenImage";
 function FormularioDetallesActividad(props) {
   const { setUsuario, usuario, actualizarActividad } = useContext(
     MainControllerContext
@@ -38,10 +38,9 @@ function FormularioDetallesActividad(props) {
   const [afiche, setAfiche] = useState(null); //Afiche opcional
   const [enlace, setEnlace] = useState(actividad.enlace); //Enlace depende de modalidad
   const [evidencias, setEvidencias] = useState([]);
-
-  const handleFileChange = (event) => {
-    setAfiche(event.target.files[0]);
-  };
+  const [showImage, setShowImage] = useState(false);
+  const [showCarousel, setShowCarousel] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   let storedUser = usuario;
   const updateState = () => {
@@ -61,9 +60,41 @@ function FormularioDetallesActividad(props) {
 
   if (storedUser == null) return <p>Cargando</p>;
 
-  const puedeModificar = !(
+  const desactiviar = !(
     usuario.rol === "Profesor" && usuario.coordinador === "COORDINADOR"
   );
+
+  const openCarousel = (index) => {
+    setCurrentImageIndex(index);
+    setShowCarousel(true);
+  };
+  const closeCarousel = (e) => {
+    e.preventDefault();
+    setShowCarousel(false);
+  };
+  const nextImage = (e) => {
+    e.preventDefault();
+    const nextIndex = (currentImageIndex + 1) % actividad.evidencias.length;
+    setCurrentImageIndex(nextIndex);
+  };
+  const previousImage = (e) => {
+    e.preventDefault();
+    const prevIndex =
+      (currentImageIndex - 1 + actividad.evidencias.length) %
+      actividad.evidencias.length;
+    setCurrentImageIndex(prevIndex);
+  };
+  const handleShowImage = (e) => {
+    e.preventDefault();
+    setShowImage(true);
+  };
+  const handleCloseImage = (e) => {
+    e.preventDefault();
+    setShowImage(false);
+  };
+  const handleFileChange = (event) => {
+    setAfiche(event.target.files[0]);
+  };
   const convertirDateAString = (fecha) => {
     return `${("0" + fecha.getDate()).slice(-2)}-${(
       "0" +
@@ -134,7 +165,6 @@ function FormularioDetallesActividad(props) {
     const files = evento.target.files;
     setEvidencias(files);
   };
-
   const handleEnviar = async (e) => {
     e.preventDefault();
     let datos = {
@@ -177,7 +207,7 @@ function FormularioDetallesActividad(props) {
               Nombre actividad
             </label>
             <input
-              disabled={puedeModificar}
+              disabled={desactiviar}
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
               defaultValue={nombre}
@@ -193,7 +223,7 @@ function FormularioDetallesActividad(props) {
               placeholder="Seleccione la semana"
               id="semana"
               className="text-center"
-              isDisabled={puedeModificar}
+              isDisabled={desactiviar}
               options={semanas.map((semana, index) => ({
                 key: index,
                 value: semana,
@@ -211,7 +241,7 @@ function FormularioDetallesActividad(props) {
               Descripción
             </label>
             <textarea
-              disabled={puedeModificar}
+              disabled={desactiviar}
               defaultValue={actividad.descripcion}
               onChange={(e) => {
                 setDescripcion(e.target.value);
@@ -226,7 +256,7 @@ function FormularioDetallesActividad(props) {
               placeholder="Seleccione el tipo de actividad"
               id="tipoActividadSelect"
               className="text-center"
-              isDisabled={puedeModificar}
+              isDisabled={desactiviar}
               value={{ value: tipoActividad, label: tipoActividad }}
               onChange={(tipoActividad) =>
                 setTipoActividad(tipoActividad?.value)
@@ -244,7 +274,7 @@ function FormularioDetallesActividad(props) {
             <Select
               id="modalidadSelect"
               className="text-center"
-              disabled={puedeModificar}
+              isDisabled={desactiviar}
               options={modalidades.map((modalidad, index) => ({
                 key: index,
                 value: modalidad,
@@ -262,7 +292,7 @@ function FormularioDetallesActividad(props) {
             <input
               type="text"
               id="enlace"
-              disabled={modalidad == "Presencial" ? true : false}
+              disabled={desactiviar && modalidad == "Presencial" ? true : false}
               className={"text-center p-1 m-2 h-auto w-auto"}
               onChange={(e) => setEnlace(e.target.value)}
             />
@@ -285,7 +315,7 @@ function FormularioDetallesActividad(props) {
               id="tipoActividad"
               className="text-center"
               required
-              isDisabled={puedeModificar}
+              isDisabled={desactiviar}
               value={{ value: estado, label: estado }}
               options={estadosActividad.map((estado, index) => ({
                 key: index,
@@ -310,11 +340,11 @@ function FormularioDetallesActividad(props) {
               className="border rounded-md  text-center"
               inputProps={{
                 id: "fecha-hora",
+                disabled: desactiviar,
                 className: "text-center w-full h-full",
               }}
             />
           </div>
-
           <br></br>
           {/*Fecha de publicacion */}
           <div className="flex flex-col text-center">
@@ -331,6 +361,7 @@ function FormularioDetallesActividad(props) {
               className="border rounded-md  text-center"
               inputProps={{
                 id: "fecha-hora",
+                disabled: desactiviar,
                 className: "text-center w-full h-full",
               }}
             />
@@ -356,6 +387,7 @@ function FormularioDetallesActividad(props) {
                       className="hover:bg-red-900"
                       key={persona.codigo}
                       index={index}
+                      disabled={desactiviar}
                       onDoubleClick={handleEliminarResponsable}
                     >
                       {"* "} {persona.nombre} {persona.apellido1}
@@ -367,7 +399,6 @@ function FormularioDetallesActividad(props) {
               )}
             </ul>
           </div>
-
           {/**Recordatorios */}
           <div className="flex flex-col text-center">
             <label htmlFor="fecha-hora">
@@ -381,7 +412,7 @@ function FormularioDetallesActividad(props) {
               className="border rounded-md  text-center"
               inputProps={{
                 id: "fecha-hora",
-                disabled: puedeModificar,
+                disabled: desactiviar,
                 className: "text-center w-full h-full",
               }}
             />
@@ -400,7 +431,7 @@ function FormularioDetallesActividad(props) {
                         index={index}
                         onDoubleClick={handleEliminarRecordatorio}
                         className="hover:bg-red-900"
-                        disabled={puedeModificar}
+                        disabled={desactiviar}
                       >
                         {date}
                       </li>
@@ -414,8 +445,8 @@ function FormularioDetallesActividad(props) {
               )}
             </div>
           </div>
-          {/**Evidencias*/}
-          <div className={cssElementosForm}>
+          {/**Evidencias
+           <div className={cssElementosForm}>
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -424,10 +455,72 @@ function FormularioDetallesActividad(props) {
             </label>
             <input
               type="file"
-              disabled={puedeModificar}
+              disabled={desactiviar}
               multiple
               onChange={handleEvidencias}
             />
+          </div>
+            
+          */}
+          <div className="text-center">
+            <label htmlFor="evidencias">Evidencias:</label>
+            {actividad.evidencias.length > 0 ? (
+              <div className="flex flex-wrap justify-center">
+                {actividad.evidencias.map((imageUrl, index) => (
+                  <div
+                    key={index}
+                    className="w-1/4 p-2 cursor-pointer"
+                    onClick={() => openCarousel(index)}
+                  >
+                    <img
+                      src={imageUrl}
+                      alt={`Image ${index}`}
+                      className="w-full"
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <>
+                <br></br>
+                <input
+                  type="file"
+                  disabled={desactiviar}
+                  multiple
+                  onChange={handleEvidencias}
+                />
+              </>
+            )}
+
+            {showCarousel && (
+              <div className="fixed inset-0 flex items-center justify-center bg-black">
+                <button
+                  className="absolute top-4 right-4 text-white text-xl"
+                  onClick={closeCarousel}
+                >
+                  X
+                </button>
+                <div className="relative">
+                  <img
+                    src={actividad.evidencias[currentImageIndex]}
+                    alt={`Image ${currentImageIndex}`}
+                    className="max-w-full max-h-full"
+                  />
+                  <button
+                    className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white bg-opacity-50 px-2 py-1 rounded"
+                    onClick={previousImage}
+                  >
+                    &lt;
+                  </button>
+                  <button
+                    className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white bg-opacity-50 px-2 py-1 rounded"
+                    onClick={nextImage}
+                  >
+                    &gt;
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
           {/**Afiche */}
           <div className={cssElementosForm}>
@@ -444,7 +537,7 @@ function FormularioDetallesActividad(props) {
                 }
               >
                 <input
-                  disabled={puedeModificar}
+                  disabled={desactiviar}
                   type="file"
                   id="file"
                   onChange={handleFileChange}
@@ -453,15 +546,36 @@ function FormularioDetallesActividad(props) {
               </div>
             ) : (
               <>
-                <img
-                  src={actividad.afiche}
-                  className="max-w-full max-h-96"
-                  alt="Imagen"
-                />
+                <div className={"text-center"}>
+                  <button
+                    onClick={handleShowImage}
+                    className="text-center bg-blue-500 rounded-md hover:bg-blue-900 hover:rounded-lg p-1 m-1"
+                  >
+                    Ver afiche
+                  </button>
+                  {showImage && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black">
+                      <button
+                        className="absolute top-4 right-4 text-white text-xl"
+                        onClick={handleCloseImage}
+                      >
+                        X
+                      </button>
+                      <img
+                        className="max-w-full max-h-full"
+                        src={actividad.afiche}
+                        alt="FullScreenImage"
+                      />
+                    </div>
+                  )}
+                  {showImage && (
+                    <button onClick={handleCloseImage}>Cerrar afiche</button>
+                  )}
+                </div>
                 <div className={cssElementosForm}>
                   <label htmlFor="file">Cambiar afiche:</label>
                   <input
-                    disabled={puedeModificar}
+                    disabled={desactiviar}
                     type="file"
                     id="file"
                     onChange={handleFileChange}
@@ -473,15 +587,19 @@ function FormularioDetallesActividad(props) {
           </div>
         </form>
         {/*Boton enviar */}
-        <div className="text-center bg-green-500 hover:bg-green-800 rounded-2xl p-3 m-5">
-          <button
-            type="submit"
-            className="text-center w-full"
-            onClick={handleEnviar}
-          >
-            Enviar
-          </button>
-        </div>
+        {!desactiviar ? (
+          <div className="text-center bg-green-500 hover:bg-green-800 rounded-2xl p-3 m-5">
+            <button
+              type="submit"
+              className="text-center w-full"
+              onClick={handleEnviar}
+            >
+              Enviar
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
