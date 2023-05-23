@@ -20,11 +20,12 @@ import { validarDatosActividad } from "../../../../validation/ValidarInputs";
 //Controlador
 import { MainControllerContext } from "../../../../contexts/MainControllerContext";
 //DTOActividad
-import DTOActividad from "../../../../services/DTOs/DTOActividad";
+import { useNavigate } from "react-router-dom";
 
 function FormularioAgregarActividad(props) {
   //*Los permisos aun no se crean pero para agregar solo el coordinador puede hacerlo.
   const { crearActividad } = useContext(MainControllerContext);
+  const navigate = useNavigate();
 
   //Use states
   const [nombreActividad, setNombreActividad] = useState(null); //Nombre
@@ -126,28 +127,32 @@ function FormularioAgregarActividad(props) {
     return datesString;
   };
   const handleErrores = async (respuestaValidacion) => {
-    console.log("HandleErrores:", respuestaValidacion);
     switch (respuestaValidacion) {
       case 0: {
         //Validacion exitosa
-        let dtoActividad = new DTOActividad(
-          null, //id generado en base de datos/
-          nombreActividad,
-          semanaSeleccionada,
-          tipoActividadSeleccionada,
-          descripcionIngresada,
+        let dtoActividad = {
+          nombre: nombreActividad,
+          semana: semanaSeleccionada,
+          tipoActividad: tipoActividadSeleccionada,
+          descripcion: descripcionIngresada,
           responsables,
-          convertirDateAString(fechaHoraSeleccionada),
-          convertirDateAString(fechaPublicacion),
-          convertirRecordatorioAString(recordatorios),
-          modalidadSeleccionada,
+          fechaHora: convertirDateAString(fechaHoraSeleccionada),
+          fechaHoraPublicacion: convertirDateAString(fechaPublicacion),
+          recordatorios: convertirRecordatorioAString(recordatorios),
+          modalidad: modalidadSeleccionada,
           enlace,
-          afiche,
-          estadoSeleccionado,
-          null //Evidencias.
+          estado: estadoSeleccionado,
+          evidencias: null, //Evidencias.
+        };
+        console.log("Actividad a crear:", dtoActividad);
+        let respuestaMainController = await crearActividad(
+          dtoActividad,
+          afiche
         );
-        let respuestaMainController = await crearActividad(dtoActividad);
-        alert("Actividad creada exitosamente");
+        if (Object.keys(respuestaMainController).length !== 0) {
+          alert("Se ha creado exitosamente la actividad.");
+          navigate("/planDeTrabajo");
+        } else alert("No se ha podido crear la actividad, intente de nuevo.");
         break;
       }
       default: {
@@ -158,32 +163,6 @@ function FormularioAgregarActividad(props) {
   };
   const handleEnviar = (e) => {
     e.preventDefault();
-    console.log(
-      "Nombre actividad:\n",
-      nombreActividad,
-      "\nDescripcion:\n",
-      descripcionIngresada,
-      "\nSemana actividad:\n",
-      semanaSeleccionada,
-      "\nEstado actividad:\n",
-      estadoSeleccionado,
-      "\nModalidad actividad:\n",
-      modalidadSeleccionada,
-      "\nTipo actividad:\n",
-      tipoActividadSeleccionada,
-      "\nFecha y hora de la actividadd:\n",
-      fechaHoraSeleccionada,
-      "\nFecha y hora de publicacion:\n",
-      fechaPublicacion,
-      "\nEnlace:\n",
-      enlace,
-      "\nAfiche:\n",
-      afiche,
-      "\nResponsables:\n",
-      responsables,
-      "\nRecordatorio:\n",
-      recordatorios
-    );
     let datos = {
       nombreActividad,
       descripcionIngresada,

@@ -4,41 +4,41 @@ class AdminActividades {
     //*Constructores
     constructor() { }
     //*Metodos
-    async crearActividad(dtoActividad) {
+    async crearActividad(dtoActividad, afiche) {
         try {
-            // Crear un objeto FormData para almacenar el archivo
-            let formData = new FormData();
-            formData.append('file', dtoActividad.afiche);
-            // Agregar el objeto JSON al FormData
-            formData.append('json', JSON.stringify({
-                "nombre": dtoActividad.nombre,
-                "descripcion": dtoActividad.descripcion,
-                "enlace": dtoActividad.enlace,
-                "estado": dtoActividad.estado,
-                "evidencias": dtoActividad.evidencias,
-                "fechaHora": dtoActividad.fechaHora,
-                "fechaHoraPublicacion": dtoActividad.fechaHoraPublicacion,
-                "id": dtoActividad.id,
-                "modalidad": dtoActividad.modalidad,
-                "recordatorios": dtoActividad.recordatorios,
-                "responsables": dtoActividad.responsables,
-                "semana": dtoActividad.semana,
-                "tipoActividad": dtoActividad.tipoActividad
-            }));
+            const formData = new FormData();
+            formData.append("afiche", afiche); //Agrega el afiche o null
+
+            // Agregar los campos de datos al FormData
+            for (let key in dtoActividad) {
+                if (key === "recordatorios") {
+                    const recordatorios = dtoActividad[key];
+                    recordatorios.forEach((recordatorio, index) => {
+                        formData.set(`recordatorios[${index}]`, recordatorio);
+                    });
+                } else if (key === 'responsables') {
+                    const responsables = dtoActividad[key];
+                    responsables.forEach((responsable, index) => {
+                        formData.set(`responsables[${index}]`, responsable);
+                    });
+                }
+                else {
+                    formData.append(key, dtoActividad[key]);
+                }
+            }
+
+            console.log("Form que se envia al back:", formData)
+
             const response = await fetch(`${API_URL}/actividades`, {
                 method: 'POST',
                 body: formData
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log('AdminActividades, en metodo crearActividad:', data);
-                return data;
-            } else {
-                throw new Error('AdminActividades, en metodo crearActividad:');
-            }
+            let data = await response.json();
+            console.log("AdminActividades, en metodo crearActividad retorna:", data)
+            return data;
         } catch (error) {
-            console.log('Error en AdminActividades, en metodo crearActividad:', error);
+            console.error('Error en AdminActividades, en metodo crearActividad:', error);
         }
     }
     async consultarPlanDeTrabajo() {
@@ -120,9 +120,9 @@ class AdminActividades {
             return null;
         }
     }
-    async consultarRespuestas(idComentario) {//FALTA QUE CREEN LA RUTA
+    async consultarRespuestas(idComentario) {
         try {
-            const response = await fetch(`${API_URL}/respuestas/${idComentario}`, {
+            const response = await fetch(`${API_URL}/respuesta/${idComentario}`, {
                 method: 'GET'
             });
             let data = await response.json(); // Convertir datos a formato JSON
@@ -130,6 +130,31 @@ class AdminActividades {
             return data;
         } catch (error) {
             console.error('Error en AdminActividades, en metodo consultarRespuestas: ', error);
+            return null;
+        }
+    }
+    async responderComentario(datos) {
+        try {
+            console.log("Datos responderComentario:", datos)
+
+            const response = await fetch(`${API_URL}/comentario/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "idActividad": datos.idActividad,
+                    "descripcion": datos.descripcion,
+                    "fecha": datos.fecha,
+                    "autor": datos.autor,
+                    "idRespuesta": datos.idRespuesta
+                })
+            });
+            let data = await response.json(); // Convertir datos a formato JSON
+            console.log("AdminActividades responderComentario retorna :", data)
+            return data;
+        } catch (error) {
+            console.error('Error en AdminActividades, en metodo responderComentario: ', error);
             return null;
         }
     }

@@ -8,16 +8,26 @@ function PlanDeTrabajo(props) {
   const navigate = useNavigate();
   const [nombrePlan, setNombrePlan] = useState(null);
 
-  const { consultarPlanDeTrabajo, planDeTrabajo, cambiarNombrePlanTrabajo } =
-    useContext(MainControllerContext);
+  const {
+    consultarPlanDeTrabajo,
+    planDeTrabajo,
+    cambiarNombrePlanTrabajo,
+    usuario,
+    setUsuario,
+  } = useContext(MainControllerContext);
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/agregarActividad");
   };
-  const handleClickReturn = (e) => {
+  const handleReturnMenuProfes = (e) => {
     e.preventDefault();
     navigate("/menuProfesores");
   };
+  const handleReturnMenuAsistentes = (e) => {
+    e.preventDefault();
+    navigate("/menuAsistentes");
+  };
+
   function esJSON(variable) {
     if (
       typeof variable === "object" &&
@@ -38,9 +48,16 @@ function PlanDeTrabajo(props) {
     }
   };
 
+  let storedUser = usuario;
   const updateState = () => {
     setTimeout(() => {
       consultarPlanDeTrabajo();
+      storedUser = JSON.parse(localStorage.getItem("usuario"));
+      try {
+        JSON.parse(storedUser);
+      } catch (error) {
+        setUsuario(storedUser);
+      }
     }, 1000);
   };
 
@@ -55,8 +72,13 @@ function PlanDeTrabajo(props) {
       </p>
     );
   }
+
+  //Se utiliza para mostrar el boton de agregar actividad
+  //tambien para poder cambiar el nombre del plan de trabajo
+  let permisoAgregarActividad =
+    storedUser.rol == "Profesor" && storedUser.coordinador == "COORDINADOR";
   return (
-    <div className="container text-center m-auto">
+    <div className="container text-center ">
       <div className="text-center" id="nombrePlanConteiner">
         <input
           className="text-center font-bold text-5xl p-5"
@@ -66,44 +88,62 @@ function PlanDeTrabajo(props) {
               : "Nombre plan de trabajo"
           }
           placeholder="Ingrese nombre del plan de trabajo"
+          disabled={!permisoAgregarActividad}
           onChange={(e) => {
             setNombrePlan(e.target.value);
           }}
         ></input>
         {/**Boton cambiar nombre plan de trabajo */}
-        <div className="text-center" id="containerBotonAgregarActividad">
-          <button
-            className="text-center bg-green-500 hover:bg-green-800  rounded-xl p-3 m-2"
-            onClick={handleCambiarNombrePlan}
-          >
-            Cambiar nombre del plan de trabajo
-          </button>
-        </div>
+        {permisoAgregarActividad ? (
+          <div className="text-center" id="containerBotonAgregarActividad">
+            <button
+              className="text-center bg-green-500 hover:bg-green-800  rounded-xl p-3 m-2"
+              onClick={handleCambiarNombrePlan}
+            >
+              Cambiar nombre del plan de trabajo
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
       <div className="text-center" id="tablaActividades">
         {/*Las actividades se las pasa a la tabla por props */}
         <TablaActividades actividades={planDeTrabajo?.actividades} />
       </div>
-      <div
-        className="text-center rounded-md bg-green-500 p-2 m-3 h-auto w-auto hover:bg-green-800"
-        id="containerBotonAgregarActividad"
-      >
-        {/*Boton para agregar una actividad nueva*/}
-        <button className="text-center w-full h-full" onClick={handleClick}>
-          Agregar actividad
-        </button>
-      </div>
+      {permisoAgregarActividad ? (
+        <div
+          className="text-center rounded-xl p-3 m-2 bg-green-500 hover:bg-green-800"
+          id="containerBotonAgregarActividad"
+        >
+          {/*Boton para agregar una actividad nueva*/}
+          <button className="text-center w-full h-full" onClick={handleClick}>
+            Agregar actividad
+          </button>
+        </div>
+      ) : (
+        <></>
+      )}
       <div
         className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
         id="containerBotonAgregarActividad"
       >
-        {/*Boton para regresar la menu profesores*/}
-        <button
-          className="text-center w-full h-full"
-          onClick={handleClickReturn}
-        >
-          Regresar al Menú de Profesores
-        </button>
+        {/*Boton para regresar la menu correspondiente*/}
+        {storedUser.rol == "Asistente" ? (
+          <button
+            className="text-center w-full h-full"
+            onClick={handleReturnMenuAsistentes}
+          >
+            Regresar al Menú de Asistentes
+          </button>
+        ) : (
+          <button
+            className="text-center w-full h-full"
+            onClick={handleReturnMenuProfes}
+          >
+            Regresar al Menú de Profesores
+          </button>
+        )}
       </div>
     </div>
   );
