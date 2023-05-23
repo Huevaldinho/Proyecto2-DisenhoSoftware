@@ -13,6 +13,7 @@ function InformacionEstudiantes(props) {
     e.preventDefault();
     navigate("/menuProfesores");
   };
+  
   return (
     <div className="container m-auto">
       <div className="text-center" id="nombrePlanConteiner">
@@ -34,6 +35,8 @@ function InformacionEstudiantes(props) {
           Agregar Estudiante
         </button>
       </div>
+      
+
       <div
         className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
         id="containerBotonAgregarActividad"
