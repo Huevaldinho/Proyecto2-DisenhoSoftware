@@ -22,12 +22,13 @@ export const postActividad = async (req, res) => {
 };
 
 export const putActividad = async (req, res) => {
-  let nuevaActividad = "";
-  if (!req.file || req.file == null)
-    nuevaActividad = await modificarActividadDB(req.body, "");
-  else
-    nuevaActividad = await modificarActividadDB(req.body, req.file.path);
-
+  let nuevasRutas = [];
+  if (!req.files || req.files.length === 0) {
+    nuevasRutas.push(""); // Agregar una ruta vacía al array
+  } else {
+    nuevasRutas = req.files.map((archivo) => archivo.path);
+  }
+  const nuevaActividad = await modificarActividadDB(req.body, nuevasRutas);
   res.json(nuevaActividad);
 };
 

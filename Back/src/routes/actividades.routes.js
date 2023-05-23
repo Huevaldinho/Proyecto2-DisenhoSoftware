@@ -23,7 +23,7 @@ const upload = multer({ storage });
 // Método get para recuperar todos los estudiantes y mostrarlos
 router.get('/actividades', getActividades);
 router.post('/actividades', upload.single('afiche'), postActividad);
-router.put('/actividades', upload.single('afiche'), putActividad);
+router.put('/actividades', upload.array('archivos', 10), putActividad);
 router.delete('/actividades', deleteActividad);
 
 export default router;
