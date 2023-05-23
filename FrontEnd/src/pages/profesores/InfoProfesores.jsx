@@ -6,27 +6,33 @@ import TablaProfesores from "../../components/compartidos/informacionProfesores/
 
 function informacionProfesores(props) {
   const navigate = useNavigate();
-  const { profesores, consultarProfesores } = useContext(MainControllerContext);
-  const [filaSeleccionada, setfilaSeleccionada] = useState(null);
-
-  const handleFilaSeleccionada = (e) => {//TODO
-    e.preventDefault();
-    console.log(e);
-
-  };
+  const { profesores, consultarProfesores, usuario, setUsuario } = useContext(
+    MainControllerContext
+  );
 
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/registrarProfesor");
   };
-  const handleClickReturn = (e) => {
+  const handleClickReturnProfes = (e) => {
     e.preventDefault();
     navigate("/menuProfesores");
   };
+  const handleClickReturnAsistentes = (e) => {
+    e.preventDefault();
+    navigate("/menuAsistentes");
+  };
 
+  let storedUser = usuario;
   const updateState = () => {
     setTimeout(() => {
       consultarProfesores();
+      storedUser = JSON.parse(localStorage.getItem("usuario"));
+      try {
+        JSON.parse(storedUser);
+      } catch (error) {
+        setUsuario(storedUser);
+      }
     }, 1000);
   };
 
@@ -34,6 +40,8 @@ function informacionProfesores(props) {
   useEffect(() => {
     updateState();
   }, []);
+
+  if (storedUser == null) return <p>Cargando</p>;
 
   if (profesores.length == 0) {
     return (
@@ -68,12 +76,21 @@ function informacionProfesores(props) {
         id="containerBotonAgregarActividad"
       >
         {/*Boton para regresar la menu profesores*/}
-        <button
-          className="text-center w-full h-full"
-          onClick={handleClickReturn}
-        >
-          Regresar al Menú de Profesores
-        </button>
+        {usuario.rol == "Profesor" ? (
+          <button
+            className="text-center w-full h-full"
+            onClick={handleClickReturnProfes}
+          >
+            Regresar al Menú de Profesores
+          </button>
+        ) : (
+          <button
+            className="text-center w-full h-full"
+            onClick={handleClickReturnAsistentes}
+          >
+            Regresar al Menú de Asistentes
+          </button>
+        )}
       </div>
     </div>
   );
