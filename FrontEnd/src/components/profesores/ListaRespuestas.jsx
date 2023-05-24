@@ -17,6 +17,10 @@ function ListaRespuestas(props) {
       state: { comentario: comentario, actividad: actividad },
     });
   };
+  const handleRegresarDetallesActividad = (e) => {
+    e.preventDefault();
+    navigate("/detallesActividad", { state: { actividad: actividad } });
+  };
 
   const updateState = () => {
     setTimeout(() => {
@@ -41,9 +45,21 @@ function ListaRespuestas(props) {
         >
           Agregar respuesta
         </button>
+        <div
+          className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
+          id="containerBotonAgregarActividad"
+        >
+          <button
+            className="text-center w-full h-full"
+            onClick={handleRegresarDetallesActividad}
+          >
+            Regresar
+          </button>
+        </div>
       </div>
     );
   }
+
   return (
     <div className="container m-auto">
       <div className="text-center" id="nombrePlanConteiner">
@@ -60,6 +76,17 @@ function ListaRespuestas(props) {
         {/*Boton para agregar una actividad nueva*/}
         <button className="text-center w-full h-full" onClick={handleClick}>
           Agregar Respuesta
+        </button>
+      </div>
+      <div
+        className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
+        id="containerBotonAgregarActividad"
+      >
+        <button
+          className="text-center w-full h-full"
+          onClick={handleRegresarPlanDeTrabajo}
+        >
+          Regresar al plan de trabajo
         </button>
       </div>
     </div>

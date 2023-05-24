@@ -35,6 +35,10 @@ function AgregarComentario(props) {
   const handleComentario = (e) => {
     setComentario(e.target.value);
   };
+  const handleRegresarDetalleActividad = (e) => {
+    e.preventDefault();
+    navigate("/detallesActividad",{ state: { actividad: actividad } });
+  };
   return (
     <div>
       <div className=" p-3 m-4 text-center items-center">
@@ -65,6 +69,17 @@ function AgregarComentario(props) {
           </button>
         </div>
       </form>
+      <div
+        className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
+        id="containerBotonAgregarActividad"
+      >
+        <button
+          className="text-center w-full h-full"
+          onClick={handleRegresarDetalleActividad}
+        >
+          Regresar
+        </button>
+      </div>
     </div>
   );
 }
