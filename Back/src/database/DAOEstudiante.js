@@ -75,19 +75,34 @@ export async function getEstudiantesMongo(){
 export const ingresarEstudiantes = async (lista) => {
     try {
         for (const DTOEstudiante of lista) {
-            let e = new Estudiante({
-                carnet: DTOEstudiante[0],
-                nombre: DTOEstudiante[1],
-                nombre2: DTOEstudiante[2],
-                apellido1: DTOEstudiante[3],
-                apellido2: DTOEstudiante[4],
-                correo: DTOEstudiante[5],
-                campus: DTOEstudiante[8],
-                contrasenna: DTOEstudiante[6],
-                estado: DTOEstudiante[9],
-                celular: DTOEstudiante[10],
-                rol: DTOEstudiante[7]
-            })
+            var e = await Estudiante.findOne({carnet: DTOEstudiante[0]});
+            if(e) {
+                e.carnet = DTOEstudiante[0];
+                e.nombre = DTOEstudiante[1];
+                e.nombre2 = DTOEstudiante[2];
+                e.apellido1 = DTOEstudiante[3];
+                e.apellido2 = DTOEstudiante[4];
+                e.correo = DTOEstudiante[5];
+                e.campus = DTOEstudiante[8];
+                e.contrasenna = DTOEstudiante[6];
+                e.estado = DTOEstudiante[9];
+                e.rol =  DTOEstudiante[7];
+                e.celular = DTOEstudiante[10];
+            } else {
+                e = new Estudiante({
+                    carnet: DTOEstudiante[0],
+                    nombre: DTOEstudiante[1],
+                    nombre2: DTOEstudiante[2],
+                    apellido1: DTOEstudiante[3],
+                    apellido2: DTOEstudiante[4],
+                    correo: DTOEstudiante[5],
+                    campus: DTOEstudiante[8],
+                    contrasenna: DTOEstudiante[6],
+                    estado: DTOEstudiante[9],
+                    celular: DTOEstudiante[10],
+                    rol: DTOEstudiante[7]
+                })
+            }
             e.save();
         }; 
         return lista;
@@ -101,17 +116,18 @@ export const ingresarEstudiantes = async (lista) => {
 export const modificarEstudiante = async (DTOEstudiante) => {
     console.log("mod estudiante middlewhere");
     try {
-       /* const contrasennaReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-        const correoReg = /^[a-z0-9]+@estudiantec.cr$/
-        //const data = await Estudiante.findOne({ carnet: DTOEstudiante.carnet}); 
+        const contrasennaReg = /^[0-9]{8}$/;
+        const correoReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const telefonoReg = /^(2|6|8){1}[0-9]{7}$/;
+        const data = await Profesor.findOne({ correo: DTOProfesor.correo });
+        const dataT = await Profesor.findOne({ telefono: DTOProfesor.telefono });
         if (!DTOEstudiante.contrasenna.match(contrasennaReg)) 
             return "1"; //error si la contraseña no es aceptada
         if (!DTOEstudiante.correo.match(correoReg)) 
             return "2"; //error si el correo no es aceptado
-        if (DTOEstudiante.nombre == "" || DTOEstudiante.apellido1 == "" || DTOEstudiante.apellido2 == "")
-            return "5" //error si alguno de estos campos esta vacio
-        if (data)
-            return "6" //error si ya existia un profesor registrado*/
+        if (!DTOEstudiante.telefono.match(telefonoReg)) return "3"; //error si el telefono no es aceptado
+        if (data) return "4" //error si ya existia un profesor registrado*/
+        if (dataT) return "5"
         var e = await Estudiante.findOne({carnet: DTOEstudiante.carnet}); 
         e.carnet = DTOEstudiante.carnet;
         e.nombre = DTOEstudiante.nombre;
