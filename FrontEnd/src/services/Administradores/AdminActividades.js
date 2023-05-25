@@ -18,17 +18,21 @@ class AdminActividades {
                     });
                 } else if (key === 'responsables') {
                     const responsables = dtoActividad[key];
-                    responsables.forEach((responsable, index) => {
-                        formData.set(`responsables[${index}]`, responsable);
+                    // console.log("Responsables:", responsables);
+                    // responsables.forEach((responsable, index) => {
+                    //     formData.set(`responsables[${index}]`, responsable);
+                    // });
+                    responsables.forEach((usuario, index) => {
+                        Object.entries(usuario).forEach(([key, value]) => {
+                            formData.append(`responsables[${index}][${key}]`, value);
+                        });
                     });
                 }
                 else {
                     formData.append(key, dtoActividad[key]);
                 }
             }
-
             console.log("Form que se envia al back:", formData)
-
             const response = await fetch(`${API_URL}/actividades`, {
                 method: 'POST',
                 body: formData
@@ -181,8 +185,10 @@ class AdminActividades {
                     });
                 } else if (key === 'responsables') {
                     const responsables = dtoActividad[key];
-                    responsables.forEach((responsable, index) => {
-                        formData.set(`responsables[${index}]`, responsable);
+                    responsables.forEach((usuario, index) => {
+                        Object.entries(usuario).forEach(([key, value]) => {
+                            formData.append(`responsables[${index}][${key}]`, value);
+                        });
                     });
                 }
                 else {

@@ -43,6 +43,7 @@ function ListaComentarios(props) {
       </div>
     );
   }
+
   return (
     <div className="container m-auto">
       <div className="text-center" id="nombrePlanConteiner">
