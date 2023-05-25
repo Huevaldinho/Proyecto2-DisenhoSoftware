@@ -51,7 +51,7 @@ function Router() {
           path="/InformacionEstudiante"
           element={<InformacionEstudiante />}
         />
-        <Route path="/agregarEstudiante" element={<AgregarEstudiante />} />
+        <Route path="/agregarEstudiante" element={<CargarExcel />} />
 
         {/*Inicio routes de PROFESORES */}
         <Route
