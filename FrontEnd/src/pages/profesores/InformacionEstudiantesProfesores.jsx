@@ -32,7 +32,7 @@ function InformacionEstudiantes(props) {
           className="text-center w-full h-full"
           onClick={handleAgregarEstudiante}
         >
-          Agregar Estudiante
+          Agregar Estudiantes
         </button>
       </div>
       
