@@ -26,6 +26,9 @@ function Login() {
         case Role.ESTUDIANTE: {
           navigate("/menuEstudiantes");
         }
+        case Role.SUPERUSUARIO: {
+          navigate("/menuSuperUsuario");
+        }
       }
     } else {
       alert("No existe usuario con el correo y contraseña ingresados.");

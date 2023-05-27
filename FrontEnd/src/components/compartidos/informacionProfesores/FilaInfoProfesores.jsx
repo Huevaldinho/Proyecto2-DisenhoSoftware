@@ -14,7 +14,7 @@ function FilaInfoProfesores({ profesor, index }) {
     navigate("/informacionProfesor", { state: { profesor: profesor } });
   };
   const handleAsignarAsistente = async (e) => {
-    console.log("Asignar asisente ejecutado")
+    console.log("Asignar asisente ejecutado");
     e.preventDefault();
     let respuesta = await asignarAsistente(profesor.codigo, profesor.campus);
     //No hubo errores.
@@ -51,6 +51,7 @@ function FilaInfoProfesores({ profesor, index }) {
 
   if (storedUser == null) return <p>Cargando</p>;
 
+
   return (
     <tr onDoubleClick={handleClick} className={styleFilas}>
       <td className={styleRow}>{profesor.codigo}</td>
@@ -70,7 +71,7 @@ function FilaInfoProfesores({ profesor, index }) {
       <td className={styleRow}>
         <button
           onClick={handleAsignarAsistente}
-          disabled={usuario.rol === Role.SUPERUSUARIO}
+          disabled={usuario.rol === Role.SUPERUSUARIO ? false : true}
           className="text-center bg-green-500 hover:bg-green-800 rounded-md p-1 "
         >
           Asignar

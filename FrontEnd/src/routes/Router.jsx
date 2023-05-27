@@ -26,12 +26,16 @@ import ListaComentarios from "../components/profesores/ListaComentarios";
 import ListaRespuestas from "../components/profesores/ListaRespuestas";
 import AgregarComentario from "../components/profesores/AgregarComentario";
 import AgregarRespuesta from "../components/profesores/AgregarRespuesta";
+import MenuSuperUsuario from "../pages/superUsuario/MenuSuperUsuario";
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
         {/*Ruta al iniciar aplicacion es login. */}
         <Route index element={<Navigate to="/login" />} />
+
+        {/*Menu super usuario */}
+        <Route path="/menuSuperUsuario" element={<MenuSuperUsuario />} />
 
         {/*Inicio routues de COMPARTIDAS */}
         <Route path="/planDeTrabajo" element={<PlanDeTrabajo />} />
@@ -40,7 +44,6 @@ function Router() {
         <Route path="/listaRespuestas" element={<ListaRespuestas />} />
         <Route path="/agregarComentario" element={<AgregarComentario />} />
         <Route path="/agregarRespuesta" element={<AgregarRespuesta />} />
-        
 
         {/*Inicio routes de ESTUDIANTES */}
         <Route

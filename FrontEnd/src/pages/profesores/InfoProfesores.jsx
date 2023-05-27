@@ -3,6 +3,7 @@ import { MainControllerContext } from "../../contexts/MainControllerContext";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TablaProfesores from "../../components/compartidos/informacionProfesores/TablaProfesores";
+import Role from "../../services/enums/role";
 
 function informacionProfesores(props) {
   const navigate = useNavigate();
@@ -14,13 +15,17 @@ function informacionProfesores(props) {
     e.preventDefault();
     navigate("/registrarProfesor");
   };
-  const handleClickReturnProfes = (e) => {
-    e.preventDefault();
+  const handleClickReturnProfes = () => {
     navigate("/menuProfesores");
   };
-  const handleClickReturnAsistentes = (e) => {
-    e.preventDefault();
+  const handleClickReturnAsistentes = () => {
     navigate("/menuAsistentes");
+  };
+  const handleClickReturnSuperUsuario = () => {
+    navigate("/menuSuperUsuario");
+  };
+  const handleClickReturnEstudiantes = () => {
+    navigate("/menuEstudiantes");
   };
 
   let storedUser = usuario;
@@ -51,6 +56,33 @@ function informacionProfesores(props) {
     );
   }
 
+  const menuAregresar = (e) => {
+    e.preventDefault();
+    console.log("ENTRA A MENU AGREGAR?", storedUser.rol);
+    switch (storedUser.rol) {
+      case Role.PROFESOR: {
+        console.log("Usuario es profe");
+        handleClickReturnProfes();
+        break;
+      }
+      case Role.ASISTENTE: {
+        console.log("Usuario es asistente");
+        handleClickReturnAsistentes();
+        break;
+      }
+      case Role.SUPERUSUARIO: {
+        console.log("Usuario es super usuario");
+        handleClickReturnSuperUsuario();
+        break;
+      }
+      case Role.ESTUDIANTE: {
+        console.log("Usuario es estudiante");
+        handleClickReturnEstudiantes();
+        break;
+      }
+    }
+  };
+
   return (
     <div className="container m-auto ">
       <div className="text-center" id="nombrePlanConteiner">
@@ -75,7 +107,8 @@ function informacionProfesores(props) {
         className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
         id="containerBotonAgregarActividad"
       >
-        {/*Boton para regresar la menu profesores*/}
+        {/*Boton para regresar la menu profesores
+        
         {usuario.rol == "Profesor" ? (
           <button
             className="text-center w-full h-full"
@@ -91,6 +124,10 @@ function informacionProfesores(props) {
             Regresar al Menú de Asistentes
           </button>
         )}
+        */}
+        <button className="text-center w-full h-full" onClick={menuAregresar}>
+          Regresar
+        </button>
       </div>
     </div>
   );
