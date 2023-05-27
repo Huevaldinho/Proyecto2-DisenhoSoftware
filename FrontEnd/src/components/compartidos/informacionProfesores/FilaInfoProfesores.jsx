@@ -34,7 +34,6 @@ function FilaInfoProfesores({ profesor, index }) {
   let storedUser = usuario;
   const updateState = () => {
     setTimeout(() => {
-      consultarProfesores();
       storedUser = JSON.parse(localStorage.getItem("usuario"));
       try {
         JSON.parse(storedUser);
@@ -50,7 +49,6 @@ function FilaInfoProfesores({ profesor, index }) {
   }, []);
 
   if (storedUser == null) return <p>Cargando</p>;
-
 
   return (
     <tr onDoubleClick={handleClick} className={styleFilas}>
@@ -68,7 +66,10 @@ function FilaInfoProfesores({ profesor, index }) {
       <td className={styleRow}>
         {profesor.coordinador == "NOCOORDINADOR" ? "No" : "Si"}
       </td>
-      <td className={styleRow}>
+      <td
+        hidden={storedUser.rol === Role.SUPERUSUARIO ? false : true}
+        className={styleRow}
+      >
         <button
           onClick={handleAsignarAsistente}
           disabled={usuario.rol === Role.SUPERUSUARIO ? false : true}
