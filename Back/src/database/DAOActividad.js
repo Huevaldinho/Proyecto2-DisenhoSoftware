@@ -132,7 +132,6 @@ export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
     const idsResponsables = DTOActividad.responsables.map(
       (responsable) => responsable._id
     ); //obtiene únicamente los ids de los responsables
-
     let nuevaActividad = new Actividad({
       //crear el nuevo objeto para enviarlo a la db
       afiche: rutaFoto, //guarda la ruta del archivo en la nube, sea PDF o JPG o similar
@@ -161,10 +160,9 @@ export const ingresarActividadDB = async (DTOActividad, filePhoto) => {
 
 export const modificarActividadDB = async (DTOActividad, archivos) => {
   try {
-    console.log("Archivos:", archivos)
+    console.log(DTOActividad)
     const actividadExistente = await Actividad.findById(DTOActividad._id);
     if (!actividadExistente) return "-1";
-
     const idsResponsables = DTOActividad.responsables.map(
       (responsable) => responsable._id
     ); //obtiene únicamente los ids de los responsables
