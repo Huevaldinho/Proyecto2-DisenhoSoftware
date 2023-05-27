@@ -50,8 +50,9 @@ function InformacionEstudiantes(props) {
       <div
         className="text-center rounded-md bg-green-500 p-2 m-3 h-auto w-auto hover:bg-green-800"
         id="containerBotonAgregarActividad"
+        hidden={storedUser.rol === Role.ASISTENTE ? false : true}
       >
-        {/*Boton para agregar una actividad nueva*/}
+        {/*Boton para agregar una actividad nueva, solo para asistentes*/}
         <button
           className="text-center w-full h-full"
           onClick={handleAgregarEstudiante}
