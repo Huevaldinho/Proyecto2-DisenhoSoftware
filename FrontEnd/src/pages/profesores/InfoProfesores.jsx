@@ -58,25 +58,20 @@ function informacionProfesores(props) {
 
   const menuAregresar = (e) => {
     e.preventDefault();
-    console.log("ENTRA A MENU AGREGAR?", storedUser.rol);
     switch (storedUser.rol) {
       case Role.PROFESOR: {
-        console.log("Usuario es profe");
         handleClickReturnProfes();
         break;
       }
       case Role.ASISTENTE: {
-        console.log("Usuario es asistente");
         handleClickReturnAsistentes();
         break;
       }
       case Role.SUPERUSUARIO: {
-        console.log("Usuario es super usuario");
         handleClickReturnSuperUsuario();
         break;
       }
       case Role.ESTUDIANTE: {
-        console.log("Usuario es estudiante");
         handleClickReturnEstudiantes();
         break;
       }
@@ -97,6 +92,7 @@ function informacionProfesores(props) {
       <div
         className="text-center rounded-md bg-green-500 p-2 m-3 h-auto w-auto hover:bg-green-800"
         id="containerBotonAgregarActividad"
+        hidden={storedUser.rol === Role.ASISTENTE ? false : true}
       >
         {/*Boton para agregar una actividad nueva*/}
         <button className="text-center w-full h-full" onClick={handleClick}>
@@ -107,24 +103,7 @@ function informacionProfesores(props) {
         className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
         id="containerBotonAgregarActividad"
       >
-        {/*Boton para regresar la menu profesores
-        
-        {usuario.rol == "Profesor" ? (
-          <button
-            className="text-center w-full h-full"
-            onClick={handleClickReturnProfes}
-          >
-            Regresar al Menú de Profesores
-          </button>
-        ) : (
-          <button
-            className="text-center w-full h-full"
-            onClick={handleClickReturnAsistentes}
-          >
-            Regresar al Menú de Asistentes
-          </button>
-        )}
-        */}
+        {/*Boton para regresar la menu profesores*/}
         <button className="text-center w-full h-full" onClick={menuAregresar}>
           Regresar
         </button>

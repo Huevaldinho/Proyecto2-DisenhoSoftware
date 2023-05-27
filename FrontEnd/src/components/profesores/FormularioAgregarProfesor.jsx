@@ -336,7 +336,7 @@ function FormularioAgregarProfesor(props) {
           className="text-center w-full h-full"
           onClick={handleClickReturn}
         >
-          Regresar al Menú de Profesores
+          Regresar al Información del Equipo
         </button>
       </div>
     </div>
