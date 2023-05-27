@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
 
 // Componentes de tabla
 import BodyInformacionEstudiantes from "./BodyInformacionEstudiantes";
@@ -34,13 +34,15 @@ function TablaInformacionEstudiantes(props) {
     // Crear una hoja de cálculo nueva
     const workbook = XLSX.utils.book_new();
 
-    const campuses = jsonDataFinal.map(persona => persona.campus);
+    const campuses = jsonDataFinal.map((persona) => persona.campus);
     const uniqueCampuses = Array.from(new Set(campuses));
 
     uniqueCampuses.slice(0, 5).forEach((campus, index) => {
       const worksheet = XLSX.utils.json_to_sheet([]);
 
-      const filteredData = jsonDataFinal.filter(persona => persona.campus === campus);
+      const filteredData = jsonDataFinal.filter(
+        (persona) => persona.campus === campus
+      );
 
       const data = filteredData.map(({ _id, ...rest }) => rest);
 
@@ -48,20 +50,25 @@ function TablaInformacionEstudiantes(props) {
       const header = Object.keys(data[0]);
       XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: "A1" });
 
-      XLSX.utils.sheet_add_json(worksheet, data, { skipHeader: true, origin: "A2" });
+      XLSX.utils.sheet_add_json(worksheet, data, {
+        skipHeader: true,
+        origin: "A2",
+      });
 
       XLSX.utils.book_append_sheet(workbook, worksheet, `Hoja ${index + 1}`);
     });
 
     // Guardar el archivo como Excel
     const excelData = XLSX.write(workbook, { type: "array", bookType: "xlsx" });
-    const excelBlob = new Blob([excelData], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    const excelBlob = new Blob([excelData], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
     const url = URL.createObjectURL(excelBlob);
     const a = document.createElement("a");
     a.href = url;
     a.download = "datos.xlsx";
     a.click();
-    
+
     // Navegar a la ruta "/informacionEstudiantesProfesores"
     navigate("/informacionEstudiantesProfesores");
   };
@@ -85,6 +92,9 @@ function TablaInformacionEstudiantes(props) {
       <h1 className="text-center font-light p-2 text-blue-600">
         Pulsa doble click para ver detalles del estudiante
       </h1>
+      <h1 className="text-center font-light p-2 text-yellow-500">
+        Pulsa doble click en las columnas para ordenarlas por ese campo
+      </h1>
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -95,9 +105,15 @@ function TablaInformacionEstudiantes(props) {
           </div>
         </div>
       </div>
-      <div className="text-center rounded-md bg-blue-500 p-2 m-3 h-auto w-auto hover:bg-blue-800" id="containerBotonAgregarActividad">
+      <div
+        className="text-center rounded-md bg-blue-500 p-2 m-3 h-auto w-auto hover:bg-blue-800"
+        id="containerBotonAgregarActividad"
+      >
         {/* Boton para regresar al menú de profesores */}
-        <button className="text-center w-full h-full" onClick={handleGenerateExcel}>
+        <button
+          className="text-center w-full h-full"
+          onClick={handleGenerateExcel}
+        >
           Generar Reporte
         </button>
       </div>
@@ -106,5 +122,3 @@ function TablaInformacionEstudiantes(props) {
 }
 
 export default TablaInformacionEstudiantes;
-
-

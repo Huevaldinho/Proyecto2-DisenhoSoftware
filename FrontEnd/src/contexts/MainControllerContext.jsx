@@ -166,9 +166,41 @@ const MainControllerContextProvider = ({ children }) => {
     consultarComentarios(datos.idActividad);
     return data;
   };
-  const actualizarActividad = async (dtoActividad, afiche,evidencias) => {
-    let data = await mainController.actualizarActividad(dtoActividad, afiche,evidencias);
+  const actualizarActividad = async (dtoActividad, afiche, evidencias) => {
+    let data = await mainController.actualizarActividad(
+      dtoActividad,
+      afiche,
+      evidencias
+    );
     return data;
+  };
+
+  //*ORDENAMIENTOS
+  const ordenarEstudiantesPorCarnet = () => {
+    const estudiantesOrdenados = [...estudiantes].sort(
+      (a, b) => a.carnet - b.carnet
+    );
+    setEstudiantes(estudiantesOrdenados);
+  };
+  const ordenarEstudiantesPorNombre = () => {
+    const estudiantesOrdenados = [...estudiantes].sort((a, b) => {
+      const nombreA = a.nombre.toLowerCase();
+      const nombreB = b.nombre.toLowerCase();
+      if (nombreA < nombreB) return -1;
+      if (nombreA > nombreB) return 1;
+      return 0;
+    });
+    setEstudiantes(estudiantesOrdenados);
+  };
+  const ordenarEstudiantesPorCampus = () => {
+    const estudiantesOrdenados = [...estudiantes].sort((a, b) => {
+      const campusA = a.campus.toLowerCase();
+      const campusB = b.campus.toLowerCase();
+      if (campusA < campusB) return -1;
+      if (campusA > campusB) return 1;
+      return 0;
+    });
+    setEstudiantes(estudiantesOrdenados);
   };
 
   return (
@@ -197,7 +229,10 @@ const MainControllerContextProvider = ({ children }) => {
         respuestas,
         responderComentario,
         setUsuario,
-        actualizarActividad
+        actualizarActividad,
+        ordenarEstudiantesPorCarnet,
+        ordenarEstudiantesPorNombre,
+        ordenarEstudiantesPorCampus
       }}
     >
       {children}

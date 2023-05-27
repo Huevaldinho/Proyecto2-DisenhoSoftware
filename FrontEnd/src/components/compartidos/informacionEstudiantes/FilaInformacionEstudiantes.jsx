@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 //Para abrir detalles de estudiantes
 import { useNavigate } from "react-router-dom";
-
+import { MainControllerContext } from "../../../contexts/MainControllerContext";
 function FilaInformacionEstudiante({ estudiante, index }) {
+  const { profesores } = useContext(MainControllerContext);
   const navigate = useNavigate();
+
   if (estudiante == {}) return <tr></tr>;
 
   const handleClick = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate("/informacionEstudiante", { state: { estudiante: estudiante } });
   };
   const styleRow =
@@ -23,8 +25,8 @@ function FilaInformacionEstudiante({ estudiante, index }) {
         {estudiante.apellido2}
       </td>
       <td className={styleRow}>{estudiante.carnet}</td>
+      <td className={styleRow}>{estudiante.campus}</td>
       <td className={styleRow}>{estudiante.estado}</td>
-      
     </tr>
   );
 }
