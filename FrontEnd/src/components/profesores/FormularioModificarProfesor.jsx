@@ -1,13 +1,13 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import COORDINADOR from "../../services/enums/coordinador";
 import { MainControllerContext } from "../../contexts/MainControllerContext";
 import DTOProfesor from "../../services/DTOs/DTOProfesor";
-
+import Role from "../../services/enums/role";
+import { campus } from "../../services/campus";
 function FormularioModificarProfesor(props) {
-  const { actualizarProfesor, eliminarMiembro } = useContext(
-    MainControllerContext
-  );
+  const { actualizarProfesor, eliminarMiembro, usuario, setUsuario } =
+    useContext(MainControllerContext);
   const navigate = useNavigate();
   const location = useLocation();
   let profesor = location?.state.profesor;
@@ -18,11 +18,7 @@ function FormularioModificarProfesor(props) {
   const [correo, setCorreo] = useState(profesor.correo); //Correo
   const [telefono, setTelefono] = useState(profesor.telefono); //Telefono
   const [estado, setEstado] = useState(profesor.estado); //Estado
-  const [coordinador, setCord] = useState(
-    profesor.coordinador == COORDINADOR.COORDINADOR
-      ? "Coordinador"
-      : "No coordinador"
-  ); //Coordinador
+  const [coordinador, setCord] = useState(profesor.coordinador); //Coordinador
   const [celular, setCelular] = useState(profesor.celular); //Celular
   const [cedula, setCedula] = useState(profesor.cedula); //Cedula
   const [file, setFile] = useState(null); //Imagen opcional
@@ -98,7 +94,7 @@ function FormularioModificarProfesor(props) {
   const redireccionar = async () => {
     let jsonProfe = {
       cedula,
-      nombre:nombre1,
+      nombre: nombre1,
       nombre2,
       apellido1,
       apellido2,
@@ -106,7 +102,7 @@ function FormularioModificarProfesor(props) {
       contrasenna: profesor.contrasenna,
       rol: profesor.rol,
       codigo: profesor.codigo,
-      coordinador: "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR",
+      coordinador,
       telefono,
       campus: profesor.campus,
       estado,
@@ -114,6 +110,7 @@ function FormularioModificarProfesor(props) {
       celular,
       foto: profesor.foto,
     };
+    console.log("profe a modificar:", jsonProfe);
     const respuesta = await actualizarProfesor(jsonProfe, file);
 
     if (manejoErrores(respuesta)) {
@@ -123,6 +120,9 @@ function FormularioModificarProfesor(props) {
         navigate("/infoProfesores");
       } else alert("No se ha podido modificado al profesor, intente de nuevo.");
     }
+  };
+  const handleChangeCoordinador = (e) => {
+    setCord(e.target.value === "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR");
   };
 
   const handleModificar = (e) => {
@@ -138,6 +138,28 @@ function FormularioModificarProfesor(props) {
       navigate("/infoProfesores");
     } else alert("No se ha podido eliminar al profesor, intente de nuevo.");
   };
+
+  let storedUser = usuario;
+  const updateState = () => {
+    setTimeout(() => {
+      storedUser = JSON.parse(localStorage.getItem("usuario"));
+      try {
+        JSON.parse(storedUser);
+      } catch (error) {
+        setUsuario(storedUser);
+      }
+    }, 1000);
+  };
+
+  // Efecto que actualiza el estado de myState después de que el componente ha sido montado
+  useEffect(() => {
+    updateState();
+  }, []);
+
+  if (storedUser == null) return <p>Cargando</p>;
+  let puedeAsignarCoordinador = !(
+    storedUser.rol === Role.ASISTENTE && storedUser.campus === campus[0]
+  );
 
   //*Styles
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
@@ -345,6 +367,7 @@ function FormularioModificarProfesor(props) {
             </select>
           </div>
           <br></br>
+          {/*Coordinador */}
           <div className={cssElementosForm}>
             <label
               htmlFor="coordinador"
@@ -353,13 +376,12 @@ function FormularioModificarProfesor(props) {
               Elija si es coordinador
             </label>
             <select
+              disabled={puedeAsignarCoordinador}
               id="cCoordinador"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              onChange={(e) => {
-                setCord(e.target.value);
-              }}
+              onChange={handleChangeCoordinador}
               defaultValue={
-                coordinador == "Coordinador" ? "Coordinador" : "No coordinador"
+                coordinador === "COORDINADOR" ? "Coordinador" : "No coordinador"
               }
             >
               <option value="Coordinador">Coordinador</option>
