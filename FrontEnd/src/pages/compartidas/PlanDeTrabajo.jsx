@@ -78,7 +78,7 @@ function PlanDeTrabajo(props) {
   let permisoAgregarActividad =
     storedUser.rol == "Profesor" && storedUser.coordinador == "COORDINADOR";
   return (
-    <div className="container text-center ">
+    <div className="container m-auto ">
       <div className="text-center" id="nombrePlanConteiner">
         <input
           className="text-center font-bold text-5xl p-5"

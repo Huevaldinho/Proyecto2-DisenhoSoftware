@@ -1,19 +1,43 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import TablaInformacionEstudiantes from "../../components/compartidos/informacionEstudiantes/TablaInformacionEstudiantes";
-
+import { MainControllerContext } from "../../contexts/MainControllerContext";
+import Role from "../../services/enums/role";
 function InformacionEstudiantes(props) {
+  const { usuario, setUsuario } = useContext(MainControllerContext);
   const navigate = useNavigate();
 
   const handleAgregarEstudiante = (e) => {
     e.preventDefault();
     navigate("/agregarEstudiante");
   };
-  const handleClickReturn = (e) => {
+  const handleClickReturnMenuProfesores = (e) => {
     e.preventDefault();
     navigate("/menuProfesores");
   };
-  
+  const handleClickReturnMenuAsistentes = (e) => {
+    e.preventDefault();
+    navigate("/menuAsistentes");
+  };
+  let storedUser = usuario;
+  const updateState = () => {
+    setTimeout(() => {
+      storedUser = JSON.parse(localStorage.getItem("usuario"));
+      try {
+        JSON.parse(storedUser);
+      } catch (error) {
+        setUsuario(storedUser);
+      }
+    }, 1000);
+  };
+
+  // Efecto que actualiza el estado de myState después de que el componente ha sido montado
+  useEffect(() => {
+    updateState();
+  }, []);
+
+  if (storedUser == null) return <p>Cargando</p>;
+
   return (
     <div className="container m-auto">
       <div className="text-center" id="nombrePlanConteiner">
@@ -35,19 +59,27 @@ function InformacionEstudiantes(props) {
           Agregar Estudiantes
         </button>
       </div>
-      
 
       <div
         className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
         id="containerBotonAgregarActividad"
       >
         {/*Boton para regresar la menu profesores*/}
-        <button
-          className="text-center w-full h-full"
-          onClick={handleClickReturn}
-        >
-          Regresar al Menú de Profesores
-        </button>
+        {storedUser.rol === Role.PROFESOR ? (
+          <button
+            className="text-center w-full h-full"
+            onClick={handleClickReturnMenuProfesores}
+          >
+            Regresar al Menú de Profesores
+          </button>
+        ) : (
+          <button
+            className="text-center w-full h-full"
+            onClick={handleClickReturnMenuAsistentes}
+          >
+            Regresar al Menú de Asistentes
+          </button>
+        )}
       </div>
     </div>
   );
