@@ -1,9 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 //Para abrir detalles de actividad
 import { useNavigate } from "react-router-dom";
 import { MainControllerContext } from "../../../contexts/MainControllerContext";
+import Role from "../../../services/enums/role";
 function FilaInfoProfesores({ profesor, index }) {
-  const { asignarAsistente } = useContext(MainControllerContext);
+  const { asignarAsistente, usuario, setUsuario, consultarProfesores } =
+    useContext(MainControllerContext);
   const navigate = useNavigate();
   if (profesor == {}) return <tr></tr>;
 
@@ -12,6 +14,7 @@ function FilaInfoProfesores({ profesor, index }) {
     navigate("/informacionProfesor", { state: { profesor: profesor } });
   };
   const handleAsignarAsistente = async (e) => {
+    console.log("Asignar asisente ejecutado")
     e.preventDefault();
     let respuesta = await asignarAsistente(profesor.codigo, profesor.campus);
     //No hubo errores.
@@ -27,6 +30,26 @@ function FilaInfoProfesores({ profesor, index }) {
     index % 2 === 0
       ? "bg-gray-200 hover:bg-blue-300"
       : "bg-gray-100 hover:bg-blue-300";
+
+  let storedUser = usuario;
+  const updateState = () => {
+    setTimeout(() => {
+      consultarProfesores();
+      storedUser = JSON.parse(localStorage.getItem("usuario"));
+      try {
+        JSON.parse(storedUser);
+      } catch (error) {
+        setUsuario(storedUser);
+      }
+    }, 1000);
+  };
+
+  // Efecto que actualiza el estado de myState después de que el componente ha sido montado
+  useEffect(() => {
+    updateState();
+  }, []);
+
+  if (storedUser == null) return <p>Cargando</p>;
 
   return (
     <tr onDoubleClick={handleClick} className={styleFilas}>
@@ -47,6 +70,7 @@ function FilaInfoProfesores({ profesor, index }) {
       <td className={styleRow}>
         <button
           onClick={handleAsignarAsistente}
+          disabled={usuario.rol === Role.SUPERUSUARIO}
           className="text-center bg-green-500 hover:bg-green-800 rounded-md p-1 "
         >
           Asignar
