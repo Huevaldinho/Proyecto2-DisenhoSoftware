@@ -209,7 +209,7 @@ export const modificarProfesor = async (DTOProfesor, path) => {
         dataCoordinador.save();
       }
       p.coordinador = "COORDINADOR";
-    } else p.coordinador == DTOProfesor.coordinador;
+    } else p.coordinador = DTOProfesor.coordinador;
     p.estado = DTOProfesor.estado;
     p.rol = DTOProfesor.rol;
     p.equipo = DTOProfesor.equipo;
