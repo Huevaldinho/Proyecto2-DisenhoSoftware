@@ -22,36 +22,28 @@ function FormularioInformacionEstudiante(props) {
   const [telefonoEstado, setTelefono] = useState(estudiante.celular);
 
   const redireccionar = () => {
-    //*Distinguir si es modificacion o si es eliminacion
-    if (estadoState == EstadoUsuario.ACTIVO) {
-      //Crear DTOEstudiante con datos que ya tengo y los nuevos.
-      let dtoEstudiante = {
-        carnet: estudiante.carnet,
-        nombre: estudiante.nombre,
-        nombre2: estudiante.nombre2,
-        apellido1: estudiante.apellido1,
-        apellido2: estudiante.apellido2,
-        correo: correoEstado,
-        contrasenna: estudiante.contrasenna,
-        rol: estudiante.rol,
-        campus: estudiante.campus,
-        estado: estadoState,
-        celular: telefonoEstado,
-      };
-      console.log("JSON que se envia al back:", dtoEstudiante);
-      let respuestaController = modificarInformacionEstudiante(dtoEstudiante);
+    let dtoEstudiante = {
+      carnet: estudiante.carnet,
+      nombre: estudiante.nombre,
+      nombre2: estudiante.nombre2,
+      apellido1: estudiante.apellido1,
+      apellido2: estudiante.apellido2,
+      correo: correoEstado,
+      contrasenna: estudiante.contrasenna,
+      rol: estudiante.rol,
+      campus: estudiante.campus,
+      estado: estadoState,
+      celular: telefonoEstado,
+    };
+    console.log("JSON que se envia al back:", dtoEstudiante);
+    let respuestaController = modificarInformacionEstudiante(dtoEstudiante);
 
-      //No hubo errores.
-      if (Object.keys(respuestaController).length !== 0) {
-        alert("Se ha modificado exitosamente la información del estudiante.");
-        navigate("/informacionEstudiantesProfesores");
-      } else
-        alert("No se ha podido modificar al estudiante, intente de nuevo.");
-    } else {
-      console.log("Se ha eliminado al estudiante");
-      //*LLamar al controlador para hacer el cambio, utilizar DTOEstudiante.
-      alert("Se ha eliminado exitosamente al estudiante.");
-    }
+    //No hubo errores.
+    if (Object.keys(respuestaController).length !== 0) {
+      alert("Se ha modificado exitosamente la información del estudiante.");
+      navigate("/informacionEstudiantesProfesores");
+    } else alert("No se ha podido modificar al estudiante, intente de nuevo.");
+
     navigate("/informacionEstudiantesProfesores");
   };
   /**
