@@ -156,8 +156,8 @@ class MainController {
   async registrarEstudiantes(estudiantes) {
     return await this.adminEstudiantes.registrarEstudiantes(estudiantes);
   }
-  async modificarInformacionEstudiante() {
-    return await this.adminEstudiantes.modificarInformacionEstudiante();
+  async modificarInformacionEstudiante(dtoEstudiante) {
+    return await this.adminEstudiantes.modificarInformacionEstudiante(dtoEstudiante);
   }
 }
 

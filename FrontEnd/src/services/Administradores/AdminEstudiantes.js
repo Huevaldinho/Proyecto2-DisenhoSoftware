@@ -24,7 +24,6 @@ class AdminEstudiantes {
     }
     //aaa
     async registrarEstudiantes(estudiantes) {
-        console.log(estudiantes)
         try {
             const response = await fetch(`${API_URL}/estudiantes/`, {
                 method: 'POST',
@@ -40,6 +39,24 @@ class AdminEstudiantes {
             console.error('Error en AdminEstudiantes, en metodo registrarEstudiantes: ', error);
             return null;
         }
+    }
+    async modificarInformacionEstudiante(dtoEstudiante) {
+        try {
+            const response = await fetch(`${API_URL}/estudiantes/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dtoEstudiante)
+            });
+            let data = await response.json(); // Convertir datos a formato JSON
+            console.log("AdminEstudiantes modificarInformacionEstudiante retorna :", data)
+            return data;
+        } catch (error) {
+            console.error('Error en AdminEstudiantes, en metodo modificarInformacionEstudiante: ', error);
+            return null;
+        }
+
     }
 
 }

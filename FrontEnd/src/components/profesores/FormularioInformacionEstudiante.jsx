@@ -1,13 +1,16 @@
-import { useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 //import PropTypes from "prop-types";
 //import DTOEstudiante from "../../services/DTOs/DTOEstudiante";
 import EstadoUsuario from "../../services/enums/estadoUsuario";
+import Role from "../../services/enums/role";
 import { validarCorreoTelefono } from "../../validation/ValidarInputs";
 //Main controller
-import {MainControllerContext} from "../../contexts/MainControllerContext";
+import { MainControllerContext } from "../../contexts/MainControllerContext";
 function FormularioInformacionEstudiante(props) {
-  const mainController = useContext(MainControllerContext);
+  const { modificarInformacionEstudiante, usuario, setUsuario } = useContext(
+    MainControllerContext
+  );
   //Para sacar al informacion del estudiante
   const { state } = useLocation();
   let estudiante = state?.estudiante;
@@ -19,16 +22,31 @@ function FormularioInformacionEstudiante(props) {
   const [telefonoEstado, setTelefono] = useState(estudiante.celular);
 
   const redireccionar = () => {
-    //TODO
     //*Distinguir si es modificacion o si es eliminacion
     if (estadoState == EstadoUsuario.ACTIVO) {
-      console.log("Se ha modificado exitosamente la información");
-      //*LLamar al controlador para hacer el cambio, utilizar DTOEstudiante.
-
       //Crear DTOEstudiante con datos que ya tengo y los nuevos.
-      let respuestaController = mainController.modificarInformacionEstudiante();
+      let dtoEstudiante = {
+        carnet: estudiante.carnet,
+        nombre: estudiante.nombre,
+        nombre2: estudiante.nombre2,
+        apellido1: estudiante.apellido1,
+        apellido2: estudiante.apellido2,
+        correo: correoEstado,
+        contrasenna: estudiante.contrasenna,
+        rol: estudiante.rol,
+        campus: estudiante.campus,
+        estado: estadoState,
+        celular: telefonoEstado,
+      };
+      console.log("JSON que se envia al back:", dtoEstudiante);
+      let respuestaController = modificarInformacionEstudiante(dtoEstudiante);
 
-      alert("Se ha modificado exitosamente la información del estudiante.");
+      //No hubo errores.
+      if (Object.keys(respuestaController).length !== 0) {
+        alert("Se ha modificado exitosamente la información del estudiante.");
+        navigate("/informacionEstudiantesProfesores");
+      } else
+        alert("No se ha podido modificar al estudiante, intente de nuevo.");
     } else {
       console.log("Se ha eliminado al estudiante");
       //*LLamar al controlador para hacer el cambio, utilizar DTOEstudiante.
@@ -41,7 +59,6 @@ function FormularioInformacionEstudiante(props) {
    */
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(estadoState, correoEstado, telefonoEstado);
     //*Validar datos del formulario.
     switch (validarCorreoTelefono(correoEstado, telefonoEstado)) {
       case 0: {
@@ -61,12 +78,40 @@ function FormularioInformacionEstudiante(props) {
       }
     }
   };
+
+  let storedUser = usuario;
+  const updateState = () => {
+    setTimeout(() => {
+      storedUser = JSON.parse(localStorage.getItem("usuario"));
+      try {
+        JSON.parse(storedUser);
+      } catch (error) {
+        setUsuario(storedUser);
+      }
+    }, 1000);
+  };
+
+  // Efecto que actualiza el estado de myState después de que el componente ha sido montado
+  useEffect(() => {
+    updateState();
+  }, []);
+
+  if (storedUser == null) return <p>Cargando</p>;
+
+  let disableModificar = !(
+    storedUser.rol === Role.PROFESOR && storedUser.campus === estudiante.campus
+  );
+
+  console.log("Usuario:", storedUser);
+  console.log("Estudiante:", estudiante);
+  console.log("Diable modificar:", disableModificar);
+
   //*Styles
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
   return (
     <div className=" p-3 m-4 text-center items-center">
       <div className="text-center">
-        <form className="text-center pt-5 pl-5 pr-5 mt-10 ml-10 mr-10 mb-2 rounded-2xl  grid grid-rows-2 grid-flow-col gap-1 bg-slate-800">
+        <form className="text-center pt-5 pl-5 pr-5 mt-10 ml-10 mr-10 mb-2 rounded-2xl  grid grid-rows-3 grid-flow-col gap-1 bg-slate-800">
           {/*Carnet*/}
           <div className={cssElementosForm}>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -74,9 +119,9 @@ function FormularioInformacionEstudiante(props) {
             </label>
 
             <input
+              disabled={true}
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
-              disabled={true}
               value={estudiante.carnet}
             />
 
@@ -135,6 +180,19 @@ function FormularioInformacionEstudiante(props) {
             />
             <p className="font-thin text-red-700">No modificable</p>
           </div>
+          {/*Campus*/}
+          <div className={cssElementosForm}>
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Campus
+            </label>
+            <input
+              type="text"
+              className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              disabled={true}
+              value={estudiante.campus}
+            />
+            <p className="font-thin text-red-700">No modificable</p>
+          </div>
           {/*Correo */}
           <div className={"mb-6 w-auto  "}>
             <label
@@ -145,6 +203,7 @@ function FormularioInformacionEstudiante(props) {
             </label>
             <input
               type="email"
+              disabled={disableModificar}
               id="email"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               defaultValue={correoEstado}
@@ -164,6 +223,7 @@ function FormularioInformacionEstudiante(props) {
             <input
               type="text"
               defaultValue={telefonoEstado}
+              disabled={disableModificar}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(e) => {
                 setTelefono(e.target.value);
@@ -181,6 +241,7 @@ function FormularioInformacionEstudiante(props) {
             </label>
             <select
               id="cEstados"
+              disabled={disableModificar}
               defaultValue={estadoState}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(e) => {
@@ -193,7 +254,7 @@ function FormularioInformacionEstudiante(props) {
           </div>
         </form>
       </div>
-      <div className={"text-center w-full "}>
+      <div className={"text-center w-full "} hidden={disableModificar}>
         {/*Boton aceptar */}
         <button
           type="submit"

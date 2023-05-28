@@ -85,6 +85,11 @@ const MainControllerContextProvider = ({ children }) => {
     verEstudiantes();
     return data; //estudiantes o error
   };
+  const modificarInformacionEstudiante = async (dtoEstudiante) => {
+    const data = await mainController.modificarInformacionEstudiante(dtoEstudiante);
+    return data;
+  };
+
   //*AUTH
   /**
    * Metodo para iniciar sesion.
@@ -232,7 +237,8 @@ const MainControllerContextProvider = ({ children }) => {
         actualizarActividad,
         ordenarEstudiantesPorCarnet,
         ordenarEstudiantesPorNombre,
-        ordenarEstudiantesPorCampus
+        ordenarEstudiantesPorCampus,
+        modificarInformacionEstudiante
       }}
     >
       {children}
