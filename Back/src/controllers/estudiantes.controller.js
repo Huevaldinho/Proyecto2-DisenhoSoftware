@@ -8,7 +8,6 @@ import {
 //Método para traer todos los estudiantes de la base de datos, relacionado al metodo get de la ruta de estudiantes
 export const getEstudiantes = async (req, res) => {
     const estudiantes = await getEstudiantesMongo();
-    console.log(estudiantes);
     res.json(estudiantes);
 }
 
