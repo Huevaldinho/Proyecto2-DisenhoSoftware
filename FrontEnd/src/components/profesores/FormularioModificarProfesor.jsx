@@ -110,7 +110,6 @@ function FormularioModificarProfesor(props) {
       celular,
       foto: profesor.foto,
     };
-    console.log("profe a modificar:", jsonProfe);
     const respuesta = await actualizarProfesor(jsonProfe, file);
 
     if (manejoErrores(respuesta)) {
@@ -161,6 +160,11 @@ function FormularioModificarProfesor(props) {
     storedUser.rol === Role.ASISTENTE && storedUser.campus === campus[0]
   );
 
+  let puedeModificar = !(
+    storedUser.codigo === profesor.codigo ||
+    (storedUser.rol === Role.ASISTENTE && storedUser.campus === profesor.campus)
+  );
+
   //*Styles
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
   const styleInputs =
@@ -185,6 +189,7 @@ function FormularioModificarProfesor(props) {
                   id="file"
                   onChange={handleFileChange}
                   required={false}
+                  disabled={puedeModificar}
                 />
               </div>
             ) : (
@@ -197,6 +202,7 @@ function FormularioModificarProfesor(props) {
                     id="file"
                     onChange={handleFileChange}
                     required={false}
+                    disabled={puedeModificar}
                   />
                 </div>
               </>
@@ -222,9 +228,9 @@ function FormularioModificarProfesor(props) {
             </label>
 
             <input
+              disabled={puedeModificar}
               type="text"
               className={styleInputs}
-              disabled={false}
               defaultValue={nombre1}
               onChange={(e) => {
                 setNombre1(e.target.value);
@@ -239,7 +245,7 @@ function FormularioModificarProfesor(props) {
             <input
               type="text"
               className={styleInputs}
-              disabled={false}
+              disabled={puedeModificar}
               defaultValue={nombre2}
               onChange={(e) => {
                 setNombre2(e.target.value);
@@ -253,8 +259,8 @@ function FormularioModificarProfesor(props) {
             </label>
             <input
               type="text"
+              disabled={puedeModificar}
               className={styleInputs}
-              disabled={false}
               defaultValue={apellido1}
               onChange={(e) => {
                 setApellido1(e.target.value);
@@ -269,7 +275,7 @@ function FormularioModificarProfesor(props) {
             <input
               type="text"
               className={styleInputs}
-              disabled={false}
+              disabled={puedeModificar}
               defaultValue={apellido2}
               onChange={(e) => {
                 setApellido2(e.target.value);
@@ -286,6 +292,7 @@ function FormularioModificarProfesor(props) {
             </label>
             <input
               type="email"
+              disabled={puedeModificar}
               id="email"
               className={styleInputs}
               defaultValue={correo}
@@ -304,6 +311,7 @@ function FormularioModificarProfesor(props) {
             </label>
             <input
               type="text"
+              disabled={puedeModificar}
               className={styleInputs}
               defaultValue={telefono}
               onChange={(e) => {
@@ -321,6 +329,7 @@ function FormularioModificarProfesor(props) {
             </label>
             <input
               type="text"
+              disabled={puedeModificar}
               className={styleInputs}
               defaultValue={celular}
               onChange={(e) => {
@@ -340,6 +349,7 @@ function FormularioModificarProfesor(props) {
               type="text"
               className={styleInputs}
               defaultValue={cedula}
+              disabled={puedeModificar}
               onChange={(e) => {
                 setCedula(e.target.value);
               }}
@@ -355,6 +365,7 @@ function FormularioModificarProfesor(props) {
               Seleccione el estado
             </label>
             <select
+              disabled={puedeModificar}
               id="cEstados"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(e) => {
@@ -393,8 +404,10 @@ function FormularioModificarProfesor(props) {
           <div
             className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
             id="containerBotonAgregarActividad"
+            hidden={puedeModificar}
           >
             <button
+              disabled={puedeModificar}
               className="text-center w-full h-full"
               onClick={handleBorrar}
             >
