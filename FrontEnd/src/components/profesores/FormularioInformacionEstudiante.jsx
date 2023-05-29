@@ -21,7 +21,7 @@ function FormularioInformacionEstudiante(props) {
   const [correoEstado, setCorreo] = useState(estudiante.correo);
   const [telefonoEstado, setTelefono] = useState(estudiante.celular);
 
-  const redireccionar = () => {
+  const redireccionar = async () => {
     let dtoEstudiante = {
       carnet: estudiante.carnet,
       nombre: estudiante.nombre,
@@ -36,7 +36,7 @@ function FormularioInformacionEstudiante(props) {
       celular: telefonoEstado,
     };
     console.log("JSON que se envia al back:", dtoEstudiante);
-    let respuestaController = modificarInformacionEstudiante(dtoEstudiante);
+    let respuestaController =await  modificarInformacionEstudiante(dtoEstudiante);
 
     //No hubo errores.
     if (Object.keys(respuestaController).length !== 0) {

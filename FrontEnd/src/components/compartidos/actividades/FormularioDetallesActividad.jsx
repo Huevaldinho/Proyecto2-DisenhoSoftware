@@ -198,9 +198,9 @@ function FormularioDetallesActividad(props) {
   };
 
   return (
-    <div className=" p-3 m-auto text-center items-center">
+    <div className="p-3 m-auto text-center items-center">
       <div className="text-center">
-        <form className="text-center p-5 m-2 rounded-2xl  grid grid-rows-4 grid-flow-col gap-4 bg-slate-800">
+        <form className="text-center p-5 m-2 rounded-2xl grid grid-cols-1 bg-slate-800 sm:grid-cols-2 gap-4 ">
           {/*Nombre actividad */}
           <div className={cssElementosForm}>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
