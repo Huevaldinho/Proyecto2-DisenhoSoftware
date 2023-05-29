@@ -165,16 +165,17 @@ function FormularioModificarProfesor(props) {
     (storedUser.rol === Role.ASISTENTE && storedUser.campus === profesor.campus)
   );
 
-  //*Styles
-  const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
-  const styleInputs =
-    "text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
-  return (
-    <div className=" p-3 m-auto text-center items-center">
-      <div className="text-center">
-        <form className="text-center pt-5 pl-5 pr-5 mt-10 ml-10 mr-10 mb-2 rounded-2xl  grid grid-rows-3 grid-flow-col gap-1 bg-slate-800">
-          {/*Foto */}
-          <div className={cssElementosForm}>
+  const cssElementosForm = "mb-4 flex flex-col sm:flex-row sm:space-x-4";
+const styleInputs =
+  "text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
+
+return (
+  <div className="p-3 m-auto text-center">
+    <div className="text-center">
+      <form className="text-center pt-5 pl-5 pr-5 mt-10 ml-10 mr-10 mb-2 rounded-2xl bg-slate-800">
+        {/* Foto */}
+        <div className={cssElementosForm}>
+          <div className="w-1/2">
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -208,8 +209,8 @@ function FormularioModificarProfesor(props) {
               </>
             )}
           </div>
-          {/*Codigo*/}
-          <div className={cssElementosForm}>
+          {/* Código */}
+          <div className="w-1/2">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Código
             </label>
@@ -221,12 +222,13 @@ function FormularioModificarProfesor(props) {
             />
             <p className="font-thin text-red-700">No modificable</p>
           </div>
-          {/*Primer nombre */}
-          <div className={cssElementosForm}>
+        </div>
+        {/* Primer nombre */}
+        <div className={cssElementosForm}>
+          <div className="w-1/2">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Primer nombre
             </label>
-
             <input
               disabled={puedeModificar}
               type="text"
@@ -237,8 +239,8 @@ function FormularioModificarProfesor(props) {
               }}
             />
           </div>
-          {/*Segundo nombre */}
-          <div className={cssElementosForm}>
+          {/* Segundo nombre */}
+          <div className="w-1/2">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Segundo nombre
             </label>
@@ -252,8 +254,10 @@ function FormularioModificarProfesor(props) {
               }}
             />
           </div>
-          {/*Apellido 1 */}
-          <div className={cssElementosForm}>
+        </div>
+        {/* Apellido 1 */}
+        <div className={cssElementosForm}>
+          <div className="w-1/2">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Primer apellido
             </label>
@@ -267,8 +271,8 @@ function FormularioModificarProfesor(props) {
               }}
             />
           </div>
-          {/*Apellido 2 */}
-          <div className={cssElementosForm}>
+          {/* Apellido 2 */}
+          <div className="w-1/2">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Segundo apellido
             </label>
@@ -282,8 +286,10 @@ function FormularioModificarProfesor(props) {
               }}
             />
           </div>
-          {/*Correo */}
-          <div className={"mb-6 w-auto  "}>
+        </div>
+        {/* Correo */}
+        <div className={cssElementosForm}>
+          <div className="w-1/2">
             <label
               htmlFor="email"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -301,13 +307,13 @@ function FormularioModificarProfesor(props) {
               }}
             />
           </div>
-          {/* Telefono */}
-          <div className={cssElementosForm}>
+          {/* Teléfono */}
+          <div className="w-1/2">
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Telefono
+              Teléfono
             </label>
             <input
               type="text"
@@ -319,8 +325,10 @@ function FormularioModificarProfesor(props) {
               }}
             />
           </div>
-          {/* Celular */}
-          <div className={cssElementosForm}>
+        </div>
+        {/* Celular */}
+        <div className={cssElementosForm}>
+          <div className="w-1/2">
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -337,8 +345,8 @@ function FormularioModificarProfesor(props) {
               }}
             />
           </div>
-          {/* Cedula */}
-          <div className={cssElementosForm}>
+          {/* Cédula */}
+          <div className="w-1/2">
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -355,9 +363,10 @@ function FormularioModificarProfesor(props) {
               }}
             />
           </div>
-          {/*Estado */}
-          <br></br>
-          <div className={cssElementosForm}>
+        </div>
+        {/* Estado */}
+        <div className={cssElementosForm}>
+          <div className="w-1/2">
             <label
               htmlFor="estados"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -367,7 +376,7 @@ function FormularioModificarProfesor(props) {
             <select
               disabled={puedeModificar}
               id="cEstados"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={styleInputs}
               onChange={(e) => {
                 setEstado(e.target.value);
               }}
@@ -377,9 +386,8 @@ function FormularioModificarProfesor(props) {
               <option value="Inactivo">Inactivo</option>
             </select>
           </div>
-          <br></br>
-          {/*Coordinador */}
-          <div className={cssElementosForm}>
+          {/* Coordinador */}
+          <div className="w-1/2">
             <label
               htmlFor="coordinador"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -389,7 +397,7 @@ function FormularioModificarProfesor(props) {
             <select
               disabled={puedeAsignarCoordinador}
               id="cCoordinador"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={styleInputs}
               onChange={handleChangeCoordinador}
               defaultValue={
                 coordinador === "COORDINADOR" ? "Coordinador" : "No coordinador"
@@ -399,35 +407,36 @@ function FormularioModificarProfesor(props) {
               <option value="No coordinador">No coordinador</option>
             </select>
           </div>
+        </div>
 
-          {/*Boton para eliminar al profe*/}
-          <div
-            className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
-            id="containerBotonAgregarActividad"
-            hidden={puedeModificar}
-          >
-            <button
-              disabled={puedeModificar}
-              className="text-center w-full h-full"
-              onClick={handleBorrar}
-            >
-              Inactivar Profesor
-            </button>
-          </div>
-        </form>
-      </div>
-      <div className={"text-center w-full "}>
-        {/*Boton aceptar */}
-        <button
-          type="submit"
-          className=" text-white bg-blue-700 hover:bg-blue-900  font-medium rounded-lg w-auto p-4  text-center "
-          onClick={handleModificar}
+        {/* Boton para eliminar al profesor */}
+        <div
+          className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
+          id="containerBotonAgregarActividad"
+          hidden={puedeModificar}
         >
-          Aceptar
-        </button>
-      </div>
+          <button
+            disabled={puedeModificar}
+            className="text-center w-full h-full"
+            onClick={handleBorrar}
+          >
+            Inactivar Profesor
+          </button>
+        </div>
+      </form>
     </div>
-  );
+    <div className="text-center w-full">
+      {/* Boton aceptar */}
+      <button
+        type="submit"
+        className="text-white bg-blue-700 hover:bg-blue-900 font-medium rounded-lg w-auto p-4 text-center"
+        onClick={handleModificar}
+      >
+        Aceptar
+      </button>
+    </div>
+  </div>
+);
 }
 
 export default FormularioModificarProfesor;
