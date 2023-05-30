@@ -43,7 +43,7 @@ function FormularioModificarProfesor(props) {
       }
       case 3: {
         alert(
-          "Ha ocurrido un error, telefono incorrecto. Debe tener el formato: 2NNN-NNNN [extensión NNNN]"
+          "Ha ocurrido un error, telefono incorrecto. Debe tener el formato: 2NNN-NNNN [NNNN]"
         );
         return false;
       }
@@ -332,7 +332,7 @@ function FormularioModificarProfesor(props) {
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Telefono (2NNN-NNNN [extensión NNNN])
+              Telefono (2NNN-NNNN [NNNN])
             </label>
             <input
               type="text"
@@ -381,7 +381,6 @@ function FormularioModificarProfesor(props) {
             />
           </div>
           {/*Estado */}
-          <br></br>
           <div className={cssElementosForm}>
             <label
               htmlFor="estados"
@@ -402,7 +401,6 @@ function FormularioModificarProfesor(props) {
               <option value="Inactivo">Inactivo</option>
             </select>
           </div>
-          <br></br>
           {/*Coordinador */}
           <div className={cssElementosForm}>
             <label

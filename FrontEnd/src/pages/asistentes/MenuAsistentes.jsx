@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { useNavigate } from "react-router-dom";
+import { MainControllerContext } from "../../contexts/MainControllerContext";
 
-function MenuProfesoresGuia() {
+function MenuAsistentes() {
   const navigate = useNavigate(); //* Para redireccionar.
+  const { proximaActividad } = useContext(MainControllerContext);
+
+  const handleActividadMasProxima = async (e) => {
+    e.preventDefault();
+    let actividadMasProxima = await proximaActividad();
+    if (actividadMasProxima != null) {
+      navigate("/detallesActividad", {
+        state: { actividad: actividadMasProxima },
+      });
+    }
+  };
 
   //Redirecciona a infoProfes
   const handleInformacionEquipoGuia = (e) => {
@@ -22,10 +34,6 @@ function MenuProfesoresGuia() {
     navigate("/informacionEstudiantesProfesores");
   };
 
-  const handleProximaActividad = (e) => {
-    e.preventDefault();
-    //navigate("/informacionEstudiantesProfesores");
-  };
   const handleSalir = (e) => {
     e.preventDefault();
     navigate("/login");
@@ -65,7 +73,7 @@ function MenuProfesoresGuia() {
           </button>
         </div>
         <div id="containerBotonInformacionEstudiantes" className="p-5 m-3">
-          <button className={estiloBotones} onClick={handleProximaActividad}>
+          <button className={estiloBotones} onClick={handleActividadMasProxima}>
             Proxima actividad
           </button>
         </div>
@@ -82,4 +90,4 @@ function MenuProfesoresGuia() {
   );
 }
 
-export default MenuProfesoresGuia;
+export default MenuAsistentes;

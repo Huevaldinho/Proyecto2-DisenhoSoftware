@@ -162,14 +162,16 @@ class AdminActividades {
             return null;
         }
     }
+    /**
+     *  Metodo para actualizar los datos de una actividad
+     * @param {DTOActividad} dtoActividad:DTOActividad con los datos modificados.
+     * @param {File} afiche: Archivo de afiche.
+     * @param {FileList} evidencias:Lista de archivos de las evidencias.
+     * @returns 
+     */
     async actualizarActividad(dtoActividad, afiche, evidencias) {
         try {
             const formData = new FormData();
-            // Convierte la FileList en un array porque FileList no puede agregar cosas
-            //const filesArray = Array.from(evidencias);
-            //filesArray.unshift(afiche);//Mete el afiche al principio
-            // console.log("Array con todos los archivos:", filesArray)
-
             //Mete la lista de archivos al form
             formData.append('archivos', afiche)
             for (let i = 0; i < evidencias.length; i++) {

@@ -327,13 +327,10 @@ function FormularioAgregarProfesor(props) {
           Aceptar
         </button>
       </div>
-      <div
-        className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
-        id="containerBotonAgregarActividad"
-      >
+      <div className="text-center w-full" id="containerBotonAgregarActividad">
         {/*Boton para regresar la menu profesores*/}
         <button
-          className="text-center w-full h-full"
+          className="text-white m-3 bg-red-500 hover:bg-red-900  font-medium rounded-lg w-auto p-4  text-center "
           onClick={handleClickReturn}
         >
           Regresar al Información del Equipo
