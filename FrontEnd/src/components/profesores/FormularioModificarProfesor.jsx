@@ -166,13 +166,13 @@ function FormularioModificarProfesor(props) {
   );
 
   //*Styles
-  const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
+  const cssElementosForm = "col-span-1 md:col-span-2 lg:col-span-1";
   const styleInputs =
     "text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
   return (
-    <div className=" p-3 m-auto text-center items-center">
+    <div className="p-3 m-auto text-center items-center">
       <div className="text-center">
-        <form className="text-center pt-5 pl-5 pr-5 mt-10 ml-10 mr-10 mb-2 rounded-2xl  grid grid-rows-3 grid-flow-col gap-1 bg-slate-800">
+        <form className="text-center p-5 m-2 rounded-2xl  bg-slate-800 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
           {/*Foto */}
           <div className={cssElementosForm}>
             <label

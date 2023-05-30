@@ -14,6 +14,21 @@ class DTOActividad {
     afiche = '';
     estado = null;//Estado
     evidencias = [];
+    /*
+     _id: actividad._id,
+      nombre,
+      descripcion,
+      semana,
+      estado,
+      modalidad,
+      tipoActividad,
+      fechaHora: fecheHora,
+      fechaHoraPublicacion: fecheHoraPublicacion,
+      enlace,
+      afiche: actividad.afiche,
+      responsables,
+      recordatorios,
+    */
 
     //*Constructores
     constructor(id, nombre, semana, tipoActividad, descripcion, responsables, fechaHora, fechaHoraPublicacion, recordatorios, modalidad, enlace, afiche, estado, evidencias) {
