@@ -36,6 +36,7 @@ function FormularioInformacionEstudiante(props) {
       celular: telefonoEstado,
     };
     console.log("JSON que se envia al back:", dtoEstudiante);
+    //TODO cambiar json a DTOEstudiante
     let respuestaController =await  modificarInformacionEstudiante(dtoEstudiante);
 
     //No hubo errores.
