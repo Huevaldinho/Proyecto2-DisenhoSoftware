@@ -16,6 +16,24 @@ class DTOProfesor {
   equipo = ''
   celular = ''
   foto = '';
+  /*
+      cedula,
+      nombre: nombre1,
+      nombre2,
+      apellido1,
+      apellido2,
+      correo,
+      contrasenna: profesor.contrasenna,
+      rol: profesor.rol,
+      codigo: profesor.codigo,
+      coordinador,
+      telefono,
+      campus: profesor.campus,
+      estado,
+      equipo: profesor.equipo,
+      celular,
+      foto: profesor.foto,
+  */
   //*Constructores
   constructor(cedula, nombre, nombre2, apellido1, apellido2, correo, contrasenna, rol,
     codigo, coordinador, telefono, campus, estado, equipo, celular, foto) {
@@ -34,8 +52,9 @@ class DTOProfesor {
     this.estado = estado;
     this.equipo = equipo;
     this.celular = celular;
-    this.foto = foto;//TODO
+    this.foto = foto;
   }
+
   //*To String
   toString() {
     console.log(this.cedula, this.nombre, this.nombre2, this.apellido1,
@@ -98,6 +117,9 @@ class DTOProfesor {
   //*Setters
   setFoto(foto) {
     this.foto = foto;
+  }
+  setCelular(celular){
+    this.celular=celular;
   }
 }
 export default DTOProfesor;

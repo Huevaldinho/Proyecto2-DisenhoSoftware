@@ -26,11 +26,15 @@ function FormularioModificarProfesor(props) {
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
-
+  const handleChangeCoordinador = (e) => {
+    setCord(e.target.value === "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR");
+  };
   const manejoErrores = async (respuesta) => {
     switch (respuesta) {
       case 1: {
-        alert("Ha ocurrido un error, formato de contraseña incorrecto.");
+        alert(
+          "Ha ocurrido un error, formato de contraseña incorrecto. Debe tener el formato: NNNNNNNN"
+        );
         return false;
       }
       case 2: {
@@ -39,7 +43,7 @@ function FormularioModificarProfesor(props) {
       }
       case 3: {
         alert(
-          "Ha ocurrido un error, telefono incorrecto (8 números y debe empezar con 2|6|8)."
+          "Ha ocurrido un error, telefono incorrecto. Debe tener el formato: 2NNN-NNNN [extensión NNNN]"
         );
         return false;
       }
@@ -81,7 +85,7 @@ function FormularioModificarProfesor(props) {
       }
       case 10: {
         alert(
-          "Ha ocurrido un error, el celular no cumple con el formato (empieza con +506 (2|4|6|7|8) seguido de 7 números)."
+          "Ha ocurrido un error, el celular no cumple con el formato: 6|7|8 seguido de 7 números"
         );
         return false;
       }
@@ -110,18 +114,39 @@ function FormularioModificarProfesor(props) {
       celular,
       foto: profesor.foto,
     };
-    const respuesta = await actualizarProfesor(jsonProfe, file);
 
-    if (manejoErrores(respuesta)) {
+    console.log("Profesor:", profesor);
+    let dtoProfe = new DTOProfesor(
+      cedula,
+      nombre1,
+      nombre2,
+      apellido1,
+      apellido2,
+      correo,
+      profesor.contrasenna,
+      profesor.rol,
+      profesor.codigo,
+      coordinador,
+      telefono,
+      profesor.campus,
+      estado,
+      profesor.equipo,
+      celular,
+      profesor.foto
+    );
+    //dtoProfe.setCelular(celular); //Settea celular porque el constructor no lo agarra bien.
+    //dtoProfe.setFoto(profesor.foto); //Settea foto porque en el constructor no la agarra.
+    console.log("DTOProfe a modificar:", dtoProfe);
+    console.log("JSON profe a modificar:", jsonProfe);
+    const respuesta = await actualizarProfesor(dtoProfe, file);
+
+    if (manejoErrores(respuesta) != false) {
       //No hubo errores.
       if (Object.keys(respuesta).length !== 0) {
         alert("Se ha modificado exitosamente al profesor.");
         navigate("/infoProfesores");
-      } else alert("No se ha podido modificado al profesor, intente de nuevo.");
+      }
     }
-  };
-  const handleChangeCoordinador = (e) => {
-    setCord(e.target.value === "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR");
   };
 
   const handleModificar = (e) => {
@@ -307,7 +332,7 @@ function FormularioModificarProfesor(props) {
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Telefono
+              Telefono (2NNN-NNNN [extensión NNNN])
             </label>
             <input
               type="text"
@@ -325,7 +350,7 @@ function FormularioModificarProfesor(props) {
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Celular
+              Celular (6|7|8 seguido de 7 números)
             </label>
             <input
               type="text"

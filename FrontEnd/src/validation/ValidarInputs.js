@@ -19,7 +19,7 @@ function validarTelefono(telefono) {
    *        | false si el telefono es invalido.
    */
 export const validarCelular = (celular) => {
-    const regexTelefono = /^(\+506)?[24678]\d{7}$/;
+    const regexTelefono = /^[678]\d{7}$/;
     if (regexTelefono.test(celular))
         return true;
     return false;
