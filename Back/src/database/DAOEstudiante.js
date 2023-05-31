@@ -116,10 +116,9 @@ export const ingresarEstudiantes = async (lista) => {
 export const modificarEstudiante = async (DTOEstudiante) => {
     console.log("mod estudiante middlewhere");
     try {
-        console.log("ENTRA AQUI O QUE"+DTOEstudiante);
         var e = await Estudiante.findOne({carnet: DTOEstudiante.carnet}); 
         const correoReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const telefonoReg = /^(2|6|8){1}[0-9]{7}$/;
+        const telefonoReg = /^(7|6|8){1}[0-9]{7}$/;
         const data = await Estudiante.findOne({ correo: DTOEstudiante.correo });
         const dataT = await Estudiante.findOne({ celular: DTOEstudiante.celular });
         if (!DTOEstudiante.correo.match(correoReg)) 

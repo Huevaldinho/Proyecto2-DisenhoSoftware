@@ -93,24 +93,25 @@ function FormularioAgregarProfesor(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Crear el objeto JSON
-    const data = {
-      cedula: cedula,
-      nombre: nombre,
-      nombre2: nombre2,
-      apellido1: apellido1,
-      apellido2: apellido2,
-      correo: correo,
-      contrasenna: contrasenna,
-      rol: "Profesor",
-      coordinador: "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR",
-      telefono: telefono,
-      campus: campusSeleccionado,
-      equipo: "Equipo",
-      celular: celular,
-      foto: "",
-    };
-    const respuesta = await registrarProfesor(data, file);
+    let dtoProfe = new DTOProfesor(
+      cedula,
+      nombre,
+      nombre2,
+      apellido1,
+      apellido2,
+      correo,
+      contrasenna,
+      "Profesor",
+      "",
+      "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR",
+      telefono,
+      campusSeleccionado,
+      "",
+      "Equipo",
+      celular,
+      ""
+    );
+    const respuesta = await registrarProfesor(dtoProfe, file);
     if (manejoErrores(respuesta)) {
       //No hubo errores.
       if (Object.keys(respuesta).length !== 0) {
@@ -327,13 +328,10 @@ function FormularioAgregarProfesor(props) {
           Aceptar
         </button>
       </div>
-      <div
-        className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
-        id="containerBotonAgregarActividad"
-      >
+      <div className="text-center w-full" id="containerBotonAgregarActividad">
         {/*Boton para regresar la menu profesores*/}
         <button
-          className="text-center w-full h-full"
+          className="text-white m-3 bg-red-500 hover:bg-red-900  font-medium rounded-lg w-auto p-4  text-center "
           onClick={handleClickReturn}
         >
           Regresar al Información del Equipo

@@ -1,23 +1,39 @@
 class DTOActividad {
     //*Atributos
-    id = null;//Autogenerado por base de datos.
+    _id = null;//Autogenerado por base de datos.
     nombre = '';
-    semana = null;//[1-16]
-    tipoActividad = null;//TipoActividad
     descripcion = "";
-    responsables = [];//
+    semana = null;//[1-16]
+    estado = null;//Estado
+    modalidad = null;//True o False
+    tipoActividad = null;//TipoActividad
     fechaHora = null;//String
     fechaHoraPublicacion = null;//String
-    recordatorios = [];//Array fechas en string
-    modalidad = null;//True o False
     enlace = '';
     afiche = '';
-    estado = null;//Estado
-    evidencias = [];
+    responsables = [];//
+    recordatorios = [];//Array fechas en string
+    //evidencias = [];
+    /*
+     _id: actividad._id,
+      nombre,
+      descripcion,
+      semana,
+      estado,
+      modalidad,
+      tipoActividad,
+      fechaHora: fecheHora,
+      fechaHoraPublicacion: fecheHoraPublicacion,
+      enlace,
+      afiche: actividad.afiche,
+      responsables,
+      recordatorios,
+    */
 
     //*Constructores
-    constructor(id, nombre, semana, tipoActividad, descripcion, responsables, fechaHora, fechaHoraPublicacion, recordatorios, modalidad, enlace, afiche, estado, evidencias) {
-        this.id = id;
+    constructor(id, nombre, semana, tipoActividad, descripcion, responsables, fechaHora, fechaHoraPublicacion,
+         recordatorios, modalidad, enlace, afiche, estado) {
+        this._id = id;
         this.nombre = nombre;
         this.semana = semana;
         this.tipoActividad = tipoActividad;
@@ -30,7 +46,7 @@ class DTOActividad {
         this.enlace = enlace;
         this.afiche = afiche;
         this.estado = estado;
-        this.evidencias = evidencias
+        
     }
 
     //*Setters

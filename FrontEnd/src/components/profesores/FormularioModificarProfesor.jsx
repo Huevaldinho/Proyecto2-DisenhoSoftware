@@ -26,11 +26,15 @@ function FormularioModificarProfesor(props) {
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
-
+  const handleChangeCoordinador = (e) => {
+    setCord(e.target.value === "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR");
+  };
   const manejoErrores = async (respuesta) => {
     switch (respuesta) {
       case 1: {
-        alert("Ha ocurrido un error, formato de contraseña incorrecto.");
+        alert(
+          "Ha ocurrido un error, formato de contraseña incorrecto. Debe tener el formato: NNNNNNNN"
+        );
         return false;
       }
       case 2: {
@@ -39,7 +43,7 @@ function FormularioModificarProfesor(props) {
       }
       case 3: {
         alert(
-          "Ha ocurrido un error, telefono incorrecto (8 números y debe empezar con 2|6|8)."
+          "Ha ocurrido un error, telefono incorrecto. Debe tener el formato: 2NNN-NNNN [NNNN]"
         );
         return false;
       }
@@ -81,7 +85,7 @@ function FormularioModificarProfesor(props) {
       }
       case 10: {
         alert(
-          "Ha ocurrido un error, el celular no cumple con el formato (empieza con +506 (2|4|6|7|8) seguido de 7 números)."
+          "Ha ocurrido un error, el celular no cumple con el formato: 6|7|8 seguido de 7 números"
         );
         return false;
       }
@@ -92,36 +96,33 @@ function FormularioModificarProfesor(props) {
   };
 
   const redireccionar = async () => {
-    let jsonProfe = {
+    let dtoProfe = new DTOProfesor(
       cedula,
-      nombre: nombre1,
+      nombre1,
       nombre2,
       apellido1,
       apellido2,
       correo,
-      contrasenna: profesor.contrasenna,
-      rol: profesor.rol,
-      codigo: profesor.codigo,
+      profesor.contrasenna,
+      profesor.rol,
+      profesor.codigo,
       coordinador,
       telefono,
-      campus: profesor.campus,
+      profesor.campus,
       estado,
-      equipo: profesor.equipo,
+      profesor.equipo,
       celular,
-      foto: profesor.foto,
-    };
-    const respuesta = await actualizarProfesor(jsonProfe, file);
+      profesor.foto
+    );
+    const respuesta = await actualizarProfesor(dtoProfe, file);
 
-    if (manejoErrores(respuesta)) {
+    if (manejoErrores(respuesta) != false) {
       //No hubo errores.
       if (Object.keys(respuesta).length !== 0) {
         alert("Se ha modificado exitosamente al profesor.");
         navigate("/infoProfesores");
-      } else alert("No se ha podido modificado al profesor, intente de nuevo.");
+      }
     }
-  };
-  const handleChangeCoordinador = (e) => {
-    setCord(e.target.value === "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR");
   };
 
   const handleModificar = (e) => {
@@ -165,17 +166,16 @@ function FormularioModificarProfesor(props) {
     (storedUser.rol === Role.ASISTENTE && storedUser.campus === profesor.campus)
   );
 
-  const cssElementosForm = "mb-4 flex flex-col sm:flex-row sm:space-x-4";
-const styleInputs =
-  "text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
-
-return (
-  <div className="p-3 m-auto text-center">
-    <div className="text-center">
-      <form className="text-center pt-5 pl-5 pr-5 mt-10 ml-10 mr-10 mb-2 rounded-2xl bg-slate-800">
-        {/* Foto */}
-        <div className={cssElementosForm}>
-          <div className="w-1/2">
+  //*Styles
+  const cssElementosForm = "col-span-1 md:col-span-2 lg:col-span-1";
+  const styleInputs =
+    "text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500";
+  return (
+    <div className="p-3 m-auto text-center items-center">
+      <div className="text-center">
+        <form className="text-center p-5 m-2 rounded-2xl  bg-slate-800 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
+          {/*Foto */}
+          <div className={cssElementosForm}>
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -209,8 +209,8 @@ return (
               </>
             )}
           </div>
-          {/* Código */}
-          <div className="w-1/2">
+          {/*Codigo*/}
+          <div className={cssElementosForm}>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Código
             </label>
@@ -222,13 +222,12 @@ return (
             />
             <p className="font-thin text-red-700">No modificable</p>
           </div>
-        </div>
-        {/* Primer nombre */}
-        <div className={cssElementosForm}>
-          <div className="w-1/2">
+          {/*Primer nombre */}
+          <div className={cssElementosForm}>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Primer nombre
             </label>
+
             <input
               disabled={puedeModificar}
               type="text"
@@ -239,8 +238,8 @@ return (
               }}
             />
           </div>
-          {/* Segundo nombre */}
-          <div className="w-1/2">
+          {/*Segundo nombre */}
+          <div className={cssElementosForm}>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Segundo nombre
             </label>
@@ -254,10 +253,8 @@ return (
               }}
             />
           </div>
-        </div>
-        {/* Apellido 1 */}
-        <div className={cssElementosForm}>
-          <div className="w-1/2">
+          {/*Apellido 1 */}
+          <div className={cssElementosForm}>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Primer apellido
             </label>
@@ -271,8 +268,8 @@ return (
               }}
             />
           </div>
-          {/* Apellido 2 */}
-          <div className="w-1/2">
+          {/*Apellido 2 */}
+          <div className={cssElementosForm}>
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Segundo apellido
             </label>
@@ -286,10 +283,8 @@ return (
               }}
             />
           </div>
-        </div>
-        {/* Correo */}
-        <div className={cssElementosForm}>
-          <div className="w-1/2">
+          {/*Correo */}
+          <div className={"mb-6 w-auto  "}>
             <label
               htmlFor="email"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -307,13 +302,13 @@ return (
               }}
             />
           </div>
-          {/* Teléfono */}
-          <div className="w-1/2">
+          {/* Telefono */}
+          <div className={cssElementosForm}>
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Teléfono
+              Telefono (2NNN-NNNN [NNNN])
             </label>
             <input
               type="text"
@@ -325,15 +320,13 @@ return (
               }}
             />
           </div>
-        </div>
-        {/* Celular */}
-        <div className={cssElementosForm}>
-          <div className="w-1/2">
+          {/* Celular */}
+          <div className={cssElementosForm}>
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Celular
+              Celular (6|7|8 seguido de 7 números)
             </label>
             <input
               type="text"
@@ -345,8 +338,8 @@ return (
               }}
             />
           </div>
-          {/* Cédula */}
-          <div className="w-1/2">
+          {/* Cedula */}
+          <div className={cssElementosForm}>
             <label
               htmlFor="text"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -363,10 +356,8 @@ return (
               }}
             />
           </div>
-        </div>
-        {/* Estado */}
-        <div className={cssElementosForm}>
-          <div className="w-1/2">
+          {/*Estado */}
+          <div className={cssElementosForm}>
             <label
               htmlFor="estados"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -376,7 +367,7 @@ return (
             <select
               disabled={puedeModificar}
               id="cEstados"
-              className={styleInputs}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(e) => {
                 setEstado(e.target.value);
               }}
@@ -386,8 +377,8 @@ return (
               <option value="Inactivo">Inactivo</option>
             </select>
           </div>
-          {/* Coordinador */}
-          <div className="w-1/2">
+          {/*Coordinador */}
+          <div className={cssElementosForm}>
             <label
               htmlFor="coordinador"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -397,7 +388,7 @@ return (
             <select
               disabled={puedeAsignarCoordinador}
               id="cCoordinador"
-              className={styleInputs}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={handleChangeCoordinador}
               defaultValue={
                 coordinador === "COORDINADOR" ? "Coordinador" : "No coordinador"
@@ -407,36 +398,35 @@ return (
               <option value="No coordinador">No coordinador</option>
             </select>
           </div>
-        </div>
 
-        {/* Boton para eliminar al profesor */}
-        <div
-          className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
-          id="containerBotonAgregarActividad"
-          hidden={puedeModificar}
-        >
-          <button
-            disabled={puedeModificar}
-            className="text-center w-full h-full"
-            onClick={handleBorrar}
+          {/*Boton para eliminar al profe*/}
+          <div
+            className="text-center rounded-md bg-red-500 p-2 m-3 h-auto w-auto hover:bg-red-800"
+            id="containerBotonAgregarActividad"
+            hidden={puedeModificar}
           >
-            Inactivar Profesor
-          </button>
-        </div>
-      </form>
+            <button
+              disabled={puedeModificar}
+              className="text-center w-full h-full"
+              onClick={handleBorrar}
+            >
+              Inactivar Profesor
+            </button>
+          </div>
+        </form>
+      </div>
+      <div className={"text-center w-full "}>
+        {/*Boton aceptar */}
+        <button
+          type="submit"
+          className=" text-white bg-blue-700 hover:bg-blue-900  font-medium rounded-lg w-auto p-4  text-center "
+          onClick={handleModificar}
+        >
+          Aceptar
+        </button>
+      </div>
     </div>
-    <div className="text-center w-full">
-      {/* Boton aceptar */}
-      <button
-        type="submit"
-        className="text-white bg-blue-700 hover:bg-blue-900 font-medium rounded-lg w-auto p-4 text-center"
-        onClick={handleModificar}
-      >
-        Aceptar
-      </button>
-    </div>
-  </div>
-);
+  );
 }
 
 export default FormularioModificarProfesor;

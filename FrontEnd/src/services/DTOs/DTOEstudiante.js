@@ -7,21 +7,37 @@ class DTOEstudiante {
     apellido1 = "";
     apellido2 = "";
     correo = "";
+    contrasenna = '';
+    rol = ROLE.ESTUDIANTE;
+    campus = '';
+    estado = '';
     celular = "";
-    campus = null;
-    role = ROLE.ESTUDIANTE;
+    /*
+      carnet: estudiante.carnet,
+      nombre: estudiante.nombre,
+      nombre2: estudiante.nombre2,
+      apellido1: estudiante.apellido1,
+      apellido2: estudiante.apellido2,
+      correo: correoEstado,
+      contrasenna: estudiante.contrasenna,
+      rol: estudiante.rol,
+      campus: estudiante.campus,
+      estado: estadoState,
+      celular: telefonoEstado,
+     */
     //*Constructores
-    constructor() { }
-    constructor(carnet, nombre, nombre2, apellido1, apellido2, correo, celular, campus, role) {
+    constructor(carnet, nombre, nombre2, apellido1, apellido2, correo, contrasenna, rol, campus, estado, celular) {
         this.carnet = carnet;
         this.nombre = nombre;
         this.nombre2 = nombre2;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.correo = correo;
-        this.celular = celular;
+        this.contrasenna = contrasenna;
+        this.rol = rol;
         this.campus = campus;
-        this.role = role;
+        this.estado = estado;
+        this.celular = celular;
     }
     //*Setters
     setCarnet(carnet) { this.carnet = carnet; }

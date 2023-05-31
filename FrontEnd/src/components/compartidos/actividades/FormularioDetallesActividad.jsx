@@ -7,7 +7,8 @@ import TipoActividad from "../../../services/enums/tipoActividad";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import ResponsablesAgregarActividad from "../../profesores/coordinadores/agregarActividad/ResponsablesAgregarActividad";
-import FullScreenImage from "./FullScreenImage";
+import DTOActividad from "../../../services/DTOs/DTOActividad";
+
 function FormularioDetallesActividad(props) {
   const { setUsuario, usuario, actualizarActividad } = useContext(
     MainControllerContext
@@ -167,30 +168,24 @@ function FormularioDetallesActividad(props) {
   };
   const handleEnviar = async (e) => {
     e.preventDefault();
-    let datos = {
-      _id: actividad._id,
+
+    let dtoActividad = new DTOActividad(
+      actividad._id,
       nombre,
-      descripcion,
       semana,
-      estado,
-      modalidad,
       tipoActividad,
-      fechaHora: fecheHora,
-      fechaHoraPublicacion: fecheHoraPublicacion,
-      enlace,
-      afiche: actividad.afiche,
+      descripcion,
       responsables,
+      fecheHora,
+      fecheHoraPublicacion,
       recordatorios,
-    };
-    console.log(
-      "Actividad a modificar:",
-      datos,
-      " \n Afiche:",
-      afiche,
-      "\n Evidencias:",
-      evidencias
+      modalidad,
+      enlace,
+      actividad.afiche,
+      estado
     );
-    let respuesta = await actualizarActividad(datos, afiche, evidencias);
+
+    let respuesta = await actualizarActividad(dtoActividad, afiche, evidencias);
     if (Object.keys(respuesta).length !== 0) {
       alert("Se ha modificado exitosamente la actividad.");
       navigate("/planDeTrabajo");
@@ -288,7 +283,10 @@ function FormularioDetallesActividad(props) {
           </div>
           {/**Enlace */}
           <div className="text-center">
-            <label htmlFor="enlace">Enlace:</label>
+            {enlace != "null" && modalidad != "Presencial" && (
+              <div className="text-center">Enlace para la reunión:{enlace}</div>
+            )}
+            <label htmlFor="enlace">Cambiar enlace:</label>
             <input
               type="text"
               id="enlace"
@@ -445,23 +443,7 @@ function FormularioDetallesActividad(props) {
               )}
             </div>
           </div>
-          {/**Evidencias
-           <div className={cssElementosForm}>
-            <label
-              htmlFor="text"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Evidencias {actividad.evidencias.length} registradas
-            </label>
-            <input
-              type="file"
-              disabled={desactiviar}
-              multiple
-              onChange={handleEvidencias}
-            />
-          </div>
-            
-          */}
+          {/**Evidencias*/}
           <div className="text-center">
             <label htmlFor="evidencias">Evidencias:</label>
             {actividad.evidencias.length > 0 ? (
@@ -587,7 +569,7 @@ function FormularioDetallesActividad(props) {
           </div>
         </form>
         {/*Boton enviar */}
-        {!desactiviar ? (
+        {!desactiviar && (
           <div className="text-center bg-green-500 hover:bg-green-800 rounded-2xl p-3 m-5">
             <button
               type="submit"
@@ -597,8 +579,6 @@ function FormularioDetallesActividad(props) {
               Enviar
             </button>
           </div>
-        ) : (
-          <></>
         )}
       </div>
     </div>

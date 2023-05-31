@@ -86,7 +86,9 @@ const MainControllerContextProvider = ({ children }) => {
     return data; //estudiantes o error
   };
   const modificarInformacionEstudiante = async (dtoEstudiante) => {
-    const data = await mainController.modificarInformacionEstudiante(dtoEstudiante);
+    const data = await mainController.modificarInformacionEstudiante(
+      dtoEstudiante
+    );
     return data;
   };
 
@@ -179,6 +181,43 @@ const MainControllerContextProvider = ({ children }) => {
     );
     return data;
   };
+  const proximaActividad = async () => {
+    // Obtener la fecha actual
+    if (Object.keys(planDeTrabajo).length !== 0) {
+      var fechaActual = new Date();
+      let actividades = planDeTrabajo.actividades;
+      // Obtener la fecha actual
+      var fechaActual = new Date();
+
+      // Convertir las fechas de las actividades a objetos Date
+      var actividadesConvertidas = actividades.map(function (actividad) {
+        var partesFechaHora = actividad.fechaHora.split(" ")[0].split("-");
+        var partesHora = actividad.fechaHora.split(" ")[1].split(":");
+        return new Date(
+          partesFechaHora[2],
+          partesFechaHora[1] - 1,
+          partesFechaHora[0],
+          partesHora[0],
+          partesHora[1],
+          partesHora[2]
+        );
+      });
+
+      // Filtrar solo las fechas futuras
+      var actividadesFuturas = actividadesConvertidas.filter(function (fecha) {
+        return fecha > fechaActual;
+      });
+
+      // Obtener el índice de la fecha más próxima en el futuro
+      var indiceMasProxima = actividadesConvertidas.findIndex(function (fecha) {
+        return fecha.getTime() === actividadesFuturas[0].getTime();
+      });
+
+      // Devolver la actividad más próxima en el futuro
+      return actividades[indiceMasProxima];
+    }
+    return null; //Plan de trabajo no ha cargado.
+  };
 
   //*ORDENAMIENTOS
   const ordenarEstudiantesPorCarnet = () => {
@@ -238,7 +277,8 @@ const MainControllerContextProvider = ({ children }) => {
         ordenarEstudiantesPorCarnet,
         ordenarEstudiantesPorNombre,
         ordenarEstudiantesPorCampus,
-        modificarInformacionEstudiante
+        modificarInformacionEstudiante,
+        proximaActividad,
       }}
     >
       {children}

@@ -24,9 +24,9 @@ const Profesor = mongoose.model("Profesor", profesorSchema, "Profesor");
 
 const contrasennaReg = /^[0-9]{8}$/;
 const correoReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const telefonoReg = /^(2|6|8){1}[0-9]{7}$/;
+const telefonoReg = /^2\d{3}-\d{4}(\s\[\d{4}\])$/;
 const cedulaReg = /^[1-9]{1}[0-9]{8}$/;
-const celularReg = /^(\+506)?[24678]\d{7}$/;
+const celularReg = /^[678]\d{7}$/;
 
 //Metodo para poder validar inicio de sesión de profesor
 export async function validarProfesor(correoP, contrasennaP) {
