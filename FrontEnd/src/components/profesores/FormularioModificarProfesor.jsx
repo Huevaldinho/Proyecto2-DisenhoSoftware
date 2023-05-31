@@ -96,26 +96,6 @@ function FormularioModificarProfesor(props) {
   };
 
   const redireccionar = async () => {
-    let jsonProfe = {
-      cedula,
-      nombre: nombre1,
-      nombre2,
-      apellido1,
-      apellido2,
-      correo,
-      contrasenna: profesor.contrasenna,
-      rol: profesor.rol,
-      codigo: profesor.codigo,
-      coordinador,
-      telefono,
-      campus: profesor.campus,
-      estado,
-      equipo: profesor.equipo,
-      celular,
-      foto: profesor.foto,
-    };
-
-    console.log("Profesor:", profesor);
     let dtoProfe = new DTOProfesor(
       cedula,
       nombre1,
@@ -134,10 +114,6 @@ function FormularioModificarProfesor(props) {
       celular,
       profesor.foto
     );
-    //dtoProfe.setCelular(celular); //Settea celular porque el constructor no lo agarra bien.
-    //dtoProfe.setFoto(profesor.foto); //Settea foto porque en el constructor no la agarra.
-    console.log("DTOProfe a modificar:", dtoProfe);
-    console.log("JSON profe a modificar:", jsonProfe);
     const respuesta = await actualizarProfesor(dtoProfe, file);
 
     if (manejoErrores(respuesta) != false) {
