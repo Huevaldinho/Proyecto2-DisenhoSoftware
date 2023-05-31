@@ -93,23 +93,6 @@ function FormularioAgregarProfesor(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Crear el objeto JSON
-    const data = {
-      cedula: cedula,
-      nombre: nombre,
-      nombre2: nombre2,
-      apellido1: apellido1,
-      apellido2: apellido2,
-      correo: correo,
-      contrasenna: contrasenna,
-      rol: "Profesor",
-      coordinador: "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR",
-      telefono: telefono,
-      campus: campusSeleccionado,
-      equipo: "Equipo",
-      celular: celular,
-      foto: "",
-    };
     let dtoProfe = new DTOProfesor(
       cedula,
       nombre,
