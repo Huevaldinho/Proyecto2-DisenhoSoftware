@@ -84,7 +84,7 @@ function ListaRespuestas(props) {
       >
         <button
           className="text-center w-full h-full"
-          onClick={handleRegresarPlanDeTrabajo}
+          onClick={handleRegresarDetallesActividad}
         >
           Regresar al plan de trabajo
         </button>
