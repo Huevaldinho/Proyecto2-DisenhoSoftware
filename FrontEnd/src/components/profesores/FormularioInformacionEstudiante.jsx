@@ -1,8 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-//import PropTypes from "prop-types";
-//import DTOEstudiante from "../../services/DTOs/DTOEstudiante";
-import EstadoUsuario from "../../services/enums/estadoUsuario";
+import DTOEstudiante from "../../services/DTOs/DTOEstudiante";
+
 import Role from "../../services/enums/role";
 import { validarCorreoTelefono } from "../../validation/ValidarInputs";
 //Main controller
@@ -15,29 +14,29 @@ function FormularioInformacionEstudiante(props) {
   const { state } = useLocation();
   let estudiante = state?.estudiante;
 
-  console.log(estudiante);
   const navigate = useNavigate();
   const [estadoState, setEstado] = useState(estudiante.estado);
   const [correoEstado, setCorreo] = useState(estudiante.correo);
   const [telefonoEstado, setTelefono] = useState(estudiante.celular);
 
   const redireccionar = async () => {
-    let dtoEstudiante = {
-      carnet: estudiante.carnet,
-      nombre: estudiante.nombre,
-      nombre2: estudiante.nombre2,
-      apellido1: estudiante.apellido1,
-      apellido2: estudiante.apellido2,
-      correo: correoEstado,
-      contrasenna: estudiante.contrasenna,
-      rol: estudiante.rol,
-      campus: estudiante.campus,
-      estado: estadoState,
-      celular: telefonoEstado,
-    };
-    console.log("JSON que se envia al back:", dtoEstudiante);
-    //TODO cambiar json a DTOEstudiante
-    let respuestaController =await  modificarInformacionEstudiante(dtoEstudiante);
+    let dtoEstudiante = new DTOEstudiante(
+      estudiante.carnet,
+      estudiante.nombre,
+      estudiante.nombre2,
+      estudiante.apellido1,
+      estudiante.apellido2,
+      correoEstado,
+      estudiante.contrasenna,
+      estudiante.rol,
+      estudiante.campus,
+      estadoState,
+      telefonoEstado
+    );
+
+    let respuestaController = await modificarInformacionEstudiante(
+      dtoEstudiante
+    );
 
     //No hubo errores.
     if (Object.keys(respuestaController).length !== 0) {
@@ -94,10 +93,6 @@ function FormularioInformacionEstudiante(props) {
   let disableModificar = !(
     storedUser.rol === Role.PROFESOR && storedUser.campus === estudiante.campus
   );
-
-  console.log("Usuario:", storedUser);
-  console.log("Estudiante:", estudiante);
-  console.log("Diable modificar:", disableModificar);
 
   //*Styles
   const cssElementosForm = "mb-1 w-full sm:w-min md:w-9/11 lg:w-max p-4";
