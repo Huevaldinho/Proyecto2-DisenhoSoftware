@@ -110,7 +110,25 @@ function FormularioAgregarProfesor(props) {
       celular: celular,
       foto: "",
     };
-    const respuesta = await registrarProfesor(data, file);
+    let dtoProfe = new DTOProfesor(
+      cedula,
+      nombre,
+      nombre2,
+      apellido1,
+      apellido2,
+      correo,
+      contrasenna,
+      "Profesor",
+      "",
+      "Coordinador" ? "COORDINADOR" : "NOCOORDINADOR",
+      telefono,
+      campusSeleccionado,
+      "",
+      "Equipo",
+      celular,
+      ""
+    );
+    const respuesta = await registrarProfesor(dtoProfe, file);
     if (manejoErrores(respuesta)) {
       //No hubo errores.
       if (Object.keys(respuesta).length !== 0) {
